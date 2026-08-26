@@ -8,11 +8,11 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="VARELZA">
 <meta property="og:title" content="VARELZA — Todo bajo un mismo techo">
-<meta property="og:description" content="Cobranza, avisos, incidencias, asambleas y más — con cada rol de tu comunidad conectado en tiempo real.">
+<meta property="og:description" content="Cobranza, avisos e incidencias en un solo lugar, sin Excel ni WhatsApp perdido.">
 <meta property="og:url" content="https://varelza.app">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VARELZA — Todo bajo un mismo techo">
-<meta name="twitter:description" content="Cobranza, avisos, incidencias, asambleas y más — con cada rol de tu comunidad conectado en tiempo real.">
+<meta name="twitter:description" content="Cobranza, avisos e incidencias en un solo lugar, sin Excel ni WhatsApp perdido.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,500&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -355,13 +355,14 @@
     padding:16px 22px; margin:28px 0 40px; flex-wrap:wrap; justify-content:center; text-align:center;
   }
   .diff-banner .diff-watermark{
-    position:absolute; left:-14px; top:50%; transform:translateY(-50%); font-size:130px; line-height:1;
-    opacity:0.16; pointer-events:none; filter:grayscale(0.4);
+    position:absolute; left:-6px; top:50%; transform:translateY(-50%); width:150px; height:auto;
+    opacity:0.24; pointer-events:none;
   }
+  .diff-banner .diff-watermark path{ fill:none; stroke:var(--amarillo-dark); stroke-width:16; stroke-linecap:round; }
   .diff-banner .diff-text{ position:relative; z-index:1; }
   .diff-banner b{ color:var(--amarillo-dark); font-size:14px; }
   .diff-banner span{ font-size:13px; color:var(--ink); opacity:0.8; }
-  @media (max-width:560px){ .diff-banner .diff-watermark{ font-size:90px; left:-10px; } }
+  @media (max-width:560px){ .diff-banner .diff-watermark{ width:105px; left:-4px; } }
   .tiers-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:16px; }
   @media (max-width:900px){ .tiers-grid{ grid-template-columns:repeat(2,1fr); } }
   @media (max-width:560px){ .tiers-grid{ grid-template-columns:1fr; } }
@@ -483,6 +484,27 @@
   .cot-preferencial{ text-align:center; font-size:12.5px; color:#A6A89F; margin-top:22px; }
   .cot-preferencial b{ color:var(--amarillo); }
 
+  /* FAQ */
+  .faq{ background:var(--white); border-top:1px solid var(--border); }
+  .faq-head{ text-align:center; max-width:600px; margin:0 auto 40px; }
+  .faq-head h2{ font-size:clamp(26px,3.4vw,36px); margin-bottom:10px; }
+  .faq-head p{ color:var(--gray); font-size:16px; }
+  .faq-list{ max-width:720px; margin:0 auto; display:flex; flex-direction:column; gap:12px; }
+  .faq-item{ background:var(--fondo); border:1.5px solid var(--border); border-radius:18px; transition:border-color 0.2s ease; }
+  .faq-item.open{ border-color:var(--green); }
+  .faq-q{
+    width:100%; display:flex; align-items:center; justify-content:space-between; gap:14px;
+    background:none; border:none; text-align:left; cursor:pointer; font-family:inherit;
+    padding:18px 20px; font-size:15px; font-weight:800; color:var(--ink);
+  }
+  .faq-chev{ flex-shrink:0; transition:transform 0.3s cubic-bezier(.2,.8,.3,1); color:var(--gray); font-size:13px; }
+  .faq-item.open .faq-chev{ transform:rotate(180deg); color:var(--green-dark); }
+  .faq-a-wrap{ display:grid; grid-template-rows:0fr; transition:grid-template-rows 0.35s cubic-bezier(.2,.8,.3,1); }
+  .faq-item.open .faq-a-wrap{ grid-template-rows:1fr; }
+  .faq-a-inner{ overflow:hidden; }
+  .faq-a{ padding:0 20px 18px; font-size:14px; color:var(--gray); line-height:1.6; }
+  @media (prefers-reduced-motion: reduce){ .faq-a-wrap, .faq-chev{ transition:none; } }
+
   /* CHAT / WHATSAPP */
   .chat-fab{
     position:fixed; bottom:24px; right:24px; z-index:40; width:58px; height:58px; border-radius:50%;
@@ -547,8 +569,8 @@
   <div class="wrap">
     <div class="hero-content">
       <span class="eyebrow reveal">Administración de condominios</span>
-      <h1 class="reveal" style="transition-delay:0.06s">Todo bajo <em>un mismo techo</em>, con cada rol de tu comunidad conectado en tiempo real.</h1>
-      <p class="lead reveal" style="transition-delay:0.12s">Administrador, residentes, guardia, consejo y proveedores — cada quien con su propia vista, todos viendo la misma información al instante. Sin hojas de cálculo, sin grupos de WhatsApp.</p>
+      <h1 class="reveal" style="transition-delay:0.06s">Todo bajo <em>un mismo techo</em>: la gestión completa de tu condominio, sin Excel ni WhatsApp perdido.</h1>
+      <p class="lead reveal" style="transition-delay:0.12s">Cobranza, avisos, incidencias y más, en un solo lugar — con cada persona de tu condominio viendo la misma información al instante, sin que tengas que estar avisándole a cada quien por su lado.</p>
       <div class="hero-ctas reveal" style="transition-delay:0.18s">
         <a class="btn btn-primary" href="mailto:hola@varelza.app">Solicita una demo</a>
         <a class="btn btn-ghost" href="#funciones">Ver qué incluye</a>
@@ -822,11 +844,11 @@
   <div class="wrap">
     <div class="roles-head">
       <span class="eyebrow reveal">Un techo, distintas maneras de vivir bajo él</span>
-      <h2 class="reveal" style="transition-delay:0.06s">La información viaja sola entre cada rol</h2>
+      <h2 class="reveal" style="transition-delay:0.06s">La información viaja sola por todo tu condominio</h2>
       <p class="reveal" style="transition-delay:0.12s">No es una app genérica con todo mezclado — cada quien ve solo lo suyo, pero todo está conectado por debajo.</p>
     </div>
     <div class="map-wrap reveal" style="transition-delay:0.18s">
-      <svg viewBox="0 0 600 420" aria-label="Mapa de conexión entre los roles de VARELZA" id="role-map">
+      <svg viewBox="0 0 600 420" aria-label="Mapa de cómo se conecta la información dentro de tu condominio" id="role-map">
         <defs>
           <path id="p-res" d="M 300 210 Q 180 150 100 90" fill="none"/>
           <path id="p-adm" d="M 300 210 Q 300 130 300 60" fill="none"/>
@@ -869,7 +891,7 @@
         <g class="role-node" data-role="pro" data-caption="El <b>proveedor</b> recibe la solicitud, la resuelve y reporta cuando termina — el administrador es notificado, valida, y programa el próximo servicio."><circle cx="480" cy="350" r="26" fill="rgba(255,255,255,0.1)"/><text x="480" y="356" text-anchor="middle" font-size="18">🔨</text></g>
         <text x="480" y="392" text-anchor="middle" class="node-label">Proveedor</text>
       </svg>
-      <p class="map-caption" id="map-caption">Pasa el cursor sobre un rol para ver qué le llega — por ejemplo: <b>un residente</b> reporta una incidencia → <b>el administrador</b> la asigna a <b>un proveedor</b> → <b>el guardia</b> confirma que se resolvió en su siguiente ronda.</p>
+      <p class="map-caption" id="map-caption">Pasa el cursor sobre un ícono para ver qué le llega — por ejemplo: <b>un residente</b> reporta una incidencia → <b>el administrador</b> la asigna a <b>un proveedor</b> → <b>el guardia</b> confirma que se resolvió en su siguiente ronda.</p>
     </div>
   </div>
 </section>
@@ -883,7 +905,9 @@
     </div>
 
     <div class="diff-banner reveal" style="transition-delay:0.16s">
-      <span class="diff-watermark" aria-hidden="true">⚙️</span>
+      <svg class="diff-watermark" viewBox="0 0 400 300" aria-hidden="true">
+        <path d="M 200 30 L 20 280" /><path d="M 200 30 L 380 280" />
+      </svg>
       <div class="diff-text"><b>Ten el control completo de lo que pagas.</b> <span>Da de alta y baja unidades cuando quieras — se cobra lo proporcional a los días exactos que estuvo activa cada una. Nunca pagas de más.</span></div>
     </div>
 
@@ -962,6 +986,52 @@
         </div>
       </div>
       <p class="cot-preferencial">¿Tu condominio tiene más de 100 unidades? <b>Precio preferencial</b> — siempre bajo cotización a la medida.</p>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="preguntas">
+  <div class="wrap">
+    <div class="faq-head">
+      <span class="eyebrow reveal">Preguntas frecuentes</span>
+      <h2 class="reveal" style="transition-delay:0.06s">Antes de que preguntes, ya lo pensamos</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal" style="transition-delay:0.06s">
+        <button class="faq-q" type="button" aria-expanded="false">
+          <span>¿Qué tan seguros están los datos de mi condominio?</span>
+          <span class="faq-chev">⌄</span>
+        </button>
+        <div class="faq-a-wrap"><div class="faq-a-inner"><p class="faq-a">Cada condominio está completamente aislado del resto — aunque todos usan la misma plataforma, nadie puede ver información de otro condominio. El acceso es solo por invitación de tu administrador, nunca por registro abierto. Y los pagos de cuotas se procesan por una pasarela externa segura — VARELZA nunca guarda el número de tu tarjeta.</p></div></div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:0.1s">
+        <button class="faq-q" type="button" aria-expanded="false">
+          <span>¿Qué pasa si decido cancelar?</span>
+          <span class="faq-chev">⌄</span>
+        </button>
+        <div class="faq-a-wrap"><div class="faq-a-inner"><p class="faq-a">Cancelas cuando quieras, sin contrato forzoso ni penalización. Se cobra proporcional a los días exactos que estuvo activa cada unidad — si cancelas a la mitad del mes, no pagas el mes completo.</p></div></div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:0.14s">
+        <button class="faq-q" type="button" aria-expanded="false">
+          <span>¿Cómo migro desde Excel o WhatsApp sin perder mi historial?</span>
+          <span class="faq-chev">⌄</span>
+        </button>
+        <div class="faq-a-wrap"><div class="faq-a-inner"><p class="faq-a">Tu administrador invita a cada residente, guardia y demás personas desde la app — nadie tiene que registrarse por su cuenta. Para arrancar solo se carga la información base de tu condominio (unidades, cuotas, residentes) una sola vez; no necesitas reconstruir años de historial en Excel, solo el punto de partida.</p></div></div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:0.18s">
+        <button class="faq-q" type="button" aria-expanded="false">
+          <span>¿Hay costos ocultos además de la cuota mensual?</span>
+          <span class="faq-chev">⌄</span>
+        </button>
+        <div class="faq-a-wrap"><div class="faq-a-inner"><p class="faq-a">No. El precio de tu plan es fijo según tus unidades activas, sin letras chiquitas. Lo único adicional es la comisión de procesamiento cuando un residente paga con tarjeta — se muestra desglosada antes de confirmar el pago, y la cubre quien usa la tarjeta, no el condominio.</p></div></div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:0.22s">
+        <button class="faq-q" type="button" aria-expanded="false">
+          <span>¿Cuánto tarda en estar funcionando mi condominio?</span>
+          <span class="faq-chev">⌄</span>
+        </button>
+        <div class="faq-a-wrap"><div class="faq-a-inner"><p class="faq-a">Depende del tamaño de tu condominio, pero no es una implementación larga: se trata de invitar a las personas clave (tu equipo de seguridad, el comité, los residentes) y cargar la información base, no de meses de instalación como un sistema tradicional. Un agente te acompaña durante todo el proceso.</p></div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1177,6 +1247,17 @@
       var open = card.classList.toggle('open');
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
       btn.firstChild.textContent = open ? 'Ocultar ventajas ' : 'Ver ventajas ';
+    });
+  });
+
+  // FAQ — acordeón simple, mismo mecanismo de altura automática que ya se
+  // usó y se probó en los check-list de ventajas.
+  document.querySelectorAll('.faq-q').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var item = btn.closest('.faq-item');
+      if (!item) return;
+      var open = item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
   });
 
