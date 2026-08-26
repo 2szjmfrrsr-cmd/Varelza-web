@@ -941,8 +941,8 @@
         <div class="tc-cta-wrap"><button class="btn btn-primary tc-agent-btn" type="button">💬 Solicitar más información a un agente</button></div>
       </div>
       <div class="tier-card reveal" style="transition-delay:0.14s">
-        <h4>Básico → Esencial</h4>
-        <div class="tc-range">10 a 30 unidades</div>
+        <h4>Esencial</h4>
+        <div class="tc-range">10 a 40 unidades</div>
         <ul>
           <li>Cuota por unidad activa (sube y baja cuando tú decidas) + cuota ligera fija por mantenimiento</li>
           <li>Todos los módulos incluidos (comité + proveedores)</li>
@@ -953,7 +953,7 @@
       <div class="tier-card destacado reveal" style="transition-delay:0.18s">
         <span class="tc-badge">Pagos con tarjeta</span>
         <h4>Crecimiento en adelante</h4>
-        <div class="tc-range">31 a 100 unidades</div>
+        <div class="tc-range">41 a 100 unidades</div>
         <ul>
           <li>Incluye todo lo de los paquetes anteriores</li>
           <li><b>Pago de mensualidades con tarjeta de crédito</b></li>
@@ -989,7 +989,7 @@
         <div class="cot-result">
           <div class="cr-label">Estimado mensual</div>
           <div class="cr-amount" id="cot-amount">$950 <span>MXN</span></div>
-          <div class="cr-note" id="cot-note">Incluye todos los módulos. Pagos con tarjeta disponibles a partir de 31 unidades.</div>
+          <div class="cr-note" id="cot-note">Incluye todos los módulos. Pagos con tarjeta disponibles a partir de 41 unidades.</div>
           <a class="btn btn-primary" href="mailto:hola@varelza.app">Pide tu cotización formal →</a>
         </div>
       </div>
@@ -1184,16 +1184,32 @@
     scrollTargets.forEach(function (el) { el.classList.add('visible'); });
   }
 
-  // Cotizador — misma lógica del tabulador real (ver CLAUDE.md), estimado.
+  // Cotizador — misma lógica del tabulador real (ver src/lib/tabulador.ts y
+  // CLAUDE.md), estimado. Confirmado por Iván agosto 2026: Esencial va de
+  // 10 a 40 unidades (ya no hay un escalón "Básico" aparte), Crecimiento
+  // arranca en 41 — ahí es donde empieza el pago con tarjeta.
+  //
+  // Entre los 4 escalones pagados se elige el que resulte MÁS BARATO para
+  // el número de unidades, no el que "le toca" por rango — asignarlo solo
+  // por rango generaba un salto de precio injusto justo al cruzar un
+  // umbral (a 40 unidades, $1,400; a 41, saltaba a $2,830). Mismo criterio
+  // que el motor real de la app.
+  var ESCALONES_PAGADOS = [
+    { incluidas: 40, base: 1400, excedente: 30, nota: 'Plan Esencial — cuota fija + excedente.' },
+    { incluidas: 100, base: 2800, excedente: 30, nota: 'Plan Crecimiento — pagos con tarjeta incluidos.' },
+    { incluidas: 200, base: 4800, excedente: 28, nota: 'Plan Profesional — pagos con tarjeta incluidos.' },
+    { incluidas: 400, base: 8500, excedente: 25, nota: 'Plan Corporativo — pagos con tarjeta incluidos.' },
+  ];
   function estimar(n) {
     if (n <= 5) return { total: 0, nota: 'Plan gratuito — todos los módulos incluidos, sin costo.' };
     if (n <= 9) return { total: n * 237.5, nota: 'Plan Arranque — precio por unidad.' };
-    if (n <= 20) return { total: 950 + Math.max(0, n - 10) * 32, nota: 'Plan Básico — cuota fija + excedente.' + (n >= 10 ? '' : '') };
-    if (n <= 50) return { total: 1400 + Math.max(0, n - 21) * 30, nota: 'Plan Esencial — pagos con tarjeta disponibles desde 31 unidades.' };
-    if (n <= 100) return { total: 2800 + Math.max(0, n - 51) * 30, nota: 'Plan Crecimiento — pagos con tarjeta incluidos.' };
-    if (n <= 200) return { total: 4800 + Math.max(0, n - 101) * 28, nota: 'Plan Profesional — pagos con tarjeta incluidos.' };
-    if (n <= 400) return { total: 8500 + Math.max(0, n - 201) * 25, nota: 'Plan Corporativo — pagos con tarjeta incluidos.' };
-    return { total: null, nota: 'Más de 400 unidades — cotización a la medida.' };
+    if (n > 400) return { total: null, nota: 'Más de 400 unidades — cotización a la medida.' };
+    var mejor = null;
+    ESCALONES_PAGADOS.forEach(function (t) {
+      var total = t.base + Math.max(0, n - t.incluidas) * t.excedente;
+      if (mejor === null || total < mejor.total) mejor = { total: total, nota: t.nota };
+    });
+    return mejor;
   }
   var slider = document.getElementById('cot-slider');
   var nLabel = document.getElementById('cot-n');
@@ -1226,7 +1242,7 @@
     var r = estimar(n);
     if (r.total === null) { amount.textContent = 'A cotizar'; cotShown = null; }
     else { animateAmount(Math.round(r.total)); }
-    note.textContent = r.nota + (n < 31 ? ' Tarjeta disponible a partir de 31 unidades; antes, pago por transferencia.' : '');
+    note.textContent = r.nota + (n < 41 ? ' Tarjeta disponible a partir de 41 unidades; antes, pago por transferencia.' : '');
   }
   if (slider) { slider.addEventListener('input', updateCot); updateCot(); }
 
