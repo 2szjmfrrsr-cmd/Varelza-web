@@ -1,6 +1,14 @@
 <!doctype html>
 <html lang="es">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CC4HM80B8H"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CC4HM80B8H');
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VARELZA — Administración de condominios</title>
@@ -1071,7 +1079,7 @@
 
 <footer>
   <span class="nav-mark"><span class="var">VAR</span><span class="elza">ELZA</span></span>
-  <p>¿Preguntas? <a class="mail" href="mailto:hola@varelza.app">hola@varelza.app</a> · © 2026 VARELZA</p>
+  <p>¿Preguntas? <a class="mail" href="mailto:hola@varelza.app">hola@varelza.app</a> · © 2026 VARELZA · <a class="mail" href="#" id="open-privacy-modal">Aviso de privacidad</a></p>
 </footer>
 
 <button class="chat-fab" id="chat-fab" aria-label="Abrir chat de contacto">💬</button>
@@ -1122,6 +1130,23 @@
       <button type="submit" class="btn btn-primary" id="agent-submit" style="width:100%; justify-content:center;">Enviar por WhatsApp →</button>
       <p class="agent-modal-foot" id="agent-modal-foot">Se abrirá WhatsApp con tus datos ya escritos — solo confirmas el envío.</p>
     </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="privacy-overlay">
+  <div class="agent-modal" style="max-width:560px;" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title">
+    <div class="agent-modal-head">
+      <button class="agent-modal-close" id="privacy-modal-close" type="button" aria-label="Cerrar">✕</button>
+      <h3 id="privacy-modal-title">Aviso de privacidad — sitio web</h3>
+      <p class="agent-modal-sub">Este aviso aplica solo a este sitio (varelza.app). La app de VARELZA para administrador, residentes, guardia, consejo y proveedores tiene su propio aviso de privacidad dentro de la app.</p>
+    </div>
+    <div class="agent-modal-body" style="padding-top:0;">
+      <p style="font-size:13.5px; color:var(--gray); line-height:1.6; margin-bottom:14px;"><b style="color:var(--ink);">Qué datos recopilamos.</b> Al navegar este sitio usamos Google Analytics para entender cómo se usa la página — qué secciones se visitan, desde qué dispositivo, cuánto tiempo se permanece. Es información agregada, no te identifica personalmente. Si nos escribes por el formulario, WhatsApp o correo, recibimos los datos que tú decidas compartir: nombre, teléfono, correo, y tu condominio o empresa.</p>
+      <p style="font-size:13.5px; color:var(--gray); line-height:1.6; margin-bottom:14px;"><b style="color:var(--ink);">Para qué los usamos.</b> Para responder tu solicitud de información, y para entender qué partes del sitio funcionan mejor y así mejorarlo.</p>
+      <p style="font-size:13.5px; color:var(--gray); line-height:1.6; margin-bottom:14px;"><b style="color:var(--ink);">Con quién se comparten.</b> Con Google, a través de Google Analytics, bajo sus propios términos de privacidad — y, si nos contactas, con el equipo de VARELZA que te atiende. Nunca se venden ni se comparten con terceros para fines de publicidad.</p>
+      <p style="font-size:13.5px; color:var(--gray); line-height:1.6; margin-bottom:0;"><b style="color:var(--ink);">Tus derechos.</b> Puedes solicitar acceso, corrección o eliminación de tus datos escribiendo a <a href="mailto:hola@varelza.app" style="color:var(--green-dark); font-weight:700;">hola@varelza.app</a>.</p>
+      <p class="agent-modal-foot" style="margin-top:16px;">Última actualización: agosto 2026.</p>
+    </div>
   </div>
 </div>
 
@@ -1248,6 +1273,26 @@
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
       btn.firstChild.textContent = open ? 'Ocultar ventajas ' : 'Ver ventajas ';
     });
+  });
+
+  // Aviso de privacidad — modal simple, mismo mecanismo que el del agente.
+  var privacyOverlay = document.getElementById('privacy-overlay');
+  var openPrivacyBtn = document.getElementById('open-privacy-modal');
+  var closePrivacyBtn = document.getElementById('privacy-modal-close');
+  if (openPrivacyBtn && privacyOverlay) {
+    openPrivacyBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      privacyOverlay.classList.add('open');
+    });
+  }
+  if (closePrivacyBtn && privacyOverlay) {
+    closePrivacyBtn.addEventListener('click', function () { privacyOverlay.classList.remove('open'); });
+  }
+  if (privacyOverlay) {
+    privacyOverlay.addEventListener('click', function (e) { if (e.target === privacyOverlay) privacyOverlay.classList.remove('open'); });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && privacyOverlay && privacyOverlay.classList.contains('open')) privacyOverlay.classList.remove('open');
   });
 
   // FAQ — acordeón simple, mismo mecanismo de altura automática que ya se
