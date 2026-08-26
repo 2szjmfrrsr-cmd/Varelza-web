@@ -492,6 +492,34 @@
   .cot-preferencial{ text-align:center; font-size:12.5px; color:#A6A89F; margin-top:22px; }
   .cot-preferencial b{ color:var(--amarillo); }
 
+  /* MIGRACIÓN */
+  .migracion{ background:var(--white); border-top:1px solid var(--border); }
+  .mig-head{ text-align:center; max-width:600px; margin:0 auto 32px; }
+  .mig-head h2{ font-size:clamp(26px,3.4vw,36px); margin-bottom:10px; }
+  .mig-head p{ color:var(--gray); font-size:16px; }
+  .mig-options{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:20px; }
+  .mig-btn{
+    padding:12px 20px; border-radius:999px; border:1.5px solid var(--border); background:var(--fondo);
+    font-family:inherit; font-weight:800; font-size:14px; color:var(--ink); cursor:pointer;
+    transition:border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  }
+  .mig-btn:hover{ border-color:var(--green); }
+  .mig-btn.active{ border-color:var(--green); background:var(--green-soft); color:var(--green-dark); }
+  .mig-answer{
+    max-width:620px; margin:0 auto 44px; background:var(--green-soft); border-radius:20px; padding:22px 26px;
+    text-align:center; min-height:24px;
+  }
+  .mig-answer p{ font-size:15px; color:var(--ink); line-height:1.6; margin:0; }
+  .mig-steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; max-width:820px; margin:0 auto; }
+  @media (max-width:760px){ .mig-steps{ grid-template-columns:1fr; gap:18px; } }
+  .mig-step{ display:flex; gap:14px; align-items:flex-start; }
+  .mig-num{
+    width:32px; height:32px; border-radius:50%; background:var(--ink); color:var(--fondo); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:14px;
+  }
+  .mig-step b{ display:block; font-size:14.5px; margin-bottom:3px; }
+  .mig-step span{ font-size:13px; color:var(--gray); line-height:1.5; }
+
   /* FAQ */
   .faq{ background:var(--white); border-top:1px solid var(--border); }
   .faq-head{ text-align:center; max-width:600px; margin:0 auto 40px; }
@@ -904,6 +932,30 @@
   </div>
 </section>
 
+<section class="migracion" id="migracion">
+  <div class="wrap">
+    <div class="mig-head">
+      <span class="eyebrow reveal">Cambiarte es más fácil de lo que crees</span>
+      <h2 class="reveal" style="transition-delay:0.06s">¿Qué usas hoy para administrar tu condominio?</h2>
+      <p class="reveal" style="transition-delay:0.12s">Elige una opción y te decimos exactamente qué cambiaría al pasarte a VARELZA.</p>
+    </div>
+    <div class="mig-options reveal" style="transition-delay:0.16s">
+      <button class="mig-btn active" type="button" data-key="excel">📊 Excel</button>
+      <button class="mig-btn" type="button" data-key="whatsapp">💬 WhatsApp</button>
+      <button class="mig-btn" type="button" data-key="otro">🖥️ Otro software</button>
+      <button class="mig-btn" type="button" data-key="papel">📝 Libreta o papel</button>
+    </div>
+    <div class="mig-answer reveal" style="transition-delay:0.2s">
+      <p id="mig-answer-text">Tu Excel se queda donde está — no tienes que reconstruirlo. Cargamos la información base (unidades, cuotas, residentes) una sola vez, y desde ahí la cobranza se concilia sola.</p>
+    </div>
+    <div class="mig-steps">
+      <div class="mig-step reveal" style="transition-delay:0.06s"><span class="mig-num">1</span><div><b>Nos cuentas qué usas hoy</b><span>Sin compromiso, por WhatsApp o el formulario de abajo.</span></div></div>
+      <div class="mig-step reveal" style="transition-delay:0.1s"><span class="mig-num">2</span><div><b>Un agente configura tu condominio contigo</b><span>Unidades, cuotas y residentes — no lo haces solo.</span></div></div>
+      <div class="mig-step reveal" style="transition-delay:0.14s"><span class="mig-num">3</span><div><b>Empiezas a operar</b><span>Sin reconstruir años de historial, solo el punto de partida.</span></div></div>
+    </div>
+  </div>
+</section>
+
 <section class="planes">
   <div class="wrap">
     <div class="planes-head">
@@ -944,9 +996,11 @@
         <h4>Esencial</h4>
         <div class="tc-range">10 a 40 unidades</div>
         <ul>
-          <li>Cuota por unidad activa (sube y baja cuando tú decidas) + cuota ligera fija por mantenimiento</li>
           <li>Todos los módulos incluidos (comité + proveedores)</li>
           <li>Cobranza conciliada automáticamente</li>
+          <li>Soporte prioritario — respuesta garantizada, no autoservicio</li>
+          <li>Reportes de cobranza e incidencias listos para tu asamblea</li>
+          <li>Un agente de VARELZA configura tu condominio contigo la primera vez</li>
         </ul>
         <div class="tc-cta-wrap"><button class="btn btn-primary tc-agent-btn" type="button">💬 Solicitar más información a un agente</button></div>
       </div>
@@ -1309,6 +1363,24 @@
   }
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && privacyOverlay && privacyOverlay.classList.contains('open')) privacyOverlay.classList.remove('open');
+  });
+
+  // Migración — botones "¿qué usas hoy?" que cambian la respuesta de abajo.
+  var migAnswers = {
+    excel: 'Tu Excel se queda donde está — no tienes que reconstruirlo. Cargamos la información base (unidades, cuotas, residentes) una sola vez, y desde ahí la cobranza se concilia sola.',
+    whatsapp: 'Los avisos que hoy mandas por WhatsApp llegan igual de rápido, pero con confirmación de lectura — se acaba el "¿ya viste el mensaje?" entre cientos de no leídos.',
+    otro: 'No tienes que esperar a que termine tu contrato actual — te ayudamos a migrar tu información base desde el primer día, en paralelo.',
+    papel: 'Es el cambio que más se va a sentir: pasar de una libreta con "¿pagó o no pagó?" a verlo resuelto en la pantalla, al instante, sin que nadie tenga que preguntar.'
+  };
+  var migBtns = document.querySelectorAll('.mig-btn');
+  var migAnswerText = document.getElementById('mig-answer-text');
+  migBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      migBtns.forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var key = btn.getAttribute('data-key');
+      if (migAnswerText && migAnswers[key]) migAnswerText.textContent = migAnswers[key];
+    });
   });
 
   // FAQ — acordeón simple, mismo mecanismo de altura automática que ya se
