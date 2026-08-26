@@ -1202,7 +1202,7 @@
   ];
   function estimar(n) {
     if (n <= 5) return { total: 0, nota: 'Plan gratuito — todos los módulos incluidos, sin costo.' };
-    if (n <= 9) return { total: n * 237.5, nota: 'Plan Arranque — precio por unidad.' };
+    if (n <= 9) return { total: Math.max(0, n - 5) * 237.5, nota: 'Plan Arranque — las primeras 5 unidades siguen gratis, luego $237.50/u.' };
     if (n > 400) return { total: null, nota: 'Más de 400 unidades — cotización a la medida.' };
     var mejor = null;
     ESCALONES_PAGADOS.forEach(function (t) {
