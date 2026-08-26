@@ -3,139 +3,1326 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VARELZA — Muy pronto</title>
-<meta name="description" content="Todo bajo un mismo techo. El portal de VARELZA está en construcción.">
+<title>VARELZA — Administración de condominios</title>
+<meta name="description" content="Todo bajo un mismo techo: cobranza, avisos, incidencias, asambleas y más, en una sola app para tu condominio.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VARELZA">
+<meta property="og:title" content="VARELZA — Todo bajo un mismo techo">
+<meta property="og:description" content="Cobranza, avisos, incidencias, asambleas y más — con cada rol de tu comunidad conectado en tiempo real.">
+<meta property="og:url" content="https://varelza.app">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VARELZA — Todo bajo un mismo techo">
+<meta name="twitter:description" content="Cobranza, avisos, incidencias, asambleas y más — con cada rol de tu comunidad conectado en tiempo real.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,500&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,500&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
     --green:#E8825C; --green-dark:#C86640; --green-soft:#FBE4D9;
     --orange:#8FA888; --orange-dark:#6B8865; --orange-soft:#EAF0E7;
+    --amarillo:#FFC24B; --amarillo-soft:#FFF3DC; --amarillo-dark:#8A5A00;
+    --critico:#B33; --critico-soft:#FBE7E5;
     --ink:#2E3130; --gray:#84867F; --fondo:#FBFAF7; --border:#ECEAE2;
+    --white:#FFFFFF;
   }
-  *{box-sizing:border-box;}
-  html,body{height:100%;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
   body{
-    margin:0;
-    background: linear-gradient(120deg, var(--green-soft) 0%, var(--orange-soft) 100%);
     font-family:'Nunito',system-ui,sans-serif;
-    color:var(--ink);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-    position:relative;
+    background:var(--fondo); color:var(--ink);
+    line-height:1.5;
+    font-variant-numeric:tabular-nums;
   }
-  .roof{
-    position:absolute;
-    top:50%; left:50%;
-    transform:translate(-50%,-56%);
-    width:min(90vw, 640px);
-    opacity:0.35;
-    pointer-events:none;
+  img,svg{display:block; max-width:100%;}
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+  section{padding:88px 0;}
+  h1,h2,h3{text-wrap:balance; font-weight:800;}
+  .eyebrow{
+    font-size:12px; font-weight:800; letter-spacing:2px; text-transform:uppercase;
+    color:var(--orange-dark); margin-bottom:16px; display:block;
   }
-  .roof path{
-    fill:none;
-    stroke:var(--ink);
-    stroke-width:10;
-    stroke-linecap:round;
-    animation: breathe 6s ease-in-out infinite;
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-weight:800; font-size:15px; padding:15px 30px; border-radius:999px;
+    text-decoration:none; border:none; cursor:pointer; font-family:inherit;
   }
-  .roof path.right{ animation-delay: -3s; }
-  @keyframes breathe{
-    0%,100%{ opacity:0.5; }
-    50%{ opacity:0.9; }
+  .btn-primary{ background:var(--green); color:white; box-shadow:0 10px 26px rgba(232,130,92,0.32); transition:background 0.2s ease, transform 0.12s ease, box-shadow 0.2s ease; }
+  .btn-primary:hover{ background:var(--green-dark); }
+  .btn-ghost{ background:transparent; color:var(--ink); border:1.5px solid var(--border); transition:border-color 0.2s ease, color 0.2s ease, transform 0.12s ease; }
+  .btn-ghost:hover{ border-color:var(--green); color:var(--green-dark); }
+  /* Feedback táctil real — se hunden al presionar, no solo cambian de color */
+  .btn:active{ transform:scale(0.96) translateY(1px); }
+  .btn-primary:active{ box-shadow:0 4px 12px rgba(232,130,92,0.28); }
+
+  /* Cursor personalizado — un punto de marca que crece sobre lo clickeable.
+     Se desactiva solo en touch (no hay cursor real) y con reduce-motion. */
+  html.has-fine-cursor, html.has-fine-cursor a, html.has-fine-cursor button, html.has-fine-cursor input{ cursor:none; }
+  .cursor-dot{
+    position:fixed; top:0; left:0; width:9px; height:9px; border-radius:50%;
+    background:var(--green); pointer-events:none; z-index:999; mix-blend-mode:normal;
+    transform:translate(-50%,-50%); transition:width 0.18s ease, height 0.18s ease, background 0.18s ease, opacity 0.2s ease;
+    opacity:0;
   }
-  @media (prefers-reduced-motion: reduce){
-    .roof path{ animation:none; }
+  .cursor-dot.ready{ opacity:1; }
+  .cursor-dot.hover{ width:34px; height:34px; background:rgba(232,130,92,0.22); border:1.5px solid var(--green); }
+
+  /* Textura de grano — sutil, sobre superficies con degradado, para que se
+     sienta con textura en vez de un color plano tipo "diseño genérico de IA". */
+  .grain{ position:relative; }
+  .grain::after{
+    content:""; position:absolute; inset:0; pointer-events:none; opacity:0.05; z-index:1;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  .card{
-    position:relative;
-    text-align:center;
-    padding:0 24px;
-    max-width:520px;
+  /* Scrollbar de marca */
+  ::-webkit-scrollbar{ width:11px; }
+  ::-webkit-scrollbar-track{ background:var(--fondo); }
+  ::-webkit-scrollbar-thumb{ background:var(--border); border-radius:999px; border:3px solid var(--fondo); }
+  ::-webkit-scrollbar-thumb:hover{ background:var(--green); }
+  html{ scrollbar-color:var(--border) var(--fondo); }
+
+  @media (prefers-reduced-motion: reduce), (hover:none){
+    .cursor-dot{ display:none; }
+    html.has-fine-cursor{ cursor:auto; }
+    html.has-fine-cursor a, html.has-fine-cursor button, html.has-fine-cursor input{ cursor:pointer; }
   }
-  .eyebrow{
-    font-size:12px;
-    font-weight:800;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    color:var(--orange-dark);
-    margin:0 0 22px;
+
+  /* Revelado al hacer scroll — mecanismo único para TODO el movimiento de
+     entrada del sitio, incluido el hero. Antes el hero usaba su propia
+     animación CSS pura con opacity:0 de base; si el navegador tardaba en
+     pintar o la sección cargaba fuera de foco, se quedaba invisible para
+     siempre. Ahora todo pasa por el mismo observer con JS, con opacity:1
+     como respaldo si JS no corre (ver <noscript> abajo). */
+  .reveal{ opacity:0; transform:translateY(26px); transition:opacity 0.7s cubic-bezier(.2,.7,.3,1), transform 0.7s cubic-bezier(.2,.7,.3,1); }
+  .reveal.visible{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
   }
-  .wordmark{
-    font-family:'Fraunces',serif;
-    font-size:clamp(42px, 9vw, 68px);
-    line-height:1;
-    margin:0;
-    letter-spacing:-1px;
+
+  /* NAV */
+  header{
+    position:sticky; top:0; z-index:30;
+    background:rgba(251,250,247,0.88); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
   }
-  .wordmark .var{
-    font-weight:600;
-    color:var(--ink);
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:1120px; margin:0 auto; }
+  .nav-mark{ font-family:'Fraunces',serif; font-size:22px; letter-spacing:-0.5px; }
+  .nav-mark .var{ font-weight:600; color:var(--ink); }
+  .nav-mark .elza{ font-weight:500; font-style:italic; color:var(--green); }
+  nav .btn{ padding:10px 22px; font-size:13.5px; }
+
+  /* HERO */
+  .hero{ position:relative; overflow:hidden; padding:90px 0 64px; }
+  .hero-bg{ position:absolute; inset:0; z-index:-1; background:linear-gradient(120deg, var(--green-soft) 0%, var(--fondo) 55%); }
+  .hero-glow{
+    position:absolute; z-index:-1; width:520px; height:520px; border-radius:50%; pointer-events:none;
+    background:radial-gradient(circle, rgba(232,130,92,0.16), transparent 70%);
+    left:var(--gx, 50%); top:var(--gy, 30%); transform:translate(-50%,-50%);
+    transition:left 0.5s cubic-bezier(.2,.7,.3,1), top 0.5s cubic-bezier(.2,.7,.3,1);
   }
-  .wordmark .elza{
-    font-weight:500;
-    font-style:italic;
-    color:var(--green);
+  @media (prefers-reduced-motion: reduce){ .hero-glow{ display:none; } }
+  .hero-roof{ position:absolute; top:-40px; right:-120px; width:560px; z-index:-1; }
+  .hero-roof path{ fill:none; stroke:var(--ink); stroke-width:9; stroke-linecap:round; animation:breathe 6s ease-in-out infinite; }
+  .hero-roof path.right{ animation-delay:-3s; }
+  @keyframes breathe{ 0%,100%{ opacity:0.22; } 50%{ opacity:0.42; } }
+  .hero-content{ max-width:640px; }
+  .hero h1{ font-family:'Fraunces',serif; font-size:clamp(34px,5vw,52px); line-height:1.08; margin-bottom:18px; }
+  .hero h1 em{ font-style:italic; font-weight:500; color:var(--green); }
+  .hero p.lead{ font-size:18px; color:var(--gray); max-width:520px; margin-bottom:28px; line-height:1.65; }
+  .hero-ctas{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:18px; }
+  .hero-note{ font-size:13px; color:var(--gray); font-weight:700; }
+  .store-badges{ display:flex; gap:10px; margin-top:22px; flex-wrap:wrap; }
+  .store-badge{
+    position:relative; display:inline-flex; align-items:center; gap:9px; background:var(--ink);
+    border-radius:11px; padding:8px 16px 8px 13px; color:white;
   }
-  .tagline{
-    font-family:'Fraunces',serif;
-    font-style:italic;
-    font-weight:500;
-    color:var(--green-dark);
-    font-size:clamp(16px, 3vw, 20px);
-    margin:14px 0 34px;
+  .store-badge svg{ width:20px; height:20px; flex-shrink:0; }
+  .store-badge .sb-text{ line-height:1.15; }
+  .store-badge .sb-small{ font-size:9px; opacity:0.75; display:block; }
+  .store-badge .sb-big{ font-size:14px; font-weight:800; display:block; }
+  @media (prefers-reduced-motion: reduce){ .hero-roof path{ animation:none; opacity:0.32; } }
+
+  /* PROBLEMA — rediseñado: split-screen "tu problema / nuestra solución",
+     con visuales simuladas (no solo texto), justo después del hero para
+     capturar de inmediato, per benchmarking de landing pages SaaS 2026. */
+  .problema{ background:var(--ink); color:var(--fondo); overflow:hidden; }
+  .problema-head{ text-align:center; max-width:640px; margin:0 auto 52px; }
+  .problema-head .eyebrow{ color:var(--amarillo); }
+  .problema-head h2{ color:var(--fondo); font-size:clamp(28px,3.8vw,42px); margin-bottom:14px; }
+  .problema-head p{ color:#C7C9C4; font-size:17px; }
+  .split{ display:grid; grid-template-columns:1fr 1fr; gap:0; border-radius:28px; overflow:hidden; box-shadow:0 30px 60px rgba(0,0,0,0.3); }
+  @media (max-width:760px){ .split{ grid-template-columns:1fr; } }
+  .split-half{ padding:36px 32px; }
+  .split-antes{ background:#26221F; }
+  .split-despues{ background:linear-gradient(160deg, var(--green-soft), var(--orange-soft)); color:var(--ink); }
+  .split-tag{ font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:18px; display:inline-block; }
+  .split-antes .split-tag{ color:#8A8A85; }
+  .split-despues .split-tag{ color:var(--green-dark); }
+  .split-antes .split-visual{ display:flex; flex-direction:column; gap:10px; margin-bottom:22px; }
+  .fake-chip{ background:#332F2B; border:1px solid #454039; border-radius:12px; padding:10px 14px; font-size:12.5px; color:#B8B6B0; display:flex; align-items:center; gap:8px; }
+  .fake-chip .badge-x{ background:#4A322F; color:#E89B96; font-size:9px; font-weight:800; padding:2px 6px; border-radius:5px; }
+  .split-despues .split-visual{ margin-bottom:22px; }
+  .mini-app{
+    background:var(--white); border-radius:16px; padding:12px 14px; box-shadow:0 10px 22px rgba(46,49,48,0.1);
   }
-  .msg{
-    font-size:15px;
-    line-height:1.6;
-    color:var(--ink);
-    margin:0 0 30px;
+  .mini-app .mrow2{ display:flex; align-items:center; gap:8px; padding:7px 0; border-bottom:1px solid var(--border); font-size:11px; font-weight:700; }
+  .mini-app .mrow2:last-child{ border-bottom:none; }
+  .mini-app .mrow2 .ok-dot{ width:16px; height:16px; border-radius:50%; background:var(--green-soft); color:var(--green-dark); font-size:9px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .split h3{ font-size:20px; margin-bottom:14px; }
+  .split-antes h3{ color:var(--fondo); }
+  .split ul{ list-style:none; display:flex; flex-direction:column; gap:11px; }
+  .split li{ font-size:14px; line-height:1.5; display:flex; gap:9px; }
+  .split-antes li{ color:#B8B6B0; }
+  .split-antes li::before{ content:"✕"; color:#8A5A56; font-weight:800; flex-shrink:0; }
+  .split-despues li::before{ content:"✓"; color:var(--green-dark); font-weight:800; flex-shrink:0; }
+
+  /* PRODUCT TOUR */
+  .tour{ background:var(--white); border-bottom:1px solid var(--border); }
+  .tour-head{ text-align:center; margin-bottom:16px; }
+  .tour-head h2{ font-size:clamp(26px,3.4vw,36px); margin-bottom:10px; }
+  .tour-head p{ color:var(--gray); max-width:560px; margin:0 auto; font-size:16px; }
+  .tour-connect{
+    text-align:center; font-size:14px; font-weight:700; color:var(--green-dark);
+    background:var(--green-soft); display:inline-block; padding:8px 18px; border-radius:999px; margin:14px auto 44px;
   }
-  .contact{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    font-weight:700;
-    font-size:14px;
-    color:var(--fondo);
-    background:var(--green);
-    padding:13px 26px;
-    border-radius:999px;
-    text-decoration:none;
-    box-shadow: 0 8px 20px rgba(232,130,92,0.35);
+  .tour-connect-wrap{ text-align:center; }
+  .tour-grid{ display:flex; gap:56px; justify-content:center; flex-wrap:wrap; align-items:center; padding-top:10px; }
+  .tour-item{ width:270px; position:relative; }
+  .tour-item:first-child .phone{ transform:rotate(-4deg); }
+  .tour-item:last-child .phone{ transform:rotate(3deg); }
+  .tour-item:hover .phone{ transform:rotate(0deg) translateY(-6px); }
+  .tour-item figcaption{ text-align:center; font-size:13.5px; color:var(--gray); margin-top:24px; line-height:1.5; }
+  .tour-item figcaption b{ display:block; color:var(--ink); font-size:15px; margin-bottom:2px; }
+  .float-badge{
+    position:absolute; z-index:5; background:var(--ink); color:var(--fondo); font-size:11px; font-weight:800;
+    padding:8px 14px; border-radius:999px; box-shadow:0 10px 20px rgba(0,0,0,0.18); white-space:nowrap;
   }
-  .contact:hover{ background:var(--green-dark); }
-  footer{
-    position:absolute;
-    bottom:26px;
-    left:0; right:0;
-    text-align:center;
-    font-size:12px;
-    color:var(--gray);
-    font-weight:600;
+  .tour-item:first-child .float-badge{ top:8px; right:-30px; }
+  .tour-item:last-child .float-badge{ bottom:60px; left:-26px; background:var(--green); }
+  .phone{
+    width:270px; background:var(--fondo); border-radius:34px; border:8px solid var(--ink);
+    overflow:hidden; box-shadow:0 24px 48px rgba(46,49,48,0.2); transition:transform 0.4s cubic-bezier(.2,.8,.3,1);
   }
+  .phone .pstatus{ display:flex; justify-content:space-between; padding:8px 16px 0; font-size:10px; font-weight:800; color:var(--ink); }
+  .phone .pcontent{ padding:12px 14px 14px; }
+  .phone .hola{ font-size:15px; font-weight:900; margin-bottom:1px; }
+  .phone .fecha{ font-size:10px; color:var(--gray); margin-bottom:10px; }
+  .phone .label{ font-size:10px; font-weight:800; color:var(--ink); margin-bottom:6px; }
+  .phone .hero-card{ background:var(--green-soft); border-radius:14px; padding:10px 12px; margin-bottom:8px; display:flex; align-items:center; gap:10px; }
+  .phone .hero-card.crit{ background:var(--critico-soft); }
+  .phone .ring{ width:34px; height:34px; border-radius:50%; background:conic-gradient(var(--critico) 0% 50%, rgba(0,0,0,0.1) 50% 100%); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .phone .ring b{ width:24px; height:24px; border-radius:50%; background:var(--critico-soft); display:flex; align-items:center; justify-content:center; font-size:7.5px; color:var(--critico); font-weight:900; }
+  .phone .hero-text b{ display:block; font-size:11px; color:var(--critico); font-weight:800; }
+  .phone .hero-text span{ font-size:8.5px; color:var(--gray); }
+  .phone .kgrid{ display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:10px; }
+  .phone .kcard{ background:var(--white); border:1px solid var(--border); border-radius:10px; padding:8px; position:relative; overflow:hidden; }
+  .phone .kcard::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:3px; }
+  .phone .kcard.ok::before{ background:var(--orange-dark); }
+  .phone .kcard.warn::before{ background:var(--amarillo); }
+  .phone .kcard .kv{ font-size:15px; font-weight:900; }
+  .phone .kcard .kl{ font-size:7.5px; color:var(--gray); font-weight:700; }
+  .phone .act{ background:var(--white); border:1px solid var(--border); border-radius:12px; padding:2px 10px; }
+  .phone .act-row{ display:flex; gap:6px; padding:7px 0; border-bottom:1px solid var(--border); align-items:flex-start; }
+  .phone .act-row:last-child{ border-bottom:none; }
+  .phone .act-row .ic{ font-size:9px; margin-top:1px; }
+  .phone .act-row b{ display:block; font-size:8.5px; font-weight:800; }
+  .phone .act-row span{ font-size:7.5px; color:var(--gray); }
+  .phone .search{ background:var(--white); border:1px solid var(--border); border-radius:999px; padding:7px 10px; font-size:9px; color:var(--gray); margin-bottom:10px; }
+  .phone .favs{ display:flex; gap:8px; margin-bottom:10px; }
+  .phone .fav{ text-align:center; flex:1; }
+  .phone .fav .sq{ width:34px; height:34px; border-radius:10px; background:var(--green-soft); margin:0 auto 3px; display:flex; align-items:center; justify-content:center; font-size:15px; }
+  .phone .fav span{ font-size:7px; font-weight:700; }
+  .phone .pills{ display:flex; gap:4px; margin-bottom:10px; flex-wrap:wrap; }
+  .phone .pill{ font-size:7px; font-weight:700; padding:4px 8px; border-radius:999px; border:1px solid var(--border); color:var(--gray); }
+  .phone .pill.on{ background:var(--ink); color:var(--fondo); border-color:var(--ink); }
+  .phone .mrow{ display:flex; align-items:center; gap:6px; padding:6px 0; border-bottom:1px solid var(--border); font-size:9px; font-weight:700; }
+  .phone .mrow .ic2{ width:18px; height:18px; border-radius:5px; background:var(--border); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:9px; }
+  .phone .mrow span{ flex:1; }
+  .phone .mrow .chev{ color:var(--gray); }
+  .phone .tabbar{ display:flex; justify-content:space-around; padding:8px 0 4px; border-top:1px solid var(--border); margin-top:8px; }
+  .phone .tab{ font-size:7px; font-weight:800; color:var(--gray); text-align:center; }
+  .phone .tab.on{ color:var(--green-dark); }
+  .phone .tab .dot{ width:14px; height:14px; border-radius:4px; background:var(--border); margin:0 auto 2px; }
+  .phone .tab.on .dot{ background:var(--green); }
+
+  /* FEATURES — bento con bloques destacados reales + grid secundario */
+  .features h2{ font-size:clamp(26px,3.4vw,36px); text-align:center; margin-bottom:10px; }
+  .features > .wrap > p.sub{ text-align:center; color:var(--gray); max-width:560px; margin:0 auto 56px; font-size:16px; }
+  .feat-hero-row{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px; }
+  @media (max-width:820px){ .feat-hero-row{ grid-template-columns:1fr; } }
+  .feat-hero{
+    background:var(--white); border:1.5px solid var(--border); border-radius:24px; padding:30px;
+    display:flex; flex-direction:column; gap:18px;
+  }
+  .feat-hero .fh-top{ display:flex; align-items:center; gap:12px; }
+  .feat-hero .fh-icon{ width:44px; height:44px; border-radius:13px; display:flex; align-items:center; justify-content:center; font-size:21px; flex-shrink:0; }
+  .feat-hero.cobranza .fh-icon{ background:var(--green-soft); }
+  .feat-hero.avisos .fh-icon{ background:var(--orange-soft); }
+  .feat-hero h4{ font-size:18px; font-weight:800; }
+  .feat-hero p{ font-size:14px; color:var(--gray); line-height:1.55; }
+  .fh-visual{ background:var(--fondo); border-radius:16px; padding:16px; border:1px solid var(--border); }
+  .fh-ring-row{ display:flex; align-items:center; gap:14px; }
+  .fh-ring{ width:52px; height:52px; border-radius:50%; background:conic-gradient(var(--critico) 0% 50%, rgba(0,0,0,0.08) 50% 100%); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .fh-ring b{ width:38px; height:38px; border-radius:50%; background:var(--critico-soft); display:flex; align-items:center; justify-content:center; font-size:11px; color:var(--critico); font-weight:900; }
+  .fh-ring-row strong{ display:block; font-size:13px; color:var(--critico); font-weight:800; }
+  .fh-ring-row span{ font-size:11.5px; color:var(--gray); }
+  .fh-avisos-row{ display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:12px; font-weight:700; }
+  .fh-avisos-row:last-child{ border-bottom:none; }
+  .fh-avisos-row .read-count{ font-size:10.5px; color:var(--green-dark); font-weight:800; background:var(--green-soft); padding:2px 8px; border-radius:999px; }
+
+  .feat-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  @media (max-width:860px){ .feat-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .feat-grid{ grid-template-columns:1fr; } }
+  .feat-card{
+    background:var(--white); border:1.5px solid var(--border); border-radius:20px; padding:22px;
+    transition:transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  .feat-card:hover{ transform:translateY(-5px); border-color:var(--green); box-shadow:0 14px 28px rgba(46,49,48,0.08); }
+  .feat-icon{
+    width:44px; height:44px; border-radius:13px; display:flex; align-items:center; justify-content:center;
+    font-size:21px; margin-bottom:14px; box-shadow:inset 0 0 0 1.5px rgba(0,0,0,0.04);
+    transition:transform 0.25s cubic-bezier(.2,.8,.3,1);
+  }
+  .feat-card:hover .feat-icon{ transform:scale(1.12) rotate(-4deg); }
+  .feat-icon.c-servicio{ background:var(--orange-soft); }
+  .feat-icon.c-finanzas{ background:var(--green-soft); }
+  .feat-icon.c-comunidad{ background:var(--amarillo-soft); }
+  .feat-card .cat-tag{ font-size:9.5px; font-weight:800; letter-spacing:0.4px; text-transform:uppercase; margin-bottom:6px; display:block; }
+  .feat-card .c-servicio-tag{ color:var(--orange-dark); }
+  .feat-card .c-finanzas-tag{ color:var(--green-dark); }
+  .feat-card .c-comunidad-tag{ color:var(--amarillo-dark); }
+  .feat-card h4{ font-size:15.5px; font-weight:800; margin-bottom:6px; }
+  .feat-card p{ font-size:13.5px; color:var(--gray); line-height:1.5; }
+
+  /* Check-list de ventajas — se despliega dentro de cada tarjeta de función
+     (grid chico y los 2 bloques grandes) al hacer clic en "Ver ventajas".
+     Truco de grid-template-rows 0fr→1fr para animar una altura que no
+     conocemos de antemano, sin saltos ni recorte brusco. */
+  .feat-toggle{
+    margin-top:14px; display:inline-flex; align-items:center; gap:6px; background:none; border:none;
+    font-family:inherit; font-size:12.5px; font-weight:800; color:var(--green-dark); cursor:pointer; padding:0;
+  }
+  .feat-toggle:hover{ color:var(--green); }
+  .feat-toggle .ft-chev{ display:inline-block; transition:transform 0.3s cubic-bezier(.2,.8,.3,1); font-size:11px; }
+  .feat-card.open .feat-toggle .ft-chev, .feat-hero.open .feat-toggle .ft-chev{ transform:rotate(180deg); }
+  .feat-detail-wrap{ display:grid; grid-template-rows:0fr; transition:grid-template-rows 0.4s cubic-bezier(.2,.8,.3,1); }
+  .feat-card.open .feat-detail-wrap, .feat-hero.open .feat-detail-wrap{ grid-template-rows:1fr; }
+  .feat-detail-inner{ overflow:hidden; }
+  .feat-checklist{
+    list-style:none; display:flex; flex-direction:column; gap:9px;
+    margin-top:14px; padding-top:14px; border-top:1px dashed var(--border);
+  }
+  .feat-checklist li{ font-size:12.5px; line-height:1.5; color:var(--ink); display:flex; gap:7px; }
+  .feat-checklist li::before{ content:"✓"; color:var(--green-dark); font-weight:800; flex-shrink:0; }
+  .feat-checklist li b{ font-weight:800; }
+  @media (prefers-reduced-motion: reduce){
+    .feat-detail-wrap, .feat-toggle .ft-chev{ transition:none; }
+  }
+
+  /* ROLES — mapa de conexión animado, estilo rutas aéreas */
+  .roles{ background:var(--ink); color:var(--fondo); }
+  .roles .eyebrow{ color:var(--amarillo); }
+  .roles-head{ text-align:center; max-width:620px; margin:0 auto 20px; }
+  .roles h2{ color:var(--fondo); font-size:clamp(26px,3.4vw,38px); margin-bottom:14px; }
+  .roles-head p{ color:#C7C9C4; font-size:16px; }
+  .map-wrap{ max-width:640px; margin:0 auto; position:relative; }
+  .map-caption{
+    text-align:center; margin-top:22px; font-size:14px; color:#C7C9C4; min-height:22px;
+  }
+  .map-caption b{ color:var(--amarillo); font-weight:800; }
+  .route-dot{ filter:drop-shadow(0 0 4px currentColor); transition:opacity 0.3s ease; }
+  .route-path{ transition:stroke 0.3s ease, stroke-width 0.3s ease, opacity 0.3s ease; }
+  #role-map.hovering .route-path:not(.active){ opacity:0.35; }
+  #role-map.hovering .route-dot:not(.active){ opacity:0.25; }
+  .role-node{ cursor:pointer; transition:transform 0.25s cubic-bezier(.2,.8,.3,1); transform-box:fill-box; transform-origin:center; }
+  .role-node:hover, .role-node.active{ transform:scale(1.14); }
+  @media (prefers-reduced-motion: reduce){
+    .route-dot{ display:none; }
+  }
+  .node-label{ font-size:11px; font-weight:800; fill:var(--fondo); }
+  .node-sub{ font-size:8.5px; fill:#9C9E97; }
+  #map-caption b{ color:var(--amarillo); }
+
+  /* PLANES */
+  .planes{ background:var(--white); border-top:1px solid var(--border); }
+  .planes-head{ text-align:center; margin-bottom:20px; }
+  .planes-head h2{ font-size:clamp(26px,3.4vw,36px); margin-bottom:12px; }
+  .planes-head p{ color:var(--gray); max-width:560px; margin:0 auto; font-size:16px; }
+  .diff-banner{
+    position:relative; overflow:hidden;
+    display:flex; align-items:center; gap:14px; background:var(--amarillo-soft); border-radius:18px;
+    padding:16px 22px; margin:28px 0 40px; flex-wrap:wrap; justify-content:center; text-align:center;
+  }
+  .diff-banner .diff-watermark{
+    position:absolute; left:-14px; top:50%; transform:translateY(-50%); font-size:130px; line-height:1;
+    opacity:0.16; pointer-events:none; filter:grayscale(0.4);
+  }
+  .diff-banner .diff-text{ position:relative; z-index:1; }
+  .diff-banner b{ color:var(--amarillo-dark); font-size:14px; }
+  .diff-banner span{ font-size:13px; color:var(--ink); opacity:0.8; }
+  @media (max-width:560px){ .diff-banner .diff-watermark{ font-size:90px; left:-10px; } }
+  .tiers-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:16px; }
+  @media (max-width:900px){ .tiers-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .tiers-grid{ grid-template-columns:1fr; } }
+  .tier-card{
+    background:var(--fondo); border:1.5px solid var(--border); border-radius:20px; padding:22px; position:relative;
+    cursor:pointer; transition:transform 0.3s cubic-bezier(.2,.8,.3,1), box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  }
+  .tier-card:hover{ transform:translateY(-3px); border-color:var(--green); }
+  .tier-card:focus-visible{ outline:2px solid var(--green); outline-offset:3px; }
+  .tier-card.destacado{ border-color:var(--green); background:var(--green-soft); }
+  .tier-card .tc-badge{ position:absolute; top:-11px; right:16px; background:var(--green); color:white; font-size:10px; font-weight:800; padding:4px 10px; border-radius:999px; }
+  .tier-card h4{ font-size:16px; font-weight:800; margin-bottom:3px; }
+  .tier-card .tc-range{ font-size:12px; color:var(--gray); font-weight:700; margin-bottom:14px; }
+  .tier-card ul{ list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .tier-card li{ font-size:12.5px; line-height:1.4; display:flex; gap:6px; }
+  .tier-card li::before{ content:"✓"; color:var(--green-dark); font-weight:800; flex-shrink:0; }
+  /* Plan seleccionado — resalta con borde, fondo, sombra y un chip que entra
+     con una pequeña animación. Solo un plan puede estar activo a la vez. */
+  .tier-card.selected{
+    border-color:var(--green); background:var(--green-soft);
+    box-shadow:0 18px 34px rgba(232,130,92,0.24); transform:translateY(-4px) scale(1.015);
+    animation:tier-pulse 0.8s ease-out;
+  }
+  .tier-card.selected::after{
+    content:"✓ Plan seleccionado"; position:absolute; top:-11px; left:16px; background:var(--ink); color:var(--fondo);
+    font-size:10px; font-weight:800; padding:4px 10px; border-radius:999px; animation:chip-in 0.3s cubic-bezier(.2,.8,.3,1);
+  }
+  @keyframes tier-pulse{ 0%{ box-shadow:0 0 0 0 rgba(232,130,92,0.45); } 70%{ box-shadow:0 0 0 16px rgba(232,130,92,0); } 100%{ box-shadow:0 18px 34px rgba(232,130,92,0.24); } }
+  @keyframes chip-in{ from{ opacity:0; transform:translateY(-4px) scale(0.9); } to{ opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce){
+    .tier-card{ transition:none; }
+    .tier-card.selected{ animation:none; }
+    .tier-card.selected::after{ animation:none; }
+  }
+  .planes-cta{ text-align:center; margin-top:8px; }
+
+  /* CTA "Solicitar más información a un agente" + modal */
+  .agent-cta{ text-align:center; margin:10px 0 44px; }
+  .agent-cta-note{ font-size:12.5px; color:var(--gray); margin-top:10px; }
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(46,49,48,0.55); backdrop-filter:blur(3px);
+    z-index:60; display:none; align-items:center; justify-content:center; padding:20px;
+  }
+  .modal-overlay.open{ display:flex; }
+  .agent-modal{
+    background:var(--white); border-radius:24px; max-width:440px; width:100%; max-height:88vh; overflow-y:auto;
+    box-shadow:0 34px 68px rgba(0,0,0,0.32); animation:modal-in 0.3s cubic-bezier(.2,.8,.3,1); position:relative;
+  }
+  @keyframes modal-in{ from{ opacity:0; transform:translateY(18px) scale(0.97); } to{ opacity:1; transform:none; } }
+  .agent-modal-head{ padding:26px 26px 4px; }
+  .agent-modal-close{
+    position:absolute; top:16px; right:16px; width:30px; height:30px; border-radius:50%; border:none;
+    background:var(--fondo); color:var(--gray); font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .agent-modal-close:hover{ background:var(--border); color:var(--ink); }
+  .agent-modal-head h3{ font-size:19px; margin-bottom:6px; padding-right:24px; }
+  .agent-modal-sub{ font-size:13px; color:var(--gray); line-height:1.5; margin-bottom:14px; }
+  .modal-plan-chip{
+    display:inline-flex; align-items:center; gap:7px; background:var(--green-soft); color:var(--green-dark);
+    font-weight:800; font-size:12px; padding:7px 14px; border-radius:999px; margin-bottom:16px;
+  }
+  .agent-modal-body{ padding:4px 26px 26px; }
+  .mode-row{ display:flex; gap:8px; margin-bottom:18px; }
+  .mode-btn{
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; padding:12px 8px; border-radius:14px;
+    border:1.5px solid var(--border); background:var(--fondo); cursor:pointer; font-family:inherit;
+    font-weight:800; font-size:12px; color:var(--gray); transition:border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  }
+  .mode-btn .mi{ font-size:18px; }
+  .mode-btn.active{ border-color:var(--green); background:var(--green-soft); color:var(--green-dark); }
+  .field-group{ margin-bottom:14px; }
+  .field-group label{ display:block; font-size:12px; font-weight:800; margin-bottom:6px; color:var(--ink); }
+  .field-group .optional{ font-weight:600; color:var(--gray); text-transform:none; letter-spacing:0; }
+  .field-group input{
+    width:100%; padding:12px 14px; border-radius:12px; border:1.5px solid var(--border);
+    font-family:inherit; font-size:14px; background:var(--fondo); color:var(--ink); transition:border-color 0.2s ease, background 0.2s ease;
+  }
+  .field-group input:focus{ outline:none; border-color:var(--green); background:var(--white); }
+  .phone-row{ display:flex; gap:8px; }
+  .phone-row input{ flex:1; min-width:0; }
+  .lada-select{
+    flex:0 0 104px; padding:12px 6px; border-radius:12px; border:1.5px solid var(--border);
+    font-family:inherit; font-size:13px; background:var(--fondo); color:var(--ink); cursor:pointer;
+    transition:border-color 0.2s ease, background 0.2s ease;
+  }
+  .lada-select:focus{ outline:none; border-color:var(--green); background:var(--white); }
+  .agent-modal-foot{ font-size:11.5px; color:var(--gray); text-align:center; margin-top:12px; line-height:1.5; }
+
+  /* Botón "Solicitar más información" por tarjeta — vive dentro de cada
+     plan y solo se revela cuando ESE plan queda seleccionado, para que la
+     acción esté siempre pegada al plan del que se está pidiendo info. */
+  .tc-cta-wrap{
+    max-height:0; opacity:0; overflow:hidden;
+    transition:max-height 0.35s cubic-bezier(.2,.8,.3,1), opacity 0.25s ease;
+  }
+  .tier-card.selected .tc-cta-wrap{ max-height:70px; opacity:1; }
+  .tc-agent-btn{ width:100%; justify-content:center; margin-top:14px; font-size:12.5px; padding:11px 16px; }
+  @media (prefers-reduced-motion: reduce){ .tc-cta-wrap{ transition:none; } }
+
+  /* COTIZADOR */
+  .cotizador{ background:var(--ink); border-radius:28px; padding:44px 40px; color:var(--fondo); margin-top:52px; overflow:hidden; }
+  .cot-head{ text-align:center; max-width:520px; margin:0 auto 30px; }
+  .cot-head h3{ font-size:22px; margin-bottom:8px; }
+  .cot-head p{ font-size:14px; color:#C7C9C4; }
+  .cot-body{ display:flex; gap:36px; align-items:center; flex-wrap:wrap; justify-content:center; }
+  .cot-input-wrap{ flex:1; min-width:260px; }
+  .cot-label{ display:flex; justify-content:space-between; font-size:13px; font-weight:700; margin-bottom:10px; }
+  .cot-label b{ color:var(--amarillo); font-size:18px; }
+  input[type="range"]{ width:100%; accent-color:var(--green); height:6px; }
+  .cot-result{
+    background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); border-radius:20px;
+    padding:24px 28px; text-align:center; min-width:240px;
+  }
+  .cot-result .cr-label{ font-size:11px; text-transform:uppercase; letter-spacing:1px; color:#A6A89F; font-weight:800; margin-bottom:8px; }
+  .cot-result .cr-amount{ font-size:34px; font-weight:900; color:var(--fondo); font-variant-numeric:tabular-nums; }
+  .cot-result .cr-amount span{ font-size:14px; color:#A6A89F; font-weight:700; }
+  .cot-result .cr-note{ font-size:11.5px; color:#A6A89F; margin-top:8px; line-height:1.5; }
+  .cot-result .btn{ margin-top:16px; width:100%; justify-content:center; }
+  .cot-preferencial{ text-align:center; font-size:12.5px; color:#A6A89F; margin-top:22px; }
+  .cot-preferencial b{ color:var(--amarillo); }
+
+  /* CHAT / WHATSAPP */
+  .chat-fab{
+    position:fixed; bottom:24px; right:24px; z-index:40; width:58px; height:58px; border-radius:50%;
+    background:#25D366; color:white; display:flex; align-items:center; justify-content:center; font-size:26px;
+    box-shadow:0 12px 26px rgba(37,211,102,0.4); cursor:pointer; border:none; transition:transform 0.2s ease;
+  }
+  .chat-fab:hover{ transform:scale(1.07); }
+  .chat-panel{
+    position:fixed; bottom:94px; right:24px; z-index:41; width:300px; background:var(--white);
+    border-radius:20px; box-shadow:0 24px 48px rgba(0,0,0,0.2); overflow:hidden; display:none;
+  }
+  .chat-panel.open{ display:block; }
+  .chat-panel-head{ background:var(--green); color:white; padding:16px 18px; }
+  .chat-panel-head b{ display:block; font-size:14.5px; }
+  .chat-panel-head span{ font-size:11.5px; opacity:0.9; }
+  .chat-panel-body{ padding:16px 18px; }
+  .chat-panel-body p{ font-size:13px; color:var(--gray); margin-bottom:14px; line-height:1.5; }
+  .chat-option{
+    display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:12px; border:1.5px solid var(--border);
+    text-decoration:none; color:var(--ink); font-size:13px; font-weight:700; margin-bottom:8px;
+  }
+  .chat-option:hover{ border-color:var(--green); }
+  .chat-option .co-ic{ font-size:17px; }
+
+  /* CTA FINAL */
+  .cta-final{ background:linear-gradient(120deg, var(--green-soft), var(--orange-soft)); border-radius:32px; margin:0 24px; padding:64px 40px; text-align:center; overflow:hidden; }
+  .cta-final h2{ font-family:'Fraunces',serif; font-style:italic; font-weight:500; font-size:clamp(24px,3.2vw,32px); color:var(--green-dark); margin-bottom:14px; }
+  .cta-final p{ color:var(--ink); opacity:0.75; max-width:480px; margin:0 auto 30px; font-size:15.5px; }
+
+  /* MARQUEE DE BANDERAS */
+  .marquee-section{ padding:52px 0; overflow:hidden; }
+  .marquee-label{ text-align:center; font-size:13px; font-weight:800; color:var(--gray); text-transform:uppercase; letter-spacing:1px; margin-bottom:22px; }
+  .marquee-track{ display:flex; width:max-content; animation:scroll-left 26s linear infinite; }
+  .marquee-item{ display:flex; align-items:center; gap:10px; padding:0 18px; font-size:15px; font-weight:700; color:var(--gray); white-space:nowrap; }
+  .marquee-item .flag{ font-size:24px; }
+  @keyframes scroll-left{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce){ .marquee-track{ animation:none; } }
+
+  footer{ padding:56px 0 40px; text-align:center; }
+  footer .nav-mark{ justify-content:center; margin-bottom:14px; display:flex; }
+  footer p{ font-size:13px; color:var(--gray); }
+  footer a.mail{ color:var(--green-dark); font-weight:700; text-decoration:none; }
 </style>
 </head>
 <body>
 
-  <svg class="roof" viewBox="0 0 400 300" aria-hidden="true">
-    <path class="left" d="M 200 75 L 20 295" />
-    <path class="right" d="M 200 75 L 380 295" />
+<div class="cursor-dot" id="cursor-dot"></div>
+
+<header>
+  <nav>
+    <span class="nav-mark"><span class="var">VAR</span><span class="elza">ELZA</span></span>
+    <a class="btn btn-primary" href="mailto:hola@varelza.app">Contáctanos</a>
+  </nav>
+</header>
+
+<section class="hero grain">
+  <div class="hero-bg"></div>
+  <div class="hero-glow" id="hero-glow"></div>
+  <svg class="hero-roof" viewBox="0 0 400 300" aria-hidden="true">
+    <path class="left" d="M 200 75 L 20 295" /><path class="right" d="M 200 75 L 380 295" />
   </svg>
-
-  <div class="card">
-    <p class="eyebrow">Administración de condominios</p>
-    <h1 class="wordmark"><span class="var">VAR</span><span class="elza">ELZA</span></h1>
-    <p class="tagline">Todo bajo un mismo techo</p>
-    <p class="msg">Estamos construyendo el portal web de VARELZA — cobranza, avisos, asambleas y más, todo en un mismo lugar para tu condominio. Muy pronto estará listo.</p>
-    <a class="contact" href="mailto:hola@varelza.app">Escríbenos → hola@varelza.app</a>
+  <div class="wrap">
+    <div class="hero-content">
+      <span class="eyebrow reveal">Administración de condominios</span>
+      <h1 class="reveal" style="transition-delay:0.06s">Todo bajo <em>un mismo techo</em>, con cada rol de tu comunidad conectado en tiempo real.</h1>
+      <p class="lead reveal" style="transition-delay:0.12s">Administrador, residentes, guardia, consejo y proveedores — cada quien con su propia vista, todos viendo la misma información al instante. Sin hojas de cálculo, sin grupos de WhatsApp.</p>
+      <div class="hero-ctas reveal" style="transition-delay:0.18s">
+        <a class="btn btn-primary" href="mailto:hola@varelza.app">Solicita una demo</a>
+        <a class="btn btn-ghost" href="#funciones">Ver qué incluye</a>
+      </div>
+      <span class="hero-note reveal" style="transition-delay:0.24s">Acceso solo por invitación — lo activa tu administrador.</span>
+      <div class="store-badges reveal" style="transition-delay:0.3s">
+        <span class="store-badge">
+          <svg viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M16.7 12.4c0-2.2 1.8-3.3 1.9-3.3-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.7.8-3.4.8-.7 0-1.8-.8-3-.8-1.5 0-2.9.9-3.7 2.3-1.6 2.7-.4 6.8 1.1 9 .8 1.1 1.7 2.3 2.9 2.3 1.2 0 1.6-.7 3-.7 1.4 0 1.8.7 3 .7 1.3 0 2.1-1.1 2.8-2.2.9-1.3 1.3-2.5 1.3-2.6-.1 0-2.7-1-2.7-3.8zM14.1 5.7c.6-.7 1-1.7.9-2.7-.9 0-2 .6-2.6 1.3-.6.6-1.1 1.7-1 2.6 1 .1 2-.5 2.7-1.2z"/></svg>
+          <span class="sb-text"><span class="sb-small">Próximamente en</span><span class="sb-big">App Store</span></span>
+        </span>
+        <span class="store-badge">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.6 2.6c-.4.4-.6.9-.6 1.6v15.6c0 .7.2 1.2.6 1.6l.1.1L13 12.3v-.2L3.7 2.5l-.1.1z" fill="#8FA888"/><path d="M16.1 15.4l-3.1-3.1v-.2l3.1-3.1 6.6 3.7c.5.3.8.6.8.8s-.3.5-.8.8l-6.6 3.7z" fill="#FFC24B"/><path d="M16.1 15.4L13 12.3 3.7 21.6c.4.4.9.4 1.6.1l10.8-6.3" fill="#E8825C"/><path d="M16.1 8.6L5.3 2.3c-.7-.3-1.2-.3-1.6.1L13 12.3l3.1-3.7z" fill="#C86640"/></svg>
+          <span class="sb-text"><span class="sb-small">Próximamente en</span><span class="sb-big">Google Play</span></span>
+        </span>
+      </div>
+    </div>
   </div>
+</section>
 
-  <footer>&copy; 2026 VARELZA</footer>
+<section class="problema grain">
+  <div class="wrap">
+    <div class="problema-head">
+      <span class="eyebrow reveal">El problema real</span>
+      <h2 class="reveal" style="transition-delay:0.06s">Administrar un condominio no debería sentirse como un segundo trabajo</h2>
+      <p class="reveal" style="transition-delay:0.12s">Entre recibos sueltos, grupos de WhatsApp que nadie lee completos, y una libreta de quién pagó y quién no — se pierde tiempo, y se pierde confianza.</p>
+    </div>
+    <div class="split reveal" style="transition-delay:0.18s">
+      <div class="split-half split-antes">
+        <span class="split-tag">Sin VARELZA</span>
+        <div class="split-visual">
+          <div class="fake-chip">📊 cobranza_agosto_v3_final.xlsx <span class="badge-x">desactualizado</span></div>
+          <div class="fake-chip">💬 "¿Alguien vio el aviso de la asamblea?" <span class="badge-x">247 no leídos</span></div>
+          <div class="fake-chip">📝 Libreta: "Depto 4... ¿pagó o no pagó?" <span class="badge-x">sin folio</span></div>
+        </div>
+        <h3>El caos de siempre</h3>
+        <ul>
+          <li>Cobranza en una hoja de Excel que solo tú entiendes</li>
+          <li>Avisos que se pierden entre cientos de mensajes</li>
+          <li>Incidencias reportadas de boca en boca, sin seguimiento</li>
+          <li>Asambleas armadas a mano, listas de asistencia en papel</li>
+        </ul>
+      </div>
+      <div class="split-half split-despues">
+        <span class="split-tag">Con VARELZA</span>
+        <div class="split-visual">
+          <div class="mini-app">
+            <div class="mrow2"><span class="ok-dot">✓</span> Cobranza al día, visible al instante</div>
+            <div class="mrow2"><span class="ok-dot">✓</span> Aviso con confirmación de lectura</div>
+            <div class="mrow2"><span class="ok-dot">✓</span> Incidencia con folio y foto</div>
+          </div>
+        </div>
+        <h3>Todo en su lugar</h3>
+        <ul>
+          <li>Cobranza al día, visible para ti y para cada residente</li>
+          <li>Avisos que llegan con notificación y confirmación de lectura</li>
+          <li>Incidencias con folio, foto, y estado en tiempo real</li>
+          <li>Asambleas con asistencia por QR, quórum y votaciones en vivo</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tour">
+  <div class="wrap">
+    <div class="tour-head reveal">
+      <h2>Así se ve VARELZA de verdad — no una maqueta</h2>
+      <p>Esto es exactamente lo que ve un Administrador al abrir la app, con datos reales de un condominio.</p>
+    </div>
+    <div class="tour-connect-wrap reveal" style="transition-delay:0.06s">
+      <span class="tour-connect">🔗 Todo lo que ves aquí, el residente, el guardia y el consejo lo ven conectado en tiempo real</span>
+    </div>
+    <div class="tour-grid">
+      <figure class="tour-item reveal" style="transition-delay:0.1s">
+        <span class="float-badge">📊 Datos reales, no relleno</span>
+        <div class="phone">
+          <div class="pstatus"><span>9:41</span><span>📶 🔋</span></div>
+          <div class="pcontent">
+            <p class="hola">Hola, Iván 👋</p>
+            <p class="fecha">Martes, 25 de agosto</p>
+            <p class="label">De un vistazo</p>
+            <div class="hero-card crit">
+              <div class="ring"><b>50%</b></div>
+              <div class="hero-text"><b>Cobranza crítica</b><span>2 de 4 unidades · $3,700 vencido</span></div>
+            </div>
+            <div class="kgrid">
+              <div class="kcard ok"><div class="kv">0</div><div class="kl">Incidencias abiertas</div></div>
+              <div class="kcard"><div class="kv">2</div><div class="kl">Avisos publicados</div></div>
+              <div class="kcard warn"><div class="kv">2</div><div class="kl">Rondas pendientes</div></div>
+              <div class="kcard"><div class="kv">0</div><div class="kl">Reservas próximas</div></div>
+            </div>
+            <p class="label">Actividad reciente</p>
+            <div class="act">
+              <div class="act-row"><span class="ic">✅</span><div><b>Ronda "Recorrido perimetral" completada</b><span>hace 18h</span></div></div>
+              <div class="act-row"><span class="ic">🔔</span><div><b>Aviso publicado — "Asamblea extraordinaria"</b><span>hace 2 días</span></div></div>
+            </div>
+            <div class="tabbar">
+              <div class="tab on"><div class="dot"></div>Hoy</div>
+              <div class="tab"><div class="dot"></div>Módulos</div>
+              <div class="tab"><div class="dot"></div>Cuenta</div>
+            </div>
+          </div>
+        </div>
+        <figcaption><b>Hoy</b>Todo lo urgente, de un vistazo — no hojas sueltas.</figcaption>
+      </figure>
+
+      <figure class="tour-item reveal" style="transition-delay:0.18s">
+        <span class="float-badge">🧩 19 módulos, organizados solos</span>
+        <div class="phone">
+          <div class="pstatus"><span>9:41</span><span>📶 🔋</span></div>
+          <div class="pcontent">
+            <p class="hola">Módulos</p>
+            <div class="search" style="margin-top:10px;">🔍 Buscar un módulo...</div>
+            <p class="label">Tus favoritos</p>
+            <div class="favs">
+              <div class="fav"><div class="sq">💳</div><span>Cobranza</span></div>
+              <div class="fav"><div class="sq">🔔</div><span>Avisos</span></div>
+              <div class="fav"><div class="sq">🔧</div><span>Incidencias</span></div>
+            </div>
+            <div class="pills">
+              <span class="pill on">Todo</span><span class="pill">🛠️ Servicio</span><span class="pill">💰 Finanzas</span>
+            </div>
+            <p class="label">🛠️ SERVICIO Y MANTENIMIENTO</p>
+            <div class="mrow"><div class="ic2">🔧</div><span>Incidencias</span><span class="chev">›</span></div>
+            <div class="mrow"><div class="ic2">🏢</div><span>Mantenimiento</span><span class="chev">›</span></div>
+            <div class="mrow" style="border-bottom:none;"><div class="ic2">🕐</div><span>Rondas</span><span class="chev">›</span></div>
+            <div class="tabbar">
+              <div class="tab"><div class="dot"></div>Hoy</div>
+              <div class="tab on"><div class="dot"></div>Módulos</div>
+              <div class="tab"><div class="dot"></div>Cuenta</div>
+            </div>
+          </div>
+        </div>
+        <figcaption><b>Módulos</b>Todo organizado como de verdad piensas tu trabajo.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="funciones">
+  <div class="wrap">
+    <h2 class="reveal">Un módulo para cada parte de administrar</h2>
+    <p class="sub reveal" style="transition-delay:0.08s">Los mismos módulos que ya usa el Administrador — no es una lista, es lo que de verdad resuelve el día a día.</p>
+
+    <div class="feat-hero-row">
+      <div class="feat-hero cobranza reveal" style="transition-delay:0.1s">
+        <div class="fh-top">
+          <div class="fh-icon">💳</div>
+          <div><h4>Cobranza</h4></div>
+        </div>
+        <p>Ve quién está al corriente y quién no en un vistazo — con el monto vencido real, no una hoja aparte que hay que actualizar a mano.</p>
+        <div class="fh-visual">
+          <div class="fh-ring-row">
+            <div class="fh-ring"><b>50%</b></div>
+            <div><strong>Cobranza crítica</strong><span>2 de 4 unidades al corriente</span></div>
+          </div>
+        </div>
+        <button class="feat-toggle" type="button" aria-expanded="false">Ver ventajas <span class="ft-chev">⌄</span></button>
+        <div class="feat-detail-wrap"><div class="feat-detail-inner"><ul class="feat-checklist">
+          <li><b>Controlas:</b> cuándo se marca vencido y cómo se le recuerda a cada residente.</li>
+          <li><b>Facilita:</b> la conciliación es automática — nada de cruzar recibos a mano.</li>
+          <li><b>Ventaja para ti:</b> sabes quién debe en tiempo real, sin esperar al corte de mes.</li>
+        </ul></div></div>
+      </div>
+      <div class="feat-hero avisos reveal" style="transition-delay:0.16s">
+        <div class="fh-top">
+          <div class="fh-icon">🔔</div>
+          <div><h4>Avisos con confirmación de lectura</h4></div>
+        </div>
+        <p>Publica una vez y sabe exactamente quién lo leyó y quién falta — se acabó el "yo no vi el mensaje".</p>
+        <div class="fh-visual">
+          <div class="fh-avisos-row"><span>Corte de agua programado</span><span class="read-count">18/20 leído</span></div>
+          <div class="fh-avisos-row"><span>Asamblea extraordinaria</span><span class="read-count">20/20 leído</span></div>
+        </div>
+        <button class="feat-toggle" type="button" aria-expanded="false">Ver ventajas <span class="ft-chev">⌄</span></button>
+        <div class="feat-detail-wrap"><div class="feat-detail-inner"><ul class="feat-checklist">
+          <li><b>Controlas:</b> a quién va dirigido cada aviso y con qué nivel de urgencia.</li>
+          <li><b>Facilita:</b> la confirmación de lectura es automática — no preguntas uno por uno.</li>
+          <li><b>Ventaja para ti:</b> se acaba el "yo no vi el mensaje" como excusa.</li>
+        </ul></div></div>
+      </div>
+    </div>
+
+    <div class="feat-grid">
+      <div class="feat-card reveal" style="transition-delay:0.06s">
+        <div class="feat-icon c-servicio">🔧</div><span class="cat-tag c-servicio-tag">Servicio</span><h4>Incidencias</h4><p>Reporte con foto, prioridad y seguimiento hasta que se resuelve.</p>
+        <button class="feat-toggle" type="button" aria-expanded="false">Ver ventajas <span class="ft-chev">⌄</span></button>
+        <div class="feat-detail-wrap"><div class="feat-detail-inner"><ul class="feat-checklist">
+          <li><b>Controlas:</b> la prioridad y a quién se asigna cada reporte.</li>
+          <li><b>Facilita:</b> el seguimiento con foto y estado, sin llamadas de "¿ya se resolvió?".</li>
+          <li><b>Ventaja para ti:</b> nada se pierde entre reportes de boca en boca.</li>
+        </ul></div></div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:0.1s">
+        <div class="feat-icon c-comunidad">🗳️</div><span class="cat-tag c-comunidad-tag">Comunidad</span><h4>Asambleas</h4><p>Asistencia por QR, quórum en vivo, votaciones y resultados exportables.</p>
+        <button class="feat-toggle" type="button" aria-expanded="false">Ver ventajas <span class="ft-chev">⌄</span></button>
+        <div class="feat-detail-wrap"><div class="feat-detail-inner"><ul class="feat-checklist">
+          <li><b>Controlas:</b> qué se vota, quién puede votar y el quórum necesario.</li>
+          <li><b>Facilita:</b> asistencia por QR y un acta lista para exportar, sin listas en papel.</li>
+          <li><b>Ventaja para ti:</b> se acaban las discusiones de "¿sí hubo quórum?".</li>
+        </ul></div></div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:0.14s">
+        <div class="feat-icon c-comunidad">📅</div><span class="cat-tag c-comunidad-tag">Comunidad</span><h4>Reservas</h4><p>Salón de fiestas, alberca, roof garden — calendario y política de uso claros.</p>
+        <button class="feat-toggle" type="button" aria-expanded="false">Ver ventajas <span class="ft-chev">⌄</span></button>
+        <div class="feat-detail-wrap"><div class="feat-detail-inner"><ul class="feat-checklist">
+          <li><b>Controlas:</b> horarios, aforo y la política de uso de cada espacio.</li>
+          <li><b>Facilita:</b> un calendario visible para todos, sin choques de fecha.</li>
+          <li><b>Ventaja para ti:</b> se acaba el "yo lo aparté primero" sin comprobante.</li>
+        </ul></div></div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:0.06s">
+        <div class="feat-icon c-servicio">🏢</div><span class="cat-tag c-servicio-tag">Servicio</span><h4>Mantenimiento</h4><p>Programa y da seguimiento a lo que necesita atención periódica.</p>
+        <button class="feat-toggle" type="button" aria-expanded="false">Ver ventajas <span class="ft-chev">⌄</span></button>
+        <div class="feat-detail-wrap"><div class="feat-detail-inner"><ul class="feat-checklist">
+          <li><b>Controlas:</b> qué necesita atención periódica y cada cuánto.</li>
+          <li><b>Facilita:</b> recordatorios automáticos, sin depender de la memoria de nadie.</li>
+          <li><b>Ventaja para ti:</b> nada se pasa de fecha por olvido.</li>
+        </ul></div></div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:0.1s">
+        <div class="feat-icon c-servicio">🔨</div><span class="cat-tag c-servicio-tag">Servicio</span><h4>Proveedores</h4><p>Un directorio de a quién llamar, con historial de trabajos hechos.</p>
+        <button class="feat-toggle" type="button" aria-expanded="false">Ver ventajas <span class="ft-chev">⌄</span></button>
+        <div class="feat-detail-wrap"><div class="feat-detail-inner"><ul class="feat-checklist">
+          <li><b>Controlas:</b> quién tiene permiso de entrar y a qué área.</li>
+          <li><b>Facilita:</b> historial de trabajos y desempeño por proveedor, en un solo lugar.</li>
+          <li><b>Ventaja para ti:</b> decides con quién seguir trabajando, con datos reales.</li>
+        </ul></div></div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:0.14s">
+        <div class="feat-icon c-servicio">🕐</div><span class="cat-tag c-servicio-tag">Servicio</span><h4>Rondas de seguridad</h4><p>Tú decides dónde y qué debe revisar el guardia en cada ronda — puntos de control, horarios y frecuencia. El guardia solo la sigue y confirma; tú ves el historial completo.</p>
+        <button class="feat-toggle" type="button" aria-expanded="false">Ver ventajas <span class="ft-chev">⌄</span></button>
+        <div class="feat-detail-wrap"><div class="feat-detail-inner"><ul class="feat-checklist">
+          <li><b>Controlas:</b> puntos de control, horarios y frecuencia de cada ronda.</li>
+          <li><b>Facilita:</b> el guardia solo sigue y confirma — tú ves el historial completo.</li>
+          <li><b>Ventaja para ti:</b> sabes exactamente qué se revisó y cuándo, sin preguntarle al guardia.</li>
+        </ul></div></div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:0.06s">
+        <div class="feat-icon c-comunidad">📄</div><span class="cat-tag c-comunidad-tag">Comunidad</span><h4>Documentos</h4><p>Reglamento, actas y contratos, ordenados y siempre a la mano.</p>
+        <button class="feat-toggle" type="button" aria-expanded="false">Ver ventajas <span class="ft-chev">⌄</span></button>
+        <div class="feat-detail-wrap"><div class="feat-detail-inner"><ul class="feat-checklist">
+          <li><b>Controlas:</b> quién puede ver o descargar cada documento.</li>
+          <li><b>Facilita:</b> reglamento, actas y contratos siempre a la mano, sin carpetas físicas.</li>
+          <li><b>Ventaja para ti:</b> nunca más "no encuentro esa acta de hace dos años".</li>
+        </ul></div></div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:0.1s">
+        <div class="feat-icon c-servicio">📦</div><span class="cat-tag c-servicio-tag">Servicio</span><h4>Objetos perdidos</h4><p>Registro con foto de lo que se encuentra en áreas comunes.</p>
+        <button class="feat-toggle" type="button" aria-expanded="false">Ver ventajas <span class="ft-chev">⌄</span></button>
+        <div class="feat-detail-wrap"><div class="feat-detail-inner"><ul class="feat-checklist">
+          <li><b>Controlas:</b> qué se publica y por cuánto tiempo queda visible.</li>
+          <li><b>Facilita:</b> registro con foto, sin bitácora en papel en la caseta.</li>
+          <li><b>Ventaja para ti:</b> los residentes lo consultan solos, sin pasar por ti.</li>
+        </ul></div></div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:0.14s">
+        <div class="feat-icon c-finanzas">💼</div><span class="cat-tag c-finanzas-tag">Finanzas</span><h4>Cuotas y tarifas</h4><p>Define montos y vencimientos una vez; se aplican solos cada mes.</p>
+        <button class="feat-toggle" type="button" aria-expanded="false">Ver ventajas <span class="ft-chev">⌄</span></button>
+        <div class="feat-detail-wrap"><div class="feat-detail-inner"><ul class="feat-checklist">
+          <li><b>Controlas:</b> montos, vencimientos y recargos por atraso.</li>
+          <li><b>Facilita:</b> se aplican solas cada mes, sin capturarlas a mano.</li>
+          <li><b>Ventaja para ti:</b> cobranza siempre al día, sin depender de que alguien "se acuerde".</li>
+        </ul></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="roles grain">
+  <div class="wrap">
+    <div class="roles-head">
+      <span class="eyebrow reveal">Un techo, distintas maneras de vivir bajo él</span>
+      <h2 class="reveal" style="transition-delay:0.06s">La información viaja sola entre cada rol</h2>
+      <p class="reveal" style="transition-delay:0.12s">No es una app genérica con todo mezclado — cada quien ve solo lo suyo, pero todo está conectado por debajo.</p>
+    </div>
+    <div class="map-wrap reveal" style="transition-delay:0.18s">
+      <svg viewBox="0 0 600 420" aria-label="Mapa de conexión entre los roles de VARELZA" id="role-map">
+        <defs>
+          <path id="p-res" d="M 300 210 Q 180 150 100 90" fill="none"/>
+          <path id="p-adm" d="M 300 210 Q 300 130 300 60" fill="none"/>
+          <path id="p-gua" d="M 300 210 Q 420 150 500 90" fill="none"/>
+          <path id="p-con" d="M 300 210 Q 200 300 120 350" fill="none"/>
+          <path id="p-pro" d="M 300 210 Q 400 300 480 350" fill="none"/>
+        </defs>
+        <g fill="none">
+          <path class="route-path" data-role="res" data-color="#E8825C" d="M 300 210 Q 180 150 100 90" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+          <path class="route-path" data-role="adm" data-color="#8FA888" d="M 300 210 Q 300 130 300 60" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+          <path class="route-path" data-role="gua" data-color="#FFC24B" d="M 300 210 Q 420 150 500 90" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+          <path class="route-path" data-role="con" data-color="#E8825C" d="M 300 210 Q 200 300 120 350" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+          <path class="route-path" data-role="pro" data-color="#8FA888" d="M 300 210 Q 400 300 480 350" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+        </g>
+
+        <circle class="route-dot" data-role="res" r="5" fill="#E8825C"><animateMotion dur="3.4s" repeatCount="indefinite" rotate="auto"><mpath href="#p-res"/></animateMotion></circle>
+        <circle class="route-dot" data-role="adm" r="5" fill="#8FA888"><animateMotion dur="3.8s" begin="0.5s" repeatCount="indefinite"><mpath href="#p-adm"/></animateMotion></circle>
+        <circle class="route-dot" data-role="gua" r="5" fill="#FFC24B"><animateMotion dur="3.2s" begin="1s" repeatCount="indefinite"><mpath href="#p-gua"/></animateMotion></circle>
+        <circle class="route-dot" data-role="con" r="5" fill="#E8825C"><animateMotion dur="4s" begin="1.5s" repeatCount="indefinite"><mpath href="#p-con"/></animateMotion></circle>
+        <circle class="route-dot" data-role="pro" r="5" fill="#8FA888"><animateMotion dur="3.6s" begin="0.8s" repeatCount="indefinite"><mpath href="#p-pro"/></animateMotion></circle>
+
+        <g>
+          <circle cx="300" cy="210" r="34" fill="#E8825C"/>
+          <text x="300" y="206" text-anchor="middle" font-size="16">🏠</text>
+          <text x="300" y="222" text-anchor="middle" class="node-label" font-size="9">VARELZA</text>
+        </g>
+
+        <g class="role-node" data-role="res" data-caption="Un <b>residente</b> reporta una incidencia con foto → el administrador la asigna a un proveedor → el residente ve en tiempo real cuándo quedó resuelta."><circle cx="100" cy="90" r="26" fill="rgba(255,255,255,0.1)"/><text x="100" y="96" text-anchor="middle" font-size="18">🏠</text></g>
+        <text x="100" y="132" text-anchor="middle" class="node-label">Residente</text>
+
+        <g class="role-node" data-role="adm" data-caption="El <b>administrador</b> asigna la incidencia a un proveedor → el proveedor la resuelve y reporta → el administrador valida el trabajo y lo cierra."><circle cx="300" cy="60" r="26" fill="rgba(255,255,255,0.1)"/><text x="300" y="66" text-anchor="middle" font-size="18">🗝️</text></g>
+        <text x="300" y="102" text-anchor="middle" class="node-label">Administrador</text>
+
+        <g class="role-node" data-role="gua" data-caption="El <b>guardia</b> completa su ronda → el administrador ve el registro al instante → si algo salió mal, se convierte en incidencia con un toque."><circle cx="500" cy="90" r="26" fill="rgba(255,255,255,0.1)"/><text x="500" y="96" text-anchor="middle" font-size="18">🛡️</text></g>
+        <text x="500" y="132" text-anchor="middle" class="node-label">Guardia</text>
+
+        <g class="role-node" data-role="con" data-caption="El administrador propone una cuota extraordinaria → el <b>consejo</b> la revisa y vota en la app → si se aprueba, el cobro se activa solo."><circle cx="120" cy="350" r="26" fill="rgba(255,255,255,0.1)"/><text x="120" y="356" text-anchor="middle" font-size="18">⚖️</text></g>
+        <text x="120" y="392" text-anchor="middle" class="node-label">Consejo</text>
+
+        <g class="role-node" data-role="pro" data-caption="El <b>proveedor</b> recibe la solicitud, la resuelve y reporta cuando termina — el administrador es notificado, valida, y programa el próximo servicio."><circle cx="480" cy="350" r="26" fill="rgba(255,255,255,0.1)"/><text x="480" y="356" text-anchor="middle" font-size="18">🔨</text></g>
+        <text x="480" y="392" text-anchor="middle" class="node-label">Proveedor</text>
+      </svg>
+      <p class="map-caption" id="map-caption">Pasa el cursor sobre un rol para ver qué le llega — por ejemplo: <b>un residente</b> reporta una incidencia → <b>el administrador</b> la asigna a <b>un proveedor</b> → <b>el guardia</b> confirma que se resolvió en su siguiente ronda.</p>
+    </div>
+  </div>
+</section>
+
+<section class="planes">
+  <div class="wrap">
+    <div class="planes-head">
+      <span class="eyebrow reveal">Planes</span>
+      <h2 class="reveal" style="transition-delay:0.06s">Un plan para cada tamaño de condominio</h2>
+      <p class="reveal" style="transition-delay:0.12s">Desde un edificio chico hasta un desarrollo de cientos de unidades — el costo crece contigo, no antes.</p>
+    </div>
+
+    <div class="diff-banner reveal" style="transition-delay:0.16s">
+      <span class="diff-watermark" aria-hidden="true">⚙️</span>
+      <div class="diff-text"><b>Ten el control completo de lo que pagas.</b> <span>Da de alta y baja unidades cuando quieras — se cobra lo proporcional a los días exactos que estuvo activa cada una. Nunca pagas de más.</span></div>
+    </div>
+
+    <div class="tiers-grid">
+      <div class="tier-card reveal" style="transition-delay:0.06s">
+        <h4>🎉 Gratuito</h4>
+        <div class="tc-range">1 a 5 unidades</div>
+        <ul>
+          <li>Módulos de residente, administración y guardia incluidos</li>
+          <li>Gestión completa de cuotas de mantenimiento</li>
+          <li>Control de accesos con QR y NIP</li>
+        </ul>
+        <div class="tc-cta-wrap"><button class="btn btn-primary tc-agent-btn" type="button">💬 Solicitar más información a un agente</button></div>
+      </div>
+      <div class="tier-card reveal" style="transition-delay:0.1s">
+        <h4>Arranque</h4>
+        <div class="tc-range">6 a 9 unidades</div>
+        <ul>
+          <li>Cuota fija por administración de 6 a 9 unidades</li>
+          <li>Módulos de residente, administración y guardia incluidos</li>
+          <li>Gestión de incidencias a través de tickets</li>
+        </ul>
+        <div class="tc-cta-wrap"><button class="btn btn-primary tc-agent-btn" type="button">💬 Solicitar más información a un agente</button></div>
+      </div>
+      <div class="tier-card reveal" style="transition-delay:0.14s">
+        <h4>Básico → Esencial</h4>
+        <div class="tc-range">10 a 30 unidades</div>
+        <ul>
+          <li>Cuota por unidad activa (sube y baja cuando tú decidas) + cuota ligera fija por mantenimiento</li>
+          <li>Todos los módulos incluidos (comité + proveedores)</li>
+          <li>Cobranza conciliada automáticamente</li>
+        </ul>
+        <div class="tc-cta-wrap"><button class="btn btn-primary tc-agent-btn" type="button">💬 Solicitar más información a un agente</button></div>
+      </div>
+      <div class="tier-card destacado reveal" style="transition-delay:0.18s">
+        <span class="tc-badge">Pagos con tarjeta</span>
+        <h4>Crecimiento en adelante</h4>
+        <div class="tc-range">31 a 100 unidades</div>
+        <ul>
+          <li>Incluye todo lo de los paquetes anteriores</li>
+          <li><b>Pago de mensualidades con tarjeta de crédito</b></li>
+          <li>Envío automático de recibos de pago por correo</li>
+        </ul>
+        <div class="tc-cta-wrap"><button class="btn btn-primary tc-agent-btn" type="button">💬 Solicitar más información a un agente</button></div>
+      </div>
+      <div class="tier-card reveal" style="transition-delay:0.22s">
+        <h4>🏢 Empresarial</h4>
+        <div class="tc-range">+100 unidades</div>
+        <ul>
+          <li>Incluye todo lo de los paquetes anteriores</li>
+          <li>Precios preferenciales</li>
+          <li>Siempre bajo cotización a la medida</li>
+        </ul>
+        <div class="tc-cta-wrap"><button class="btn btn-primary tc-agent-btn" type="button">💬 Solicitar más información a un agente</button></div>
+      </div>
+    </div>
+    <p class="planes-cta" style="font-size:12.5px; color:var(--gray); margin-top:6px;">* Precios exactos por cotización — dependen del número de unidades y sus condiciones.</p>
+
+    <p class="agent-cta reveal" style="transition-delay:0.1s"><span class="agent-cta-note">👆 Selecciona el plan que más se parece a tu condominio para solicitar más información con un agente.</span></p>
+
+    <div class="cotizador grain reveal" style="transition-delay:0.06s">
+      <div class="cot-head">
+        <h3>Simula cuánto pagarías</h3>
+        <p>Mueve el control según el número de departamentos de tu condominio — es un estimado, no un cobro.</p>
+      </div>
+      <div class="cot-body">
+        <div class="cot-input-wrap">
+          <div class="cot-label"><span>Unidades del condominio</span><b id="cot-n">20</b></div>
+          <input type="range" id="cot-slider" min="1" max="100" value="20">
+        </div>
+        <div class="cot-result">
+          <div class="cr-label">Estimado mensual</div>
+          <div class="cr-amount" id="cot-amount">$950 <span>MXN</span></div>
+          <div class="cr-note" id="cot-note">Incluye todos los módulos. Pagos con tarjeta disponibles a partir de 31 unidades.</div>
+          <a class="btn btn-primary" href="mailto:hola@varelza.app">Pide tu cotización formal →</a>
+        </div>
+      </div>
+      <p class="cot-preferencial">¿Tu condominio tiene más de 100 unidades? <b>Precio preferencial</b> — siempre bajo cotización a la medida.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cta-final grain reveal">
+      <h2>¿Listo para dejar el Excel y el WhatsApp atrás?</h2>
+      <p>Escríbenos y te mostramos VARELZA funcionando con datos reales de un condominio, no una maqueta.</p>
+      <a class="btn btn-primary" href="mailto:hola@varelza.app">Solicita una demo →</a>
+    </div>
+  </div>
+</section>
+
+<section class="marquee-section">
+  <p class="marquee-label">Construido para operar en todo Latinoamérica</p>
+  <div class="marquee-track" id="marquee-track">
+    <div class="marquee-item"><span class="flag">🇲🇽</span> México</div>
+    <div class="marquee-item"><span class="flag">🇬🇹</span> Guatemala</div>
+    <div class="marquee-item"><span class="flag">🇨🇴</span> Colombia</div>
+    <div class="marquee-item"><span class="flag">🇨🇷</span> Costa Rica</div>
+    <div class="marquee-item"><span class="flag">🇵🇦</span> Panamá</div>
+    <div class="marquee-item"><span class="flag">🇩🇴</span> Rep. Dominicana</div>
+    <div class="marquee-item"><span class="flag">🇵🇪</span> Perú</div>
+    <div class="marquee-item"><span class="flag">🇨🇱</span> Chile</div>
+    <!-- duplicado para el loop continuo -->
+    <div class="marquee-item"><span class="flag">🇲🇽</span> México</div>
+    <div class="marquee-item"><span class="flag">🇬🇹</span> Guatemala</div>
+    <div class="marquee-item"><span class="flag">🇨🇴</span> Colombia</div>
+    <div class="marquee-item"><span class="flag">🇨🇷</span> Costa Rica</div>
+    <div class="marquee-item"><span class="flag">🇵🇦</span> Panamá</div>
+    <div class="marquee-item"><span class="flag">🇩🇴</span> Rep. Dominicana</div>
+    <div class="marquee-item"><span class="flag">🇵🇪</span> Perú</div>
+    <div class="marquee-item"><span class="flag">🇨🇱</span> Chile</div>
+  </div>
+</section>
+
+<footer>
+  <span class="nav-mark"><span class="var">VAR</span><span class="elza">ELZA</span></span>
+  <p>¿Preguntas? <a class="mail" href="mailto:hola@varelza.app">hola@varelza.app</a> · © 2026 VARELZA</p>
+</footer>
+
+<button class="chat-fab" id="chat-fab" aria-label="Abrir chat de contacto">💬</button>
+<div class="chat-panel" id="chat-panel">
+  <div class="chat-panel-head">
+    <b>¿Tienes dudas?</b>
+    <span>Normalmente respondemos en minutos</span>
+  </div>
+  <div class="chat-panel-body">
+    <p>Escríbenos directo — no es un bot, es un humano real del otro lado.</p>
+    <a class="chat-option" href="https://wa.me/5219991781098?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20de%20VARELZA" target="_blank" rel="noopener"><span class="co-ic">💬</span> WhatsApp</a>
+    <a class="chat-option" href="mailto:hola@varelza.app"><span class="co-ic">✉️</span> hola@varelza.app</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="agent-overlay">
+  <div class="agent-modal" role="dialog" aria-modal="true" aria-labelledby="agent-modal-title">
+    <div class="agent-modal-head">
+      <button class="agent-modal-close" id="agent-modal-close" type="button" aria-label="Cerrar">✕</button>
+      <h3 id="agent-modal-title">Habla con un agente</h3>
+      <p class="agent-modal-sub">Cuéntanos de tu condominio y te contactamos con tu cotización — normalmente en minutos.</p>
+      <div class="modal-plan-chip" id="modal-plan-chip" style="display:none;">📋 Plan de interés: <span id="modal-plan-name"></span></div>
+    </div>
+    <form class="agent-modal-body" id="agent-form">
+      <div class="mode-row">
+        <button type="button" class="mode-btn active" data-mode="whatsapp"><span class="mi">💬</span>Por WhatsApp</button>
+        <button type="button" class="mode-btn" data-mode="email"><span class="mi">✉️</span>Por correo</button>
+      </div>
+      <div class="field-group"><label for="af-nombre">Nombre</label><input id="af-nombre" name="nombre" type="text" required placeholder="Tu nombre"></div>
+      <div class="field-group"><label for="af-empresa">Condominio o empresa <span class="optional">(opcional)</span></label><input id="af-empresa" name="empresa" type="text" placeholder="Nombre del condominio"></div>
+      <div class="field-group">
+        <label for="af-telefono">Teléfono <span class="optional">(opcional)</span></label>
+        <div class="phone-row">
+          <select id="af-lada" class="lada-select" aria-label="Código de país">
+            <option value="+52" selected>🇲🇽 +52</option>
+            <option value="+502">🇬🇹 +502</option>
+            <option value="+57">🇨🇴 +57</option>
+            <option value="+506">🇨🇷 +506</option>
+            <option value="+507">🇵🇦 +507</option>
+            <option value="+1">🇩🇴 +1</option>
+            <option value="+51">🇵🇪 +51</option>
+            <option value="+56">🇨🇱 +56</option>
+          </select>
+          <input id="af-telefono" name="telefono" type="tel" placeholder="10 dígitos">
+        </div>
+      </div>
+      <div class="field-group"><label for="af-correo">Correo <span class="optional">(opcional)</span></label><input id="af-correo" name="correo" type="email" placeholder="tucorreo@ejemplo.com"></div>
+      <button type="submit" class="btn btn-primary" id="agent-submit" style="width:100%; justify-content:center;">Enviar por WhatsApp →</button>
+      <p class="agent-modal-foot" id="agent-modal-foot">Se abrirá WhatsApp con tus datos ya escritos — solo confirmas el envío.</p>
+    </form>
+  </div>
+</div>
+
+<noscript><style>.reveal{ opacity:1 !important; transform:none !important; }</style></noscript>
+
+<script>
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // El hero está en pantalla desde el primer instante — no depende de que
+  // el usuario haga scroll, así que no debe depender de IntersectionObserver
+  // (que puede tardar o no disparar si la pestaña tarda en pintar). Se
+  // revela directo, apenas carga.
+  document.querySelectorAll('.hero .reveal').forEach(function (el) { el.classList.add('visible'); });
+
+  // Todo lo demás sí es scroll-triggered de verdad, y ahí el observer
+  // funciona bien porque el usuario ya interactuó (hizo scroll).
+  var scrollTargets = document.querySelectorAll('.reveal:not(.hero .reveal)');
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+    scrollTargets.forEach(function (el) { observer.observe(el); });
+    // Respaldo: si por lo que sea el observer nunca dispara para algo que
+    // ya está a la vista al cargar (mismo problema que tenía el hero),
+    // se revela solo de todos modos tras un momento.
+    setTimeout(function () {
+      scrollTargets.forEach(function (el) { el.classList.add('visible'); });
+    }, 2500);
+  } else {
+    scrollTargets.forEach(function (el) { el.classList.add('visible'); });
+  }
+
+  // Cotizador — misma lógica del tabulador real (ver CLAUDE.md), estimado.
+  function estimar(n) {
+    if (n <= 5) return { total: 0, nota: 'Plan gratuito — todos los módulos incluidos, sin costo.' };
+    if (n <= 9) return { total: n * 237.5, nota: 'Plan Arranque — precio por unidad.' };
+    if (n <= 20) return { total: 950 + Math.max(0, n - 10) * 32, nota: 'Plan Básico — cuota fija + excedente.' + (n >= 10 ? '' : '') };
+    if (n <= 50) return { total: 1400 + Math.max(0, n - 21) * 30, nota: 'Plan Esencial — pagos con tarjeta disponibles desde 31 unidades.' };
+    if (n <= 100) return { total: 2800 + Math.max(0, n - 51) * 30, nota: 'Plan Crecimiento — pagos con tarjeta incluidos.' };
+    if (n <= 200) return { total: 4800 + Math.max(0, n - 101) * 28, nota: 'Plan Profesional — pagos con tarjeta incluidos.' };
+    if (n <= 400) return { total: 8500 + Math.max(0, n - 201) * 25, nota: 'Plan Corporativo — pagos con tarjeta incluidos.' };
+    return { total: null, nota: 'Más de 400 unidades — cotización a la medida.' };
+  }
+  var slider = document.getElementById('cot-slider');
+  var nLabel = document.getElementById('cot-n');
+  var amount = document.getElementById('cot-amount');
+  var note = document.getElementById('cot-note');
+  // El número cuenta hacia arriba/abajo en vez de saltar de golpe — detalle
+  // pequeño, pero es justo el tipo de cosa que separa "se ve bien" de
+  // "se siente cuidado".
+  var cotShown = null;
+  var cotRaf = null;
+  function animateAmount(target) {
+    if (cotShown === null) cotShown = target;
+    var start = cotShown, startTime = performance.now(), dur = 380;
+    if (cotRaf) cancelAnimationFrame(cotRaf);
+    function paint(val) { amount.innerHTML = '$' + val.toLocaleString('es-MX') + ' <span>MXN/mes</span>'; }
+    function tick(now) {
+      var t = Math.min(1, (now - startTime) / dur);
+      var eased = 1 - Math.pow(1 - t, 3);
+      paint(Math.round(start + (target - start) * eased));
+      if (t < 1) { cotRaf = requestAnimationFrame(tick); } else { cotShown = target; }
+    }
+    cotRaf = requestAnimationFrame(tick);
+    // Respaldo — si por lo que sea requestAnimationFrame nunca corre (pestaña
+    // sin foco real al momento del cambio), el número igual queda correcto.
+    setTimeout(function () { cotShown = target; paint(target); }, dur + 120);
+  }
+  function updateCot() {
+    var n = parseInt(slider.value, 10);
+    nLabel.textContent = n;
+    var r = estimar(n);
+    if (r.total === null) { amount.textContent = 'A cotizar'; cotShown = null; }
+    else { animateAmount(Math.round(r.total)); }
+    note.textContent = r.nota + (n < 31 ? ' Tarjeta disponible a partir de 31 unidades; antes, pago por transferencia.' : '');
+  }
+  if (slider) { slider.addEventListener('input', updateCot); updateCot(); }
+
+  // Chat widget
+  var fab = document.getElementById('chat-fab');
+  var panel = document.getElementById('chat-panel');
+  if (fab && panel) {
+    fab.addEventListener('click', function () { panel.classList.toggle('open'); });
+  }
+
+  // Cursor personalizado — solo si hay mouse de verdad (no en touch), y
+  // respetando reduce-motion. Crece sobre cualquier cosa clickeable.
+  var canFineCursor = window.matchMedia('(hover:hover) and (pointer:fine)').matches && !reduceMotion;
+  if (canFineCursor) {
+    document.documentElement.classList.add('has-fine-cursor');
+    var dot = document.getElementById('cursor-dot');
+    var glow = document.getElementById('hero-glow');
+    var heroEl = document.querySelector('.hero');
+    window.addEventListener('mousemove', function (e) {
+      dot.style.left = e.clientX + 'px';
+      dot.style.top = e.clientY + 'px';
+      dot.classList.add('ready');
+      if (heroEl) {
+        var r = heroEl.getBoundingClientRect();
+        if (e.clientY >= r.top && e.clientY <= r.bottom && glow) {
+          glow.style.setProperty('--gx', (e.clientX - r.left) + 'px');
+          glow.style.setProperty('--gy', (e.clientY - r.top) + 'px');
+        }
+      }
+    }, { passive: true });
+    document.querySelectorAll('a, button, input[type="range"], .role-node').forEach(function (el) {
+      el.addEventListener('mouseenter', function () { dot.classList.add('hover'); });
+      el.addEventListener('mouseleave', function () { dot.classList.remove('hover'); });
+    });
+  }
+
+  // Check-list de ventajas — acordeón dentro de cada tarjeta de función
+  // (los 2 bloques grandes y las 9 del grid comparten el mismo mecanismo).
+  document.querySelectorAll('.feat-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var card = btn.closest('.feat-card, .feat-hero');
+      if (!card) return;
+      var open = card.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.firstChild.textContent = open ? 'Ocultar ventajas ' : 'Ver ventajas ';
+    });
+  });
+
+  // Selección de plan — un solo plan activo a la vez, con animación real.
+  // Clic de nuevo sobre el mismo plan lo deselecciona.
+  var tierCards = document.querySelectorAll('.tier-card');
+  var selectedPlan = null;
+  tierCards.forEach(function (card) {
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-pressed', 'false');
+    function toggleSelect() {
+      var wasSelected = card.classList.contains('selected');
+      tierCards.forEach(function (c) { c.classList.remove('selected'); c.setAttribute('aria-pressed', 'false'); });
+      if (!wasSelected) {
+        void card.offsetWidth; // reinicia la animación del pulso aunque ya se haya usado antes
+        card.classList.add('selected');
+        card.setAttribute('aria-pressed', 'true');
+        var h4 = card.querySelector('h4');
+        selectedPlan = h4 ? h4.textContent.trim() : null;
+      } else {
+        selectedPlan = null;
+      }
+    }
+    card.addEventListener('click', toggleSelect);
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSelect(); }
+    });
+  });
+
+  // Modal "Solicitar más información a un agente".
+  // Importante: esta página es estática (sin servidor propio), así que no
+  // hay manera de enviar el WhatsApp o el correo de forma silenciosa sin que
+  // el visitante lo confirme — eso requeriría un backend real. Lo que sí
+  // hacemos es dejar todo prellenado: WhatsApp abre con el mensaje ya
+  // escrito (el visitante solo pulsa enviar en su propio WhatsApp) y correo
+  // abre su app de correo con el mensaje y el asunto ya listos.
+  var overlay = document.getElementById('agent-overlay');
+  var agentBtns = document.querySelectorAll('.tc-agent-btn');
+  var closeAgentBtn = document.getElementById('agent-modal-close');
+  var planChip = document.getElementById('modal-plan-chip');
+  var planNameEl = document.getElementById('modal-plan-name');
+  var modeBtns = document.querySelectorAll('.mode-btn');
+  var agentSubmit = document.getElementById('agent-submit');
+  var agentFoot = document.getElementById('agent-modal-foot');
+  var agentForm = document.getElementById('agent-form');
+  var currentMode = 'whatsapp';
+
+  function openAgentModal() {
+    if (!overlay) return;
+    overlay.classList.add('open');
+    if (selectedPlan && planChip && planNameEl) {
+      planNameEl.textContent = selectedPlan;
+      planChip.style.display = 'inline-flex';
+    } else if (planChip) {
+      planChip.style.display = 'none';
+    }
+    var firstField = document.getElementById('af-nombre');
+    if (firstField) setTimeout(function () { firstField.focus(); }, 100);
+  }
+  function closeAgentModal() { if (overlay) overlay.classList.remove('open'); }
+
+  agentBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation(); // no debe re-disparar el clic de selección de la tarjeta que lo contiene
+      openAgentModal();
+    });
+  });
+  if (closeAgentBtn) closeAgentBtn.addEventListener('click', closeAgentModal);
+  if (overlay) overlay.addEventListener('click', function (e) { if (e.target === overlay) closeAgentModal(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay && overlay.classList.contains('open')) closeAgentModal();
+  });
+
+  modeBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      modeBtns.forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentMode = btn.getAttribute('data-mode');
+      if (currentMode === 'whatsapp') {
+        if (agentSubmit) agentSubmit.textContent = 'Enviar por WhatsApp →';
+        if (agentFoot) agentFoot.textContent = 'Se abrirá WhatsApp con tus datos ya escritos — solo confirmas el envío.';
+      } else {
+        if (agentSubmit) agentSubmit.textContent = 'Enviar por correo →';
+        if (agentFoot) agentFoot.textContent = 'Se abrirá tu app de correo con el mensaje ya escrito — solo confirmas el envío.';
+      }
+    });
+  });
+
+  if (agentForm) {
+    agentForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var nombre = document.getElementById('af-nombre').value.trim();
+      var empresa = document.getElementById('af-empresa').value.trim();
+      var lada = document.getElementById('af-lada').value;
+      var telefono = document.getElementById('af-telefono').value.trim();
+      var telefonoCompleto = telefono ? (lada + ' ' + telefono) : '';
+      var correo = document.getElementById('af-correo').value.trim();
+      if (!nombre) { document.getElementById('af-nombre').focus(); return; }
+      var planTxt = selectedPlan || 'Sin especificar';
+      var detalle = 'Nombre: ' + nombre + '\n' +
+        'Condominio/empresa: ' + (empresa || '—') + '\n' +
+        'Teléfono: ' + (telefonoCompleto || '—') + '\n' +
+        'Correo: ' + (correo || '—') + '\n' +
+        'Plan de interés: ' + planTxt;
+      if (currentMode === 'whatsapp') {
+        var msg = 'Hola, quiero información de VARELZA.\n' + detalle;
+        window.open('https://wa.me/5219991781098?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+      } else {
+        var mailUrl = 'mailto:hola@varelza.app?subject=' + encodeURIComponent('Cotización urgente') + '&body=' + encodeURIComponent(detalle);
+        window.location.href = mailUrl;
+      }
+      closeAgentModal();
+      agentForm.reset();
+    });
+  }
+
+  // Mapa de roles — pasar el cursor sobre un rol resalta su ruta real y
+  // cambia el texto de abajo, para que la interacción tenga significado.
+  var roleMap = document.getElementById('role-map');
+  var mapCaption = document.getElementById('map-caption');
+  var defaultCaption = mapCaption ? mapCaption.innerHTML : '';
+  if (roleMap) {
+    document.querySelectorAll('.role-node').forEach(function (node) {
+      var role = node.getAttribute('data-role');
+      node.addEventListener('mouseenter', function () {
+        roleMap.classList.add('hovering');
+        node.classList.add('active');
+        var path = roleMap.querySelector('.route-path[data-role="' + role + '"]');
+        var dot = roleMap.querySelector('.route-dot[data-role="' + role + '"]');
+        if (path) { path.classList.add('active'); path.setAttribute('stroke', path.getAttribute('data-color')); path.setAttribute('stroke-width', '3'); }
+        if (dot) dot.classList.add('active');
+        if (mapCaption) mapCaption.innerHTML = node.getAttribute('data-caption') || defaultCaption;
+      });
+      node.addEventListener('mouseleave', function () {
+        roleMap.classList.remove('hovering');
+        node.classList.remove('active');
+        var path = roleMap.querySelector('.route-path[data-role="' + role + '"]');
+        var dot = roleMap.querySelector('.route-dot[data-role="' + role + '"]');
+        if (path) { path.classList.remove('active'); path.setAttribute('stroke', 'rgba(255,255,255,0.16)'); path.setAttribute('stroke-width', '2'); }
+        if (dot) dot.classList.remove('active');
+        if (mapCaption) mapCaption.innerHTML = defaultCaption;
+      });
+    });
+  }
+</script>
 
 </body>
 </html>
