@@ -477,8 +477,22 @@
   .cot-head p{ font-size:14px; color:#C7C9C4; }
   .cot-body{ display:flex; gap:36px; align-items:center; flex-wrap:wrap; justify-content:center; }
   .cot-input-wrap{ flex:1; min-width:260px; }
-  .cot-label{ display:flex; justify-content:space-between; font-size:13px; font-weight:700; margin-bottom:10px; }
+  .cot-label{ display:flex; justify-content:space-between; align-items:center; font-size:13px; font-weight:700; margin-bottom:10px; }
   .cot-label b{ color:var(--amarillo); font-size:18px; }
+  .cot-n-input{
+    width:66px; background:rgba(255,255,255,0.08); border:1.5px solid rgba(255,255,255,0.2); border-radius:10px;
+    color:var(--fondo); font-family:inherit; font-weight:800; font-size:16px; text-align:center;
+    padding:6px 4px; font-variant-numeric:tabular-nums;
+    -moz-appearance:textfield; appearance:textfield;
+  }
+  .cot-n-input:focus{ outline:none; border-color:var(--amarillo); }
+  .cot-n-input::-webkit-inner-spin-button,
+  .cot-n-input::-webkit-outer-spin-button{ -webkit-appearance:none; margin:0; }
+  .cr-plan-badge{
+    display:inline-block; background:var(--green); color:white; font-size:10.5px; font-weight:800;
+    padding:3px 10px; border-radius:999px; margin-left:8px; text-transform:none; letter-spacing:0; vertical-align:middle;
+  }
+  .cr-amount-iva{ font-size:12.5px; color:#A6A89F; margin-top:2px; font-variant-numeric:tabular-nums; }
   input[type="range"]{ width:100%; accent-color:var(--green); height:6px; }
   .cot-result{
     background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); border-radius:20px;
@@ -491,6 +505,13 @@
   .cot-result .btn{ margin-top:16px; width:100%; justify-content:center; }
   .cot-preferencial{ text-align:center; font-size:12.5px; color:#A6A89F; margin-top:22px; }
   .cot-preferencial b{ color:var(--amarillo); }
+  .cot-highlight{
+    display:flex; align-items:flex-start; gap:8px; text-align:left;
+    font-size:12.5px; font-weight:400; color:#C7C9C4; line-height:1.55;
+    max-width:420px; margin:0 auto 26px;
+  }
+  .cot-highlight b{ color:var(--amarillo); font-weight:800; }
+  .cot-highlight-icon{ width:15px; height:15px; flex-shrink:0; color:var(--amarillo); margin-top:2px; }
 
   /* MIGRACIÓN */
   .migracion{ background:var(--white); border-top:1px solid var(--border); }
@@ -869,6 +890,7 @@
         <div class="feat-detail-wrap"><div class="feat-detail-inner"><ul class="feat-checklist">
           <li><b>Controlas:</b> montos, vencimientos y recargos por atraso.</li>
           <li><b>Facilita:</b> se aplican solas cada mes, sin capturarlas a mano.</li>
+          <li><b>Métodos de pago:</b> tarjeta, transferencia (SPEI) o efectivo en cualquier tienda OXXO — el residente elige.</li>
           <li><b>Ventaja para ti:</b> cobranza siempre al día, sin depender de que alguien "se acuerde".</li>
         </ul></div></div>
       </div>
@@ -1035,15 +1057,28 @@
         <h3>Simula cuánto pagarías</h3>
         <p>Mueve el control según el número de departamentos de tu condominio — es un estimado, no un cobro.</p>
       </div>
+      <p class="cot-highlight">
+        <svg class="cot-highlight-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+          <path d="M21 3v5h-5"/>
+          <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+          <path d="M8 16H3v5"/>
+        </svg>
+        Da de alta y baja unidades cuando quieras — pagas <b>solo los días exactos</b> que estuvo activa cada una.
+      </p>
       <div class="cot-body">
         <div class="cot-input-wrap">
-          <div class="cot-label"><span>Unidades del condominio</span><b id="cot-n">20</b></div>
+          <div class="cot-label">
+            <span>Unidades del condominio</span>
+            <input type="number" id="cot-n" class="cot-n-input" min="1" max="100" value="20" inputmode="numeric" aria-label="Número de unidades">
+          </div>
           <input type="range" id="cot-slider" min="1" max="100" value="20">
         </div>
         <div class="cot-result">
-          <div class="cr-label">Estimado mensual</div>
-          <div class="cr-amount" id="cot-amount">$649 <span>MXN</span></div>
-          <div class="cr-note" id="cot-note">Incluye todos los módulos. Pagos con tarjeta disponibles a partir de 41 unidades.</div>
+          <div class="cr-label">Estimado mensual <span class="cr-plan-badge" id="cot-plan-badge">Esencial</span></div>
+          <div class="cr-amount" id="cot-amount">$649 <span>MXN + IVA</span></div>
+          <div class="cr-amount-iva" id="cot-amount-iva">$753 MXN ya con IVA (16%)</div>
+          <div class="cr-note" id="cot-note">Incluye todos los módulos.</div>
           <a class="btn btn-primary" href="mailto:hola@varelza.app">Pide tu cotización formal →</a>
         </div>
       </div>
@@ -1087,6 +1122,13 @@
         </button>
         <div class="faq-a-wrap"><div class="faq-a-inner"><p class="faq-a">No. El precio de tu plan es fijo según tus unidades activas, sin letras chiquitas. Lo único adicional es la comisión de procesamiento cuando un residente paga con tarjeta — se muestra desglosada antes de confirmar el pago, y la cubre quien usa la tarjeta, no el condominio.</p></div></div>
       </div>
+      <div class="faq-item reveal" style="transition-delay:0.2s">
+        <button class="faq-q" type="button" aria-expanded="false">
+          <span>¿Cómo puede pagar su cuota un residente que no tiene tarjeta?</span>
+          <span class="faq-chev">⌄</span>
+        </button>
+        <div class="faq-a-wrap"><div class="faq-a-inner"><p class="faq-a">Con efectivo, en cualquier tienda OXXO del país — se genera una ficha desde la app y se confirma automáticamente en 24 a 48 horas, sin que el residente necesite tarjeta ni cuenta bancaria. También puede pagar por transferencia (SPEI). Nadie se queda sin forma de pagar.</p></div></div>
+      </div>
       <div class="faq-item reveal" style="transition-delay:0.22s">
         <button class="faq-q" type="button" aria-expanded="false">
           <span>¿Cuánto tarda en estar funcionando mi condominio?</span>
@@ -1119,6 +1161,7 @@
     <div class="marquee-item"><span class="flag">🇩🇴</span> Rep. Dominicana</div>
     <div class="marquee-item"><span class="flag">🇵🇪</span> Perú</div>
     <div class="marquee-item"><span class="flag">🇨🇱</span> Chile</div>
+    <div class="marquee-item"><span class="flag">🇭🇳</span> Honduras</div>
     <!-- duplicado para el loop continuo -->
     <div class="marquee-item"><span class="flag">🇲🇽</span> México</div>
     <div class="marquee-item"><span class="flag">🇬🇹</span> Guatemala</div>
@@ -1128,6 +1171,7 @@
     <div class="marquee-item"><span class="flag">🇩🇴</span> Rep. Dominicana</div>
     <div class="marquee-item"><span class="flag">🇵🇪</span> Perú</div>
     <div class="marquee-item"><span class="flag">🇨🇱</span> Chile</div>
+    <div class="marquee-item"><span class="flag">🇭🇳</span> Honduras</div>
   </div>
 </section>
 
@@ -1252,25 +1296,27 @@
   // anterior en su punto más caro — el precio de entrada de cada escalón es
   // menor al tope del anterior a propósito.
   var ESCALONES = [
-    { nMin: 10, nMax: 40, s: 399, c: 699, nota: 'Plan Esencial — cuota fija + excedente.' },
-    { nMin: 41, nMax: 100, s: 664, c: 1299, nota: 'Plan Crecimiento — pagos con tarjeta incluidos.' },
-    { nMin: 101, nMax: 200, s: 1234, c: 2199, nota: 'Plan Profesional — pagos con tarjeta incluidos.' },
-    { nMin: 201, nMax: 400, s: 2089, c: 3599, nota: 'Plan Corporativo — pagos con tarjeta incluidos.' },
+    { nMin: 10, nMax: 40, s: 399, c: 699, plan: 'Esencial', nota: 'Incluye todos los módulos.' },
+    { nMin: 41, nMax: 100, s: 664, c: 1299, plan: 'Crecimiento', nota: 'Incluye todos los módulos.' },
+    { nMin: 101, nMax: 200, s: 1234, c: 2199, plan: 'Profesional', nota: 'Incluye todos los módulos.' },
+    { nMin: 201, nMax: 400, s: 2089, c: 3599, plan: 'Corporativo', nota: 'Incluye todos los módulos.' },
   ];
   function estimar(n) {
-    if (n <= 5) return { total: 0, nota: 'Plan gratuito — todos los módulos incluidos, sin costo.' };
-    if (n <= 9) return { total: 299, nota: 'Plan Arranque — cuota fija, no cambia con el número de unidades.' };
-    if (n > 400) return { total: null, nota: 'Más de 400 unidades — cotización a la medida.' };
+    if (n <= 5) return { total: 0, plan: 'Gratuito', nota: 'Todos los módulos incluidos, sin costo.' };
+    if (n <= 9) return { total: 299, plan: 'Arranque', nota: 'Cuota fija, no cambia con el número de unidades.' };
+    if (n > 400) return { total: null, plan: 'Empresarial', nota: 'Cotización a la medida.' };
     var t = ESCALONES.find(function (e) { return n >= e.nMin && n <= e.nMax; });
     var avgInicio = t.s / t.nMin;
     var avgTope = t.c / t.nMax;
     var avgUnidades = avgInicio + (avgTope - avgInicio) * (n - t.nMin) / (t.nMax - t.nMin);
-    return { total: Math.round(avgUnidades * n), nota: t.nota };
+    return { total: Math.round(avgUnidades * n), plan: t.plan, nota: t.nota };
   }
   var slider = document.getElementById('cot-slider');
-  var nLabel = document.getElementById('cot-n');
+  var nInput = document.getElementById('cot-n');
   var amount = document.getElementById('cot-amount');
+  var amountIva = document.getElementById('cot-amount-iva');
   var note = document.getElementById('cot-note');
+  var planBadge = document.getElementById('cot-plan-badge');
   // El número cuenta hacia arriba/abajo en vez de saltar de golpe — detalle
   // pequeño, pero es justo el tipo de cosa que separa "se ve bien" de
   // "se siente cuidado".
@@ -1280,7 +1326,10 @@
     if (cotShown === null) cotShown = target;
     var start = cotShown, startTime = performance.now(), dur = 380;
     if (cotRaf) cancelAnimationFrame(cotRaf);
-    function paint(val) { amount.innerHTML = '$' + val.toLocaleString('es-MX') + ' <span>MXN/mes</span>'; }
+    function paint(val) {
+      amount.innerHTML = '$' + val.toLocaleString('es-MX') + ' <span>MXN + IVA</span>';
+      amountIva.textContent = '$' + Math.round(val * 1.16).toLocaleString('es-MX') + ' MXN ya con IVA (16%)';
+    }
     function tick(now) {
       var t = Math.min(1, (now - startTime) / dur);
       var eased = 1 - Math.pow(1 - t, 3);
@@ -1292,15 +1341,56 @@
     // sin foco real al momento del cambio), el número igual queda correcto.
     setTimeout(function () { cotShown = target; paint(target); }, dur + 120);
   }
-  function updateCot() {
-    var n = parseInt(slider.value, 10);
-    nLabel.textContent = n;
+  // Pinta el resultado para un número de unidades ya válido — no toca el
+  // valor de los campos, así que es seguro llamarla mientras el usuario
+  // sigue escribiendo.
+  function pintarEstimado(n) {
     var r = estimar(n);
-    if (r.total === null) { amount.textContent = 'A cotizar'; cotShown = null; }
+    planBadge.textContent = r.plan;
+    if (r.total === null) { amount.textContent = 'A cotizar'; amountIva.textContent = ''; cotShown = null; }
     else { animateAmount(Math.round(r.total)); }
-    note.textContent = r.nota + (n < 41 ? ' Tarjeta disponible a partir de 41 unidades; antes, pago por transferencia.' : '');
+    // La "cuota de mantenimiento" es lo que paga el RESIDENTE, no la
+    // licencia del administrador — hay que decirlo explícito para que no
+    // se confunda con el precio del plan de arriba.
+    note.textContent = r.nota + (n < 41
+      ? ' Pago de cuota de mantenimiento (residente) por transferencia o en efectivo en OXXO; con tarjeta de crédito a partir de 41 unidades.'
+      : ' Pago de cuota de mantenimiento (residente) con tarjeta de crédito, transferencia, o en efectivo en OXXO.');
   }
-  if (slider) { slider.addEventListener('input', updateCot); updateCot(); }
+  // El slider siempre trae un valor válido — sincroniza el campo numérico y pinta.
+  function alMoverSlider() {
+    var n = parseInt(slider.value, 10);
+    nInput.value = n;
+    pintarEstimado(n);
+  }
+  // El campo numérico, mientras se escribe, puede estar vacío o a medio
+  // terminar ("", "5" de camino a "50") — NO se le reescribe el valor aquí
+  // (eso era el bug: forzar "1" en cada tecla no dejaba borrar para
+  // escribir un número nuevo). Solo se actualiza el slider/estimado cuando
+  // ya hay un número válido en pantalla.
+  function alEscribirNumero() {
+    var n = parseInt(nInput.value, 10);
+    if (isNaN(n)) return;
+    var clamped = Math.min(100, Math.max(1, n));
+    slider.value = clamped;
+    pintarEstimado(clamped);
+  }
+  // Al salir del campo sí se limpia cualquier cosa fuera de rango o vacía.
+  function alSalirDelCampo() {
+    var n = parseInt(nInput.value, 10);
+    if (isNaN(n) || n < 1) n = 1;
+    if (n > 100) n = 100;
+    nInput.value = n;
+    slider.value = n;
+    pintarEstimado(n);
+  }
+  if (slider) {
+    slider.addEventListener('input', alMoverSlider);
+    if (nInput) {
+      nInput.addEventListener('input', alEscribirNumero);
+      nInput.addEventListener('blur', alSalirDelCampo);
+    }
+    alMoverSlider();
+  }
 
   // Chat widget
   var fab = document.getElementById('chat-fab');
