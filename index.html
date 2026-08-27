@@ -1042,7 +1042,7 @@
         </div>
         <div class="cot-result">
           <div class="cr-label">Estimado mensual</div>
-          <div class="cr-amount" id="cot-amount">$950 <span>MXN</span></div>
+          <div class="cr-amount" id="cot-amount">$649 <span>MXN</span></div>
           <div class="cr-note" id="cot-note">Incluye todos los módulos. Pagos con tarjeta disponibles a partir de 41 unidades.</div>
           <a class="btn btn-primary" href="mailto:hola@varelza.app">Pide tu cotización formal →</a>
         </div>
@@ -1238,32 +1238,34 @@
     scrollTargets.forEach(function (el) { el.classList.add('visible'); });
   }
 
-  // Cotizador — misma lógica del tabulador real (ver src/lib/tabulador.ts y
-  // CLAUDE.md), estimado. Confirmado por Iván agosto 2026: Esencial va de
-  // 10 a 40 unidades (ya no hay un escalón "Básico" aparte), Crecimiento
-  // arranca en 41 — ahí es donde empieza el pago con tarjeta.
+  // Cotizador V2 — misma lógica y mismos números del tabulador real (ver
+  // src/lib/tabulador.ts y CLAUDE.md). Confirmado por Iván agosto 2026,
+  // fundamentado con benchmarking real (AdminCondo, Vivook).
   //
-  // Entre los 4 escalones pagados se elige el que resulte MÁS BARATO para
-  // el número de unidades, no el que "le toca" por rango — asignarlo solo
-  // por rango generaba un salto de precio injusto justo al cruzar un
-  // umbral (a 40 unidades, $1,400; a 41, saltaba a $2,830). Mismo criterio
-  // que el motor real de la app.
-  var ESCALONES_PAGADOS = [
-    { incluidas: 40, base: 1400, excedente: 30, nota: 'Plan Esencial — cuota fija + excedente.' },
-    { incluidas: 100, base: 2800, excedente: 30, nota: 'Plan Crecimiento — pagos con tarjeta incluidos.' },
-    { incluidas: 200, base: 4800, excedente: 28, nota: 'Plan Profesional — pagos con tarjeta incluidos.' },
-    { incluidas: 400, base: 8500, excedente: 25, nota: 'Plan Corporativo — pagos con tarjeta incluidos.' },
+  // Dentro de cada escalón con curva, el PROMEDIO por unidad baja en línea
+  // recta entre el precio de entrada y el de tope — nunca sube, por
+  // construcción matemática (una versión anterior, donde el precio TOTAL se
+  // frenaba cerca del tope, hacía que el promedio subiera un tramo antes de
+  // volver a bajar; se corrigió invirtiendo la construcción: el promedio es
+  // el que se traza en línea recta, el total se deriva de multiplicarlo por
+  // las unidades). Cruzar de escalón siempre cuesta menos que seguir en el
+  // anterior en su punto más caro — el precio de entrada de cada escalón es
+  // menor al tope del anterior a propósito.
+  var ESCALONES = [
+    { nMin: 10, nMax: 40, s: 399, c: 699, nota: 'Plan Esencial — cuota fija + excedente.' },
+    { nMin: 41, nMax: 100, s: 664, c: 1299, nota: 'Plan Crecimiento — pagos con tarjeta incluidos.' },
+    { nMin: 101, nMax: 200, s: 1234, c: 2199, nota: 'Plan Profesional — pagos con tarjeta incluidos.' },
+    { nMin: 201, nMax: 400, s: 2089, c: 3599, nota: 'Plan Corporativo — pagos con tarjeta incluidos.' },
   ];
   function estimar(n) {
     if (n <= 5) return { total: 0, nota: 'Plan gratuito — todos los módulos incluidos, sin costo.' };
-    if (n <= 9) return { total: Math.max(0, n - 5) * 237.5, nota: 'Plan Arranque — las primeras 5 unidades siguen gratis, luego $237.50/u.' };
+    if (n <= 9) return { total: 299, nota: 'Plan Arranque — cuota fija, no cambia con el número de unidades.' };
     if (n > 400) return { total: null, nota: 'Más de 400 unidades — cotización a la medida.' };
-    var mejor = null;
-    ESCALONES_PAGADOS.forEach(function (t) {
-      var total = t.base + Math.max(0, n - t.incluidas) * t.excedente;
-      if (mejor === null || total < mejor.total) mejor = { total: total, nota: t.nota };
-    });
-    return mejor;
+    var t = ESCALONES.find(function (e) { return n >= e.nMin && n <= e.nMax; });
+    var avgInicio = t.s / t.nMin;
+    var avgTope = t.c / t.nMax;
+    var avgUnidades = avgInicio + (avgTope - avgInicio) * (n - t.nMin) / (t.nMax - t.nMin);
+    return { total: Math.round(avgUnidades * n), nota: t.nota };
   }
   var slider = document.getElementById('cot-slider');
   var nLabel = document.getElementById('cot-n');
