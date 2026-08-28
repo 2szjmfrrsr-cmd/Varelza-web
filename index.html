@@ -613,7 +613,7 @@
 <header>
   <nav>
     <span class="nav-mark"><span class="var">VAR</span><span class="elza">ELZA</span></span>
-    <a class="btn btn-primary" href="mailto:hola@varelza.app">Contáctanos</a>
+    <a class="btn btn-primary" href="mailto:hola@varelza.app" data-cta="nav-contactanos" data-method="email">Contáctanos</a>
   </nav>
 </header>
 
@@ -629,7 +629,7 @@
       <h1 class="reveal" style="transition-delay:0.06s">Todo bajo <em>un mismo techo</em>: la gestión completa de tu condominio, sin Excel ni WhatsApp perdido.</h1>
       <p class="lead reveal" style="transition-delay:0.12s">Cobranza, avisos, incidencias y más, en un solo lugar — con cada persona de tu condominio viendo la misma información al instante, sin que tengas que estar avisándole a cada quien por su lado.</p>
       <div class="hero-ctas reveal" style="transition-delay:0.18s">
-        <a class="btn btn-primary" href="mailto:hola@varelza.app">Solicita una demo</a>
+        <a class="btn btn-primary" href="mailto:hola@varelza.app" data-cta="hero-demo" data-method="email">Solicita una demo</a>
         <a class="btn btn-ghost" href="#funciones">Ver qué incluye</a>
       </div>
       <span class="hero-note reveal" style="transition-delay:0.24s">Acceso solo por invitación — lo activa tu administrador.</span>
@@ -1079,7 +1079,7 @@
           <div class="cr-amount" id="cot-amount">$649 <span>MXN + IVA</span></div>
           <div class="cr-amount-iva" id="cot-amount-iva">$753 MXN ya con IVA (16%)</div>
           <div class="cr-note" id="cot-note">Incluye todos los módulos.</div>
-          <a class="btn btn-primary" href="mailto:hola@varelza.app">Pide tu cotización formal →</a>
+          <a class="btn btn-primary" href="mailto:hola@varelza.app" data-cta="cotizador-formal" data-method="email">Pide tu cotización formal →</a>
         </div>
       </div>
       <p class="cot-preferencial">¿Tu condominio tiene más de 100 unidades? <b>Precio preferencial</b> — siempre bajo cotización a la medida.</p>
@@ -1145,7 +1145,7 @@
     <div class="cta-final grain reveal">
       <h2>¿Listo para dejar el Excel y el WhatsApp atrás?</h2>
       <p>Escríbenos y te mostramos VARELZA funcionando con datos reales de un condominio, no una maqueta.</p>
-      <a class="btn btn-primary" href="mailto:hola@varelza.app">Solicita una demo →</a>
+      <a class="btn btn-primary" href="mailto:hola@varelza.app" data-cta="cta-final-demo" data-method="email">Solicita una demo →</a>
     </div>
   </div>
 </section>
@@ -1188,8 +1188,8 @@
   </div>
   <div class="chat-panel-body">
     <p>Escríbenos directo — no es un bot, es un humano real del otro lado.</p>
-    <a class="chat-option" href="https://wa.me/5219991781098?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20de%20VARELZA" target="_blank" rel="noopener"><span class="co-ic">💬</span> WhatsApp</a>
-    <a class="chat-option" href="mailto:hola@varelza.app"><span class="co-ic">✉️</span> hola@varelza.app</a>
+    <a class="chat-option" href="https://wa.me/5219991781098?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20de%20VARELZA" target="_blank" rel="noopener" data-cta="chat-panel-whatsapp" data-method="whatsapp"><span class="co-ic">💬</span> WhatsApp</a>
+    <a class="chat-option" href="mailto:hola@varelza.app" data-cta="chat-panel-email" data-method="email"><span class="co-ic">✉️</span> hola@varelza.app</a>
   </div>
 </div>
 
@@ -1399,6 +1399,20 @@
     fab.addEventListener('click', function () { panel.classList.toggle('open'); });
   }
 
+  // Eventos de conversión para Analytics — clic directo a WhatsApp/correo
+  // en cualquier CTA marcado con data-cta, y el envío del formulario de
+  // agente (evento recomendado de GA4: generate_lead).
+  document.querySelectorAll('[data-cta]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      if (typeof gtag === 'function') {
+        gtag('event', 'contact_click', {
+          cta_label: el.getAttribute('data-cta'),
+          contact_method: el.getAttribute('data-method') || 'unknown',
+        });
+      }
+    });
+  });
+
   // Cursor personalizado — solo si hay mouse de verdad (no en touch), y
   // respetando reduce-motion. Crece sobre cualquier cosa clickeable.
   var canFineCursor = window.matchMedia('(hover:hover) and (pointer:fine)').matches && !reduceMotion;
@@ -1588,6 +1602,9 @@
         'Teléfono: ' + (telefonoCompleto || '—') + '\n' +
         'Correo: ' + (correo || '—') + '\n' +
         'Plan de interés: ' + planTxt;
+      if (typeof gtag === 'function') {
+        gtag('event', 'generate_lead', { method: currentMode, plan_interes: planTxt });
+      }
       if (currentMode === 'whatsapp') {
         var msg = 'Hola, quiero información de VARELZA.\n' + detalle;
         window.open('https://wa.me/5219991781098?text=' + encodeURIComponent(msg), '_blank', 'noopener');
