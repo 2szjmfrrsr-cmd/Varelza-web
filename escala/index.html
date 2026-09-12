@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CC4HM80B8H"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CC4HM80B8H');
+</script>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VARELZA — escala tipográfica consolidada</title>
+<meta name="description" content="Todo bajo un mismo techo: cobranza, avisos, incidencias, asambleas y más, en una sola app para tu condominio.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VARELZA">
+<meta property="og:title" content="VARELZA — Todo bajo un mismo techo">
+<meta property="og:description" content="Cobranza, avisos e incidencias en un solo lugar, sin Excel ni WhatsApp perdido.">
+<meta property="og:url" content="https://varelza.app">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VARELZA — Todo bajo un mismo techo">
+<meta name="twitter:description" content="Cobranza, avisos e incidencias en un solo lugar, sin Excel ni WhatsApp perdido.">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,400&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  body{margin:0;font-family:'Manrope',system-ui,sans-serif;background:#FFFFFF;color:#1E1B18;line-height:1.5;}
+  *{box-sizing:border-box;}
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  a:hover{color:#8A5A1E;}
+  html{scroll-behavior:smooth;}
+  input:focus,button:focus{outline:none;}
+  @keyframes kenburns{0%{transform:scale(1);}100%{transform:scale(1.08);}}
+  @keyframes popIn{0%{opacity:0;transform:translateY(10px) scale(0.97);}100%{opacity:1;transform:none;}}
+  @keyframes win2IconPulse{0%,100%{box-shadow:0 0 0 0 rgba(201,154,91,0.38);}50%{box-shadow:0 0 0 16px rgba(201,154,91,0);}}
+  @keyframes win2IconFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+  @keyframes win2IconOrbit{0%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-14px) rotate(180deg);}100%{transform:translateY(0) rotate(360deg);}}
+  @keyframes win2IconGlow{0%,100%{filter:drop-shadow(0 0 0px rgba(201,154,91,0));}50%{filter:drop-shadow(0 0 28px rgba(201,154,91,0.65));}}
+  @keyframes win2Shine{0%,45%{top:-60%;}70%,100%{top:160%;}}
+  @keyframes win2PopIn{0%{opacity:0;transform:scale(0.8);}100%{opacity:1;transform:scale(1);}}
+  .kb-photo{animation:kenburns 22s ease-in-out infinite alternate;}
+  .shine-sweep{position:absolute;top:0;left:0;width:36%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.55),transparent);pointer-events:none;}
+  @media (prefers-reduced-motion: reduce){
+    .kb-photo{animation:none;}
+    .shine-sweep{display:none;}
+  }
+</style>
+</helmet>
+
+<div style="overflow-x:hidden;overflow-y:visible;background:#FFFFFF;">
+
+<header style="position:fixed;top:0;left:0;right:0;z-index:30;background:{{ headerBg }};backdrop-filter:{{ headerBlur }};border-bottom:1px solid {{ headerBorder }};transition:background 0.3s ease,border-color 0.3s ease;">
+  <nav style="display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:20px 32px;">
+    <span style="position:relative;display:inline-block;font-weight:800;font-size:30px;letter-spacing:3px;">
+      <span style="color:#C99A5B;">VARELZA</span>
+      <span ref="{{ refs.wordmarkShine }}" style="position:absolute;top:0;left:0;background-image:linear-gradient(100deg,transparent 30%,rgba(255,255,255,0.95) 50%,transparent 70%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;">VARELZA</span>
+    </span>
+    <div style="display:flex;align-items:center;gap:32px;">
+      <a href="#funciones" style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:{{ headerText }};transition:color 0.3s ease;">Funciones</a>
+      <a href="#planes" style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:{{ headerText }};transition:color 0.3s ease;">Planes</a>
+      <a href="#preguntas" style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:{{ headerText }};transition:color 0.3s ease;">Preguntas</a>
+      <a href="mailto:hola@varelza.app" style="background:#1E1B18;color:#fff;padding:12px 26px;border-radius:999px;font-weight:800;font-size:13px;letter-spacing:0.5px;transition:background 0.2s ease;" style-hover="background:#C99A5B;">Contáctanos</a>
+    </div>
+  </nav>
+</header>
+
+<div style="position:fixed;inset:0;z-index:0;overflow:hidden;">
+  <img class="kb-photo" src="uploads/opt/villa-dusk-rain-sm.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,17,13,0.35) 0%,rgba(20,17,13,0.6) 60%,rgba(20,17,13,0.96) 100%);z-index:1;"></div>
+  <div style="position:relative;z-index:2;height:100%;display:flex;align-items:center;padding:100px 32px 0;">
+    <div style="max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.2fr 0.8fr;gap:56px;align-items:center;">
+      <div style="max-width:600px;">
+        <span style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#E0B876;display:block;margin-bottom:22px;">Administración de condominios</span>
+        <h1 style="font-size:clamp(34px,4.4vw,52px);line-height:1.06;font-weight:800;letter-spacing:-1px;text-transform:uppercase;margin:0 0 22px;color:#FFFFFF;">Todo bajo un mismo techo</h1>
+        <p style="font-size:18px;color:#D8D2C6;max-width:460px;margin:0 0 30px;line-height:1.6;">Cobranza, avisos e incidencias en un solo lugar — cada persona de tu condominio viendo la misma información al instante, sin Excel ni WhatsApp perdido.</p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px;">
+          <a href="mailto:hola@varelza.app" style="position:relative;overflow:hidden;background:#C99A5B;color:#14110D;padding:16px 30px;border-radius:999px;font-weight:800;font-size:15px;letter-spacing:0.3px;transition:background 0.2s ease;" style-hover="background:#E0B876;">Solicita una demo<span ref="{{ refs.btnShine }}" class="shine-sweep"></span></a>
+          <a href="#funciones" style="border:1.5px solid rgba(255,255,255,0.4);color:#FFFFFF;padding:16px 30px;border-radius:999px;font-weight:700;font-size:15px;transition:border-color 0.2s ease;" style-hover="border-color:#C99A5B;">Ver qué incluye</a>
+        </div>
+        <span style="font-size:13px;color:#B7AFA2;font-weight:600;display:block;margin-bottom:18px;">Acceso solo por invitación — lo activa tu administrador. Infraestructura PCI-DSS Nivel 1 y SOC 2 Tipo II.</span>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;">
+          <span style="border:1px solid rgba(255,255,255,0.22);border-radius:999px;padding:8px 16px;font-size:11px;font-weight:700;color:#D8D2C6;">Próximamente en App Store</span>
+          <span style="border:1px solid rgba(255,255,255,0.22);border-radius:999px;padding:8px 16px;font-size:11px;font-weight:700;color:#D8D2C6;">Próximamente en Google Play</span>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <span style="background:rgba(255,255,255,0.08);border-radius:999px;padding:7px 14px;font-size:11px;font-weight:700;color:#F5F1EA;">Cobranza</span>
+          <span style="background:rgba(255,255,255,0.08);border-radius:999px;padding:7px 14px;font-size:11px;font-weight:700;color:#F5F1EA;">Avisos</span>
+          <span style="background:rgba(255,255,255,0.08);border-radius:999px;padding:7px 14px;font-size:11px;font-weight:700;color:#F5F1EA;">Incidencias</span>
+          <span style="background:rgba(255,255,255,0.08);border-radius:999px;padding:7px 14px;font-size:11px;font-weight:700;color:#F5F1EA;">Asambleas</span>
+          <span style="background:rgba(255,255,255,0.08);border-radius:999px;padding:7px 14px;font-size:11px;font-weight:700;color:#F5F1EA;">Reservas</span>
+        </div>
+      </div>
+      <div style="position:relative;">
+        <div style="position:absolute;top:-14px;right:-14px;bottom:-14px;left:28px;background:rgba(201,154,91,0.16);border:1px solid rgba(201,154,91,0.25);border-radius:20px;z-index:-1;"></div>
+        <div style="background:rgba(20,17,13,0.55);border:1px solid rgba(255,255,255,0.14);border-radius:20px;padding:24px;backdrop-filter:blur(6px);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <span style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8A8378;">Hoy · Administrador</span>
+          <span style="font-size:11px;color:#8A8378;">9:41</span>
+        </div>
+        <div style="background:rgba(201,154,91,0.14);border:1px solid rgba(201,154,91,0.3);border-radius:14px;padding:14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div><span style="font-size:11px;font-weight:700;color:#E0B876;display:block;">Cobranza crítica</span><span style="font-size:11px;color:#B7AFA2;">2 de 4 unidades vencidas · $3,700</span></div>
+          <span style="font-size:22px;font-weight:800;color:#E0B876;">50%</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+          <div style="border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:10px;"><div style="font-size:15px;font-weight:800;color:#FFFFFF;">0</div><div style="font-size:11px;color:#8A8378;">Incidencias</div></div>
+          <div style="border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:10px;"><div style="font-size:15px;font-weight:800;color:#FFFFFF;">2</div><div style="font-size:11px;color:#8A8378;">Avisos</div></div>
+          <div style="border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:10px;"><div style="font-size:15px;font-weight:800;color:#FFFFFF;">2</div><div style="font-size:11px;color:#8A8378;">Rondas</div></div>
+          <div style="border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:10px;"><div style="font-size:15px;font-weight:800;color:#FFFFFF;">0</div><div style="font-size:11px;color:#8A8378;">Reservas</div></div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:10px;font-size:11px;color:#B7AFA2;">Ronda perimetral completada · hace 18h</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="height:500px;" aria-hidden="true"></div>
+
+<section ref="{{ refs.win2 }}" style="position:relative;height:5300px;">
+  <div style="position:fixed;top:0;left:0;right:0;width:100%;min-height:100vh;z-index:2;background:#0C0A08;border-radius:{{ win2Radius }};box-shadow:0 -20px 60px rgba(0,0,0,0.25);transform:translateY({{ win2Y }}%);transition:transform {{ win2Transition }} cubic-bezier(0.22,1,0.36,1);overflow:hidden;">
+  <img loading="lazy" decoding="async" src="uploads/ecosistema-bg.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;">
+  <div style="position:absolute;inset:0;background:rgba(12,10,8,0.82);"></div>
+  <div ref="{{ refs.chips }}" style="position:absolute;inset:0;opacity:{{ win2GroupOpacity }};transition:opacity 0.6s cubic-bezier(0.22,1,0.36,1);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 6% 24px;transform:{{ win2GroupY }};transition:transform 0.6s cubic-bezier(0.22,1,0.36,1),opacity 0.6s cubic-bezier(0.22,1,0.36,1);">
+    <div ref="{{ refs.win2Shine }}" style="position:absolute;z-index:0;top:-20%;bottom:-20%;width:30%;left:-50%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.11),transparent);transform:skewX(-10deg);pointer-events:none;"></div>
+    <h2 style="position:relative;margin:0;font-weight:800;text-transform:uppercase;letter-spacing:-1px;line-height:1.04;font-size:clamp(28px,3.4vw,38px);color:#F5F1EA;">Todo lo que tu condominio<br><span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:700;text-transform:none;color:#C99A5B;letter-spacing:0;">necesita.</span></h2>
+    <div style="position:relative;width:50px;height:3px;background:#C99A5B;margin:18px 0;"></div>
+    <span style="position:relative;font-weight:700;font-size:clamp(11px,1.1vw,13px);letter-spacing:3px;text-transform:uppercase;color:#C99A5B;margin-bottom:14px;">Un ecosistema de gestión, no una lista de apps sueltas</span>
+    <p style="position:relative;margin:0 0 28px;font-size:clamp(12px,1.25vw,15px);color:#B7AFA2;line-height:1.5;max-width:520px;">Cobranza. Amenidades. Seguridad.<br>Todo lo que tu condominio necesita para <strong style="color:#F5F1EA;">estar al día</strong> y <strong style="color:#F5F1EA;">crecer</strong>.</p>
+    <div style="position:relative;display:flex;align-items:center;gap:14px;width:100%;max-width:480px;margin:24px 0 64px;">
+      <div style="flex:1;height:2.5px;background:rgba(201,154,91,0.4);"></div>
+      <div style="width:7px;height:7px;border-radius:50%;background:#C99A5B;"></div>
+      <div style="flex:1;height:2.5px;background:rgba(245,241,234,0.3);"></div>
+    </div>
+    <div style="position:relative;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:0 clamp(32px,5vw,72px);row-gap:32px;max-width:960px;">
+      <sc-for list="{{ win2Cards }}" as="card" hint-placeholder-count="6">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:14px;position:relative;padding:0 clamp(10px,1.6vw,20px);">
+          <div style="width:{{ card.dia }};height:{{ card.dia }};border-radius:50%;border:2px solid {{ card.color }};display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform 0.2s ease;" onMouseEnter="{{ card.onHoverIn }}" onMouseLeave="{{ card.onHoverOut }}" style-hover="transform:scale(1.08);">
+            <span style="font-family:{{ card.numFont }};font-style:{{ card.numStyle }};font-weight:800;font-size:{{ card.numSize }};color:{{ card.color }};">{{ card.num }}</span>
+          </div>
+          <span style="font-weight:400;font-size:clamp(14px,1.4vw,18px);letter-spacing:5px;text-transform:uppercase;color:{{ card.color }};">{{ card.word }}</span>
+          <sc-if value="{{ card.expanded }}" hint-placeholder-val="{{ false }}">
+            <div style="position:fixed;left:{{ win2PopupPos.left }}px;bottom:{{ win2PopupPos.bottom }}px;transform:translateX(-50%);z-index:30;pointer-events:none;">
+              <div style="width:320px;max-width:calc(100vw - 32px);background:rgba(255,255,255,0.07);backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);border:1px solid rgba(255,255,255,0.22);border-radius:20px;padding:30px 28px;text-align:center;box-shadow:0 30px 60px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.15);animation:win2PopIn 0.32s cubic-bezier(0.34,1.56,0.64,1);transform-origin:bottom center;">
+                <span style="font-weight:800;font-size:13px;letter-spacing:2px;color:{{ card.color }};display:block;margin-bottom:12px;">{{ card.num }} — {{ card.word }}</span>
+                <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;">
+                  <sc-for list="{{ card.points }}" as="pt" hint-placeholder-count="3">
+                    <li style="font-size:13px;color:#F5F1EA;line-height:1.5;">{{ pt }}</li>
+                  </sc-for>
+                </ul>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section ref="{{ refs.win3 }}" style="position:relative;height:0px;">
+  <div style="position:fixed;top:0;left:0;right:0;width:100%;min-height:100vh;z-index:3;background:#FFFFFF;border-radius:{{ win3Radius }};box-shadow:0 -20px 60px rgba(0,0,0,0.25);padding:100px 32px;transform:translateY({{ win3Y }}%);transition:transform {{ win3Transition }} cubic-bezier(0.22,1,0.36,1);">
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:0.9fr 1.1fr;gap:60px;align-items:center;">
+    <div>
+      <span style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#8A5A1E;display:block;margin-bottom:20px;">Así se ve de verdad</span>
+      <h2 style="font-size:clamp(24px,2.6vw,30px);font-weight:800;letter-spacing:-0.5px;text-transform:uppercase;margin:0 0 20px;line-height:1.15;">No es una maqueta</h2>
+      <p style="color:#6B6560;font-size:15px;line-height:1.65;margin:0 0 22px;max-width:420px;">Esto es exactamente lo que ve un administrador, con datos reales de un condominio — y lo que ve el residente, el guardia y el consejo, conectado en tiempo real.</p>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px;color:#1E1B18;font-weight:600;"><span style="color:#8A5A1E;">—</span> Cobranza crítica al 50%, monto exacto vencido</div>
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px;color:#1E1B18;font-weight:600;"><span style="color:#8A5A1E;">—</span> Ronda perimetral completada hace 18h</div>
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px;color:#1E1B18;font-weight:600;"><span style="color:#8A5A1E;">—</span> Aviso de asamblea, 18 de 20 leído</div>
+      </div>
+    </div>
+    <div ref="{{ refs.diamonds }}" style="position:relative;height:420px;">
+      <div style="position:absolute;width:220px;height:220px;top:0;left:130px;transform:rotate(45deg) scale({{ diamondScale }});border-radius:16px;overflow:hidden;box-shadow:0 24px 48px rgba(30,27,24,0.22);opacity:{{ reveal.diamonds }};transition:opacity 0.7s ease,transform 0.7s cubic-bezier(.2,.8,.3,1);transition-delay:0s;">
+        <img loading="lazy" decoding="async" src="uploads/opt/modern-spacious-room-with-large-panoramic-window-sm.jpg" alt="" style="position:absolute;width:180%;height:180%;top:-40%;left:-40%;object-fit:cover;transform:rotate(-45deg);">
+      </div>
+      <div style="position:absolute;width:185px;height:185px;top:200px;left:20px;transform:rotate(45deg) scale({{ diamondScale }});border-radius:16px;overflow:hidden;box-shadow:0 24px 48px rgba(30,27,24,0.22);opacity:{{ reveal.diamonds }};transition:opacity 0.7s ease 0.12s,transform 0.7s cubic-bezier(.2,.8,.3,1) 0.12s;">
+        <img loading="lazy" decoding="async" src="uploads/opt/happy-couple-resting-home-with-good-mood-sm.jpg" alt="" style="position:absolute;width:180%;height:180%;top:-40%;left:-40%;object-fit:cover;transform:rotate(-45deg);">
+      </div>
+      <div style="position:absolute;width:185px;height:185px;top:200px;left:250px;transform:rotate(45deg) scale({{ diamondScale }});border-radius:16px;overflow:hidden;box-shadow:0 24px 48px rgba(30,27,24,0.22);opacity:{{ reveal.diamonds }};transition:opacity 0.7s ease 0.24s,transform 0.7s cubic-bezier(.2,.8,.3,1) 0.24s;">
+        <img loading="lazy" decoding="async" src="uploads/opt/modern-living-room-interior-design-sm.jpg" alt="" style="position:absolute;width:180%;height:180%;top:-40%;left:-40%;object-fit:cover;transform:rotate(-45deg);">
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section ref="{{ refs.phoneSection }}" style="position:relative;height:420vh;">
+  <div style="position:{{ pinPosition }};top:{{ pinTop }};bottom:{{ pinBottom }};left:0;right:0;width:100%;height:100vh;overflow:hidden;z-index:4;">
+    <div style="position:absolute;inset:0;background:#FFFFFF;transform:translateX({{ phoneSlideX }}%);transition:transform {{ phoneTransition }} cubic-bezier(0.22,1,0.36,1);will-change:transform;">
+      <div style="max-width:1200px;margin:0 auto;height:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:0 32px;">
+        <div>
+          <span style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#8A5A1E;display:block;margin-bottom:20px;">La app, módulo a módulo</span>
+          <h2 style="font-size:clamp(24px,2.6vw,30px);font-weight:800;letter-spacing:-0.5px;text-transform:uppercase;margin:0 0 16px;line-height:1.18;">{{ currentModule.title }}</h2>
+          <p style="color:#6B6560;font-size:15px;line-height:1.65;margin:0 0 26px;max-width:420px;">{{ currentModule.desc }}</p>
+          <div style="display:flex;gap:8px;">
+            <sc-for list="{{ moduleDots }}" as="d" hint-placeholder-count="5">
+              <span style="width:{{ d.w }};height:6px;border-radius:999px;background:{{ d.bg }};transition:all 0.3s ease;"></span>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;">
+          <div style="width:270px;height:552px;border-radius:44px;background:#1E1B18;padding:14px;box-shadow:0 40px 70px rgba(30,27,24,0.25);position:relative;">
+            <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);width:90px;height:22px;background:#1E1B18;border-radius:0 0 14px 14px;z-index:3;"></div>
+            <div style="width:100%;height:100%;background:#FFFFFF;border-radius:32px;overflow:hidden;position:relative;">
+              <div style="display:flex;justify-content:space-between;padding:16px 20px 0;font-size:11px;font-weight:700;color:#8A8378;"><span>9:41</span><span>VARELZA</span></div>
+              <div style="padding:22px 20px;">
+                <div style="width:52px;height:52px;border-radius:14px;background:#FBF3E7;color:#8A5A1E;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;margin-bottom:18px;">{{ currentModule.num }}</div>
+                <h5 style="font-size:15px;font-weight:800;margin:0 0 8px;text-transform:uppercase;">{{ currentModule.title }}</h5>
+                <div style="display:flex;flex-direction:column;gap:8px;margin-top:16px;">
+                  <sc-for list="{{ currentModule.rows }}" as="rw" hint-placeholder-count="3">
+                    <div style="border:1px solid #E7E2DC;border-radius:10px;padding:10px 12px;font-size:11px;color:#4A3F30;font-weight:600;">{{ rw }}</div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="funciones" style="padding:110px 32px;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="max-width:600px;margin:0 auto 56px;text-align:center;">
+      <span style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#8A5A1E;display:block;margin-bottom:20px;">Funciones</span>
+      <h2 style="font-size:clamp(24px,2.6vw,30px);font-weight:800;letter-spacing:-0.5px;text-transform:uppercase;margin:0 0 14px;line-height:1.15;">Un módulo para cada parte de administrar</h2>
+      <p style="color:#6B6560;font-size:15px;margin:0;">Los mismos módulos que ya usa el administrador — no una lista, lo que resuelve el día a día.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#E7E2DC;border:1px solid #E7E2DC;">
+      <sc-for list="{{ features }}" as="f" hint-placeholder-count="9">
+        <div style="background:#FFFFFF;padding:32px 28px;display:flex;flex-direction:column;gap:12px;min-height:200px;">
+          <span style="font-size:11px;font-weight:700;color:#8A5A1E;">{{ f.num }}</span>
+          <h4 style="font-size:15px;font-weight:700;margin:0;text-transform:uppercase;letter-spacing:0.3px;">{{ f.title }}</h4>
+          <p style="font-size:13px;color:#6B6560;line-height:1.55;margin:0;">{{ f.desc }}</p>
+          <button type="button" onClick="{{ f.toggle }}" style="background:none;border:none;padding:0;font-family:inherit;font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#8A5A1E;cursor:pointer;text-align:left;margin-top:6px;" style-hover="color:#C99A5B;">{{ f.toggleLabel }}</button>
+          <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+            <ul style="list-style:none;margin:6px 0 0;padding:10px 0 0;border-top:1px dashed #E7E2DC;display:flex;flex-direction:column;gap:7px;">
+              <sc-for list="{{ f.detailLines }}" as="dl" hint-placeholder-count="2">
+                <li style="font-size:11px;color:#4A3F30;line-height:1.5;display:flex;gap:6px;"><span style="color:#8A5A1E;">—</span>{{ dl }}</li>
+              </sc-for>
+            </ul>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section style="position:relative;background:#0C0A08;padding:90px 6%;display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <span style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#8A5A1E;display:block;margin-bottom:18px;">Opción B — duplicado de ventana 2</span>
+  <div style="border-top:2.5px solid #F5F1EA;border-bottom:2.5px solid #F5F1EA;padding:4px 18px;margin-bottom:18px;">
+    <span style="font-weight:800;font-size:clamp(14px,1.4vw,18px);letter-spacing:4px;color:#F5F1EA;">VARELZA</span>
+  </div>
+  <h2 style="margin:0;font-weight:800;text-transform:uppercase;letter-spacing:-1px;line-height:1.04;font-size:clamp(26px,3.2vw,38px);color:#F5F1EA;">Todo lo que tu condominio<br>necesita.</h2>
+  <div style="width:50px;height:3px;background:#C99A5B;margin:16px 0;"></div>
+  <p style="margin:0 0 22px;font-size:clamp(12px,1.25vw,15px);color:#B7AFA2;line-height:1.5;max-width:520px;">Cobranza. Amenidades. Seguridad.<br>Todo lo que tu condominio necesita para <strong style="color:#F5F1EA;">estar al día</strong> y <strong style="color:#F5F1EA;">crecer</strong>.</p>
+  <div style="display:grid;grid-template-columns:repeat(3,auto);gap:0 clamp(22px,3.2vw,44px);row-gap:20px;position:relative;">
+    <sc-for list="{{ win2Cards }}" as="card" hint-placeholder-count="6">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px;position:relative;padding:0 clamp(14px,2vw,28px);">
+        <div style="width:clamp(38px,3.6vw,48px);height:clamp(38px,3.6vw,48px);border-radius:50%;border:2px solid #F5F1EA;display:flex;align-items:center;justify-content:center;">
+          <span style="font-weight:800;font-size:clamp(16px,1.6vw,22px);color:#F5F1EA;">{{ card.num }}</span>
+        </div>
+        <span style="font-weight:800;font-size:clamp(10px,1vw,11px);letter-spacing:0.5px;text-transform:uppercase;color:#F5F1EA;">{{ card.word }}</span>
+      </div>
+    </sc-for>
+  </div>
+  <div style="margin-top:24px;border:1px solid rgba(245,241,234,0.4);border-radius:999px;padding:9px 26px;">
+    <span style="font-weight:700;font-size:clamp(10px,1vw,11px);letter-spacing:3px;color:#F5F1EA;">VARELZA.APP</span>
+  </div>
+</section>
+
+<section style="background:#F6F3EE;padding:110px 32px;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="max-width:600px;margin:0 auto 56px;text-align:center;">
+      <span style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#8A5A1E;display:block;margin-bottom:20px;">Un techo, distintas maneras de vivir bajo él</span>
+      <h2 style="font-size:clamp(24px,2.6vw,30px);font-weight:800;letter-spacing:-0.5px;text-transform:uppercase;margin:0 0 14px;line-height:1.15;">La información viaja sola</h2>
+      <p style="color:#6B6560;font-size:15px;margin:0;">No es una app genérica con todo mezclado — cada quien ve solo lo suyo, pero todo está conectado por debajo.</p>
+    </div>
+    <div ref="{{ refs.roles }}" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
+      <div style="border-radius:18px;overflow:hidden;height:260px;position:relative;opacity:{{ reveal.roles }};transform:{{ roleLeftTransform }};transition:opacity 0.8s ease,transform 0.8s cubic-bezier(.2,.8,.3,1);">
+        <img loading="lazy" decoding="async" src="uploads/opt/family-home-sm.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(20,17,13,0.9) 100%);"></div>
+        <span style="position:absolute;top:18px;left:18px;background:rgba(255,255,255,0.15);backdrop-filter:blur(4px);color:#FFFFFF;font-size:11px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;padding:6px 12px;border-radius:999px;">Rol</span>
+        <div style="position:absolute;bottom:0;left:0;padding:22px;">
+          <h5 style="font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 4px;color:#FFFFFF;display:flex;align-items:center;gap:8px;">Residente <span style="color:#E0B876;">→</span></h5>
+          <p style="font-size:11px;color:#E7E2DC;margin:0;max-width:280px;">Reporta una incidencia con foto y la sigue en tiempo real hasta que queda resuelta.</p>
+        </div>
+      </div>
+      <div style="border-radius:18px;overflow:hidden;height:260px;position:relative;opacity:{{ reveal.roles }};transform:{{ roleRightTransform }};transition:opacity 0.8s ease,transform 0.8s cubic-bezier(.2,.8,.3,1);">
+        <img loading="lazy" decoding="async" src="uploads/opt/rear-view-happy-colleagues-sitting-lobby-break-sm.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(20,17,13,0.9) 100%);"></div>
+        <span style="position:absolute;top:18px;left:18px;background:rgba(255,255,255,0.15);backdrop-filter:blur(4px);color:#FFFFFF;font-size:11px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;padding:6px 12px;border-radius:999px;">Rol</span>
+        <div style="position:absolute;bottom:0;left:0;padding:22px;">
+          <h5 style="font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 4px;color:#FFFFFF;display:flex;align-items:center;gap:8px;">Administrador y consejo <span style="color:#E0B876;">→</span></h5>
+          <p style="font-size:11px;color:#E7E2DC;margin:0;max-width:280px;">Asigna cada incidencia y aviso, y el consejo revisa y vota con reportes reales.</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+      <sc-for list="{{ rolesMini }}" as="r" hint-placeholder-count="3">
+        <div style="border:1px solid #E7E2DC;border-radius:14px;padding:20px;background:#FFFFFF;">
+          <h5 style="font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 6px;">{{ r.label }}</h5>
+          <p style="font-size:11px;color:#6B6560;margin:0;line-height:1.5;">{{ r.desc }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section style="padding:96px 32px;">
+  <div style="max-width:760px;margin:0 auto;text-align:center;">
+    <span style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#8A5A1E;display:block;margin-bottom:20px;">Cambiarte es más fácil de lo que crees</span>
+    <h2 style="font-size:clamp(24px,2.6vw,30px);font-weight:800;letter-spacing:-0.5px;text-transform:uppercase;margin:0 0 32px;line-height:1.15;">¿Qué usas hoy?</h2>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;">
+      <sc-for list="{{ migOptions }}" as="m" hint-placeholder-count="4">
+        <button type="button" onClick="{{ m.select }}" style="padding:12px 22px;border-radius:999px;border:1.5px solid #E7E2DC;background:#FFFFFF;color:#1E1B18;font-family:inherit;font-weight:700;font-size:13px;cursor:pointer;transition:border-color 0.2s ease;" style-hover="border-color:#C99A5B;">{{ m.labelStyled }}</button>
+      </sc-for>
+    </div>
+    <div key="{{ migKey }}" style="background:#FBF3E7;border:1px solid rgba(201,154,91,0.3);border-radius:18px;padding:26px 30px;min-height:24px;margin-bottom:40px;animation:popIn 0.45s cubic-bezier(.2,.8,.3,1);">
+      <p style="font-size:15px;color:#4A3F30;line-height:1.6;margin:0;">{{ migAnswer }}</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left;">
+      <sc-for list="{{ migSteps }}" as="s" hint-placeholder-count="3">
+        <div style="display:flex;gap:14px;align-items:flex-start;background:{{ s.bg }};border-radius:14px;padding:14px;">
+          <span style="width:30px;height:30px;border-radius:50%;background:#1E1B18;color:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;">{{ s.n }}</span>
+          <div><b style="display:flex;align-items:center;gap:6px;font-size:13px;margin-bottom:3px;">{{ s.title }} <span style="color:#8A5A1E;font-size:11px;">→</span></b><span style="font-size:11px;color:#8A8378;line-height:1.5;">{{ s.desc }}</span></div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="planes" style="background:#F6F3EE;padding:110px 32px;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="max-width:560px;margin:0 auto 20px;text-align:center;">
+      <span style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#8A5A1E;display:block;margin-bottom:20px;">Planes</span>
+      <h2 style="font-size:clamp(24px,2.6vw,30px);font-weight:800;letter-spacing:-0.5px;text-transform:uppercase;margin:0 0 16px;line-height:1.15;">Un plan para cada tamaño</h2>
+      <p style="color:#6B6560;font-size:15px;margin:0;">El costo crece contigo, no antes.</p>
+    </div>
+    <div style="max-width:680px;margin:32px auto 8px;text-align:center;background:#FBF3E7;border:1px solid rgba(201,154,91,0.3);border-radius:16px;padding:18px 26px;">
+      <b style="color:#8A5A1E;font-size:13px;">Ten el control completo de lo que pagas.</b>
+      <span style="font-size:13px;color:#4A3F30;display:block;margin-top:4px;">Da de alta y baja unidades cuando quieras — se cobra lo proporcional a los días exactos que estuvo activa cada una. Nunca pagas de más.</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:36px 0 8px;">
+      <sc-for list="{{ plans }}" as="p" hint-placeholder-count="5">
+        <div onClick="{{ p.select }}" style="border:1.5px solid #E7E2DC;border-radius:16px;padding:22px 18px;cursor:pointer;background:#FFFFFF;transition:border-color 0.2s ease,background 0.2s ease;" style-hover="border-color:#C99A5B;">
+          <h4 style="font-size:15px;font-weight:800;margin:0 0 3px;text-transform:uppercase;letter-spacing:0.3px;">{{ p.name }}</h4>
+          <div style="font-size:11px;color:#8A8378;font-weight:600;margin-bottom:14px;">{{ p.range }}</div>
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px;">
+            <sc-for list="{{ p.items }}" as="it" hint-placeholder-count="3">
+              <li style="font-size:11px;color:#6B6560;line-height:1.4;">{{ it }}</li>
+            </sc-for>
+          </ul>
+          <sc-if value="{{ p.selected }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:14px;font-size:11px;font-weight:800;color:#8A5A1E;">Seleccionado</div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+    <p style="text-align:center;font-size:11px;color:#8A8378;margin:0 0 40px;">* Precios exactos por cotización — dependen del número de unidades.</p>
+
+    <sc-if value="{{ activePlanName }}" hint-placeholder-val="{{ null }}">
+      <div style="text-align:center;margin-bottom:56px;">
+        <a href="{{ planCtaHref }}" target="_blank" rel="noopener" style="background:#1E1B18;color:#fff;padding:16px 30px;border-radius:999px;font-weight:800;font-size:15px;display:inline-flex;transition:background 0.2s ease;" style-hover="background:#C99A5B;">Solicitar cotización para "{{ activePlanName }}" →</a>
+      </div>
+    </sc-if>
+
+    <div style="position:relative;border-radius:24px;overflow:hidden;">
+      <img loading="lazy" decoding="async" class="kb-photo" src="uploads/opt/swimming-pool-beach-luxury-hotel-type-entertainment-complex-amara-dolce-vita-luxury-hotel-resort-tekirova-kemer-turkey-sm.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+      <div style="position:absolute;inset:0;background:rgba(20,17,13,0.85);z-index:1;"></div>
+      <div style="position:relative;z-index:2;padding:48px 44px;">
+        <div style="max-width:480px;margin:0 auto 30px;text-align:center;">
+          <h3 style="font-size:22px;font-weight:800;margin:0 0 8px;text-transform:uppercase;letter-spacing:0.3px;color:#FFFFFF;">Simula cuánto pagarías</h3>
+          <p style="font-size:13px;color:#D8D2C6;margin:0;">Mueve el control según el número de departamentos — es un estimado, no un cobro.</p>
+        </div>
+        <div style="display:flex;gap:40px;align-items:center;flex-wrap:wrap;justify-content:center;">
+          <div style="flex:1;min-width:260px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700;margin-bottom:12px;color:#FFFFFF;">
+              <span>Unidades del condominio</span>
+              <input type="number" value="{{ cotN }}" onChange="{{ onCotInput }}" min="1" max="100" style="width:64px;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.2);border-radius:10px;color:#F5F1EA;font-family:inherit;font-weight:800;font-size:15px;text-align:center;padding:6px 4px;"></input>
+            </div>
+            <input type="range" min="1" max="100" value="{{ cotN }}" onChange="{{ onCotInput }}" style="width:100%;accent-color:#C99A5B;"></input>
+          </div>
+          <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);border-radius:18px;padding:24px 28px;text-align:center;min-width:240px;">
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#B7AFA2;font-weight:700;margin-bottom:8px;">Estimado mensual · {{ cotPlan }}</div>
+            <div style="font-size:30px;font-weight:800;color:#F5F1EA;">{{ cotAmount }}</div>
+            <div style="font-size:11px;color:#B7AFA2;margin-top:6px;">{{ cotNote }}</div>
+            <a href="mailto:hola@varelza.app" style="margin-top:16px;display:flex;justify-content:center;background:#C99A5B;color:#14110D;padding:13px 20px;border-radius:999px;font-weight:800;font-size:13px;transition:background 0.2s ease;" style-hover="background:#E0B876;">Pide tu cotización formal →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="preguntas" style="padding:96px 32px;">
+  <div style="max-width:680px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:44px;">
+      <span style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#8A5A1E;display:block;margin-bottom:20px;">Preguntas frecuentes</span>
+      <h2 style="font-size:clamp(24px,2.6vw,30px);font-weight:800;letter-spacing:-0.5px;text-transform:uppercase;margin:0;line-height:1.15;">Antes de que preguntes, ya lo pensamos</h2>
+    </div>
+    <sc-for list="{{ faqs }}" as="q" hint-placeholder-count="6">
+      <div style="border-bottom:1px solid #E7E2DC;">
+        <button type="button" onClick="{{ q.toggle }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;background:none;border:none;text-align:left;cursor:pointer;font-family:inherit;padding:20px 0;font-size:15px;font-weight:700;color:#1E1B18;">
+          <span>{{ q.q }}</span>
+          <span style="flex-shrink:0;color:#8A8378;font-size:13px;">{{ q.chev }}</span>
+        </button>
+        <sc-if value="{{ q.open }}" hint-placeholder-val="{{ false }}">
+          <p style="padding:0 0 20px;font-size:13px;color:#6B6560;line-height:1.6;margin:0;max-width:600px;">{{ q.a }}</p>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section style="padding:100px 32px;background:#F6F3EE;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="max-width:600px;margin:0 auto 48px;text-align:center;">
+      <span style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#8A5A1E;display:block;margin-bottom:20px;">Confianza</span>
+      <h2 style="font-size:clamp(24px,2.6vw,30px);font-weight:800;letter-spacing:-0.5px;text-transform:uppercase;margin:0 0 14px;line-height:1.15;">Lo que dicen quienes ya lo usan</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+      <sc-for list="{{ testimonialSlots }}" as="t" hint-placeholder-count="3">
+        <div style="background:#FFFFFF;border:1.5px dashed #C9A56B;border-radius:16px;padding:24px;">
+          <p style="margin:0 0 16px;font-size:13px;color:#B7AFA2;line-height:1.55;font-style:italic;">{{ t.placeholder }}</p>
+          <span style="font-size:11px;font-weight:700;letter-spacing:0.5px;color:#8A5A1E;text-transform:uppercase;">{{ t.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section style="position:relative;padding:130px 32px;overflow:hidden;text-align:center;">
+  <img loading="lazy" decoding="async" class="kb-photo" src="uploads/opt/close-up-beautiful-woman-luxury-house-sm.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+  <div style="position:absolute;inset:0;background:rgba(20,17,13,0.75);z-index:1;"></div>
+  <div style="position:relative;z-index:2;max-width:600px;margin:0 auto;">
+    <span style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#E0B876;display:block;margin-bottom:18px;">Tu condominio, en su mejor forma</span>
+    <h2 style="font-size:clamp(26px,3.2vw,38px);font-weight:800;text-transform:uppercase;letter-spacing:-0.5px;margin:0 0 18px;color:#FFFFFF;">¿Listo para dejar el Excel atrás?</h2>
+    <p style="color:#D8D2C6;font-size:15px;margin:0 0 30px;">Escríbenos y te mostramos VARELZA funcionando con datos reales de un condominio, no una maqueta.</p>
+    <a href="mailto:hola@varelza.app" style="background:#C99A5B;color:#14110D;padding:16px 30px;border-radius:999px;font-weight:800;font-size:15px;display:inline-flex;transition:background 0.2s ease;" style-hover="background:#E0B876;">Solicita una demo →</a>
+  </div>
+</section>
+
+<footer style="padding:56px 32px 40px;text-align:center;border-top:1px solid #E7E2DC;">
+  <span style="font-weight:800;font-size:15px;letter-spacing:2px;display:block;margin-bottom:14px;">VARELZA</span>
+  <p style="font-size:13px;color:#8A8378;margin:0 0 4px;">¿Preguntas? <a href="mailto:hola@varelza.app" style="color:#8A5A1E;font-weight:700;">hola@varelza.app</a> · © 2026 VARELZA · <button type="button" onClick="{{ togglePrivacy }}" style="background:none;border:none;padding:0;font-family:inherit;color:#8A5A1E;font-weight:700;cursor:pointer;font-size:13px;">Aviso de privacidad</button></p>
+  <sc-if value="{{ privacyOpen }}" hint-placeholder-val="{{ false }}">
+    <p style="max-width:520px;margin:20px auto 0;font-size:11px;color:#8A8378;line-height:1.6;text-align:left;">Este sitio usa Google Analytics para entender su uso. Si nos escribes, recibimos los datos que decidas compartir. Nunca se venden a terceros. Puedes solicitar acceso, corrección o eliminación escribiendo a hola@varelza.app.</p>
+  </sc-if>
+</footer>
+
+<a href="https://wa.me/5219991781098?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20de%20VARELZA" target="_blank" rel="noopener" style="position:fixed;bottom:24px;right:24px;z-index:40;background:#1E1B18;color:#fff;padding:14px 22px;border-radius:999px;font-weight:800;font-size:13px;box-shadow:0 12px 24px rgba(0,0,0,0.3);transition:background 0.2s ease;" style-hover="background:#C99A5B;">Escríbenos</a>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    openFeat: {},
+    activePlan: null,
+    migKey: 'excel',
+    cotN: 20,
+    faqOpen: null,
+    privacyOpen: false,
+    reveal: { chips: false, miniapp: false, diamonds: false, roles: false },
+    jackStep: 0,
+    jackLocked: true,
+    win2Expanded: {},
+    win2PopupPos: { left: 0, bottom: 0 },
+  };
+  toggleWin2Detail(key) {
+    var cur = this.state.win2Expanded;
+    this.setState({ win2Expanded: Object.assign({}, cur, { [key]: !cur[key] }) });
+  }
+  setWin2Detail(key, val, e) {
+    var patch = { win2Expanded: Object.assign({}, this.state.win2Expanded, { [key]: val }) };
+    if (val && e && e.currentTarget) {
+      var rect = e.currentTarget.getBoundingClientRect();
+      var half = 160, margin = 16;
+      var vw = window.innerWidth;
+      var left = Math.min(Math.max(rect.left + rect.width / 2, half + margin), vw - half - margin);
+      var bottom = window.innerHeight - rect.top + 14;
+      patch.win2PopupPos = { left: left, bottom: bottom };
+    }
+    this.setState(patch);
+  }
+  closeWin2Detail() {
+    this.setState({ win2Expanded: {} });
+  }
+  stopProp(e) {
+    e.stopPropagation();
+  }
+  _els = {};
+  MAX_STEP = 8;
+
+  jackDerived(step) {
+    return {
+      win2Opened: step >= 1,
+      win3Opened: step >= 2,
+      phoneOpened: step >= 3,
+      moduleIndex: step >= 3 ? Math.min(4, step - 3) : 0,
+    };
+  }
+
+  goToJackStep(newStep) {
+    var self = this;
+    newStep = Math.max(0, Math.min(this.MAX_STEP, newStep));
+    if (newStep === this.state.jackStep) return;
+    if (newStep >= this.MAX_STEP) { this.releaseJack(); return; }
+    this.setState({ jackStep: newStep, jackLocked: true });
+    if (window.scrollY !== 0) window.scrollTo(0, 0);
+  }
+
+  releaseJack() {
+    var self = this;
+    var el = this._els.phoneSection;
+    var releaseY = 0;
+    if (el) {
+      var top = el.getBoundingClientRect().top + window.scrollY;
+      releaseY = top + el.offsetHeight;
+    }
+    this.setState({ jackStep: this.MAX_STEP, jackLocked: false }, function () {
+      window.scrollTo({ top: releaseY, behavior: 'smooth' });
+    });
+  }
+
+  componentDidMount() {
+    var self = this;
+    var THRESHOLD = 10, COOLDOWN = 700;
+    this._lastStepAt = -1e9;
+    window.scrollTo(0, 0);
+    this.setState({ jackStep: 0, jackLocked: true });
+
+    this._wheelHandler = function (e) {
+      if (!self.state.jackLocked) return;
+      e.preventDefault();
+      var now = performance.now();
+      if (now - self._lastStepAt < COOLDOWN) return;
+      if (Math.abs(e.deltaY) < THRESHOLD) return;
+      self._lastStepAt = now;
+      self.goToJackStep(self.state.jackStep + (e.deltaY > 0 ? 1 : -1));
+    };
+    window.addEventListener('wheel', this._wheelHandler, { passive: false });
+
+    this._touchStartY = 0;
+    this._touchStartHandler = function (e) { self._touchStartY = e.touches[0].clientY; };
+    this._touchMoveHandler = function (e) { if (self.state.jackLocked) e.preventDefault(); };
+    this._touchEndHandler = function (e) {
+      if (!self.state.jackLocked) return;
+      var now = performance.now();
+      if (now - self._lastStepAt < COOLDOWN) return;
+      var dy = self._touchStartY - e.changedTouches[0].clientY;
+      if (Math.abs(dy) < 30) return;
+      self._lastStepAt = now;
+      self.goToJackStep(self.state.jackStep + (dy > 0 ? 1 : -1));
+    };
+    window.addEventListener('touchstart', this._touchStartHandler, { passive: true });
+    window.addEventListener('touchmove', this._touchMoveHandler, { passive: false });
+    window.addEventListener('touchend', this._touchEndHandler, { passive: true });
+
+    this._relockScroll = function () {
+      if (self.state.jackLocked) {
+        if (window.scrollY !== 0) window.scrollTo(0, 0);
+        return;
+      }
+      var el = self._els.phoneSection;
+      if (!el) return;
+      var bottom = el.getBoundingClientRect().top + window.scrollY + el.offsetHeight;
+      if (window.scrollY < bottom - 40) {
+        self.setState({ jackStep: self.MAX_STEP - 1, jackLocked: true });
+        window.scrollTo(0, 0);
+      }
+    };
+    window.addEventListener('scroll', this._relockScroll, { passive: true });
+
+    var CYCLE = 5000, DELAY = 2000;
+    this._onShine = function () {
+      var t = performance.now();
+      var phase = t < DELAY ? 0 : ((t - DELAY) % CYCLE) / CYCLE;
+      var p = phase < 0.5 ? 2 * phase * phase : 1 - Math.pow(-2 * phase + 2, 2) / 2;
+      var off = -120 + p * 340;
+      var btn = self._els.btnShine;
+      if (btn) btn.style.transform = 'translateX(' + off + '%) skewX(-12deg)';
+      var wm = self._els.wordmarkShine;
+      if (wm) wm.style.backgroundPosition = (((1.6 - 2 * p) / 1.2) * 100) + '% 0';
+      var w2s = self._els.win2Shine;
+      if (w2s) w2s.style.left = (-50 + p * 200) + '%';
+    };
+    var tick = function () { self._onShine(); self._rafLoop = requestAnimationFrame(tick); };
+    this._rafLoop = requestAnimationFrame(tick);
+    if (typeof IntersectionObserver === 'undefined') {
+      this.setState({ reveal: { chips: true, miniapp: true, diamonds: true, roles: true } });
+      return;
+    }
+    this._observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var key = entry.target.getAttribute('data-reveal-key');
+          if (key) {
+            self.setState(function (s) { return { reveal: Object.assign({}, s.reveal, (function () { var o = {}; o[key] = true; return o; })()) }; });
+            self._observer.unobserve(entry.target);
+          }
+        }
+      });
+    }, { threshold: 0.15 });
+    ['chips', 'miniapp', 'diamonds', 'roles'].forEach(function (key) {
+      var el = self._els[key];
+      if (el) { el.setAttribute('data-reveal-key', key); self._observer.observe(el); }
+    });
+    setTimeout(function () {
+      self.setState({ reveal: { chips: true, miniapp: true, diamonds: true, roles: true } });
+    }, 2500);
+  }
+
+  componentWillUnmount() {
+    if (this._wheelHandler) window.removeEventListener('wheel', this._wheelHandler);
+    if (this._touchStartHandler) window.removeEventListener('touchstart', this._touchStartHandler);
+    if (this._touchMoveHandler) window.removeEventListener('touchmove', this._touchMoveHandler);
+    if (this._touchEndHandler) window.removeEventListener('touchend', this._touchEndHandler);
+    if (this._relockScroll) window.removeEventListener('scroll', this._relockScroll);
+    if (this._rafLoop) cancelAnimationFrame(this._rafLoop);
+    if (this._observer) this._observer.disconnect();
+  }
+
+  makeRef(key) {
+    var self = this;
+    if (!this._refFns) this._refFns = {};
+    if (!this._refFns[key]) {
+      this._refFns[key] = function (el) { if (el) self._els[key] = el; };
+    }
+    return this._refFns[key];
+  }
+
+  toggleFeat(id) { this.setState(s => ({ openFeat: { ...s.openFeat, [id]: !s.openFeat[id] } })); }
+  selectPlan(name) { this.setState(s => ({ activePlan: s.activePlan === name ? null : name })); }
+  setMig(key) { this.setState({ migKey: key }); }
+  onCotInput(e) {
+    var n = parseInt(e.target.value, 10);
+    if (isNaN(n)) return;
+    n = Math.max(1, Math.min(100, n));
+    this.setState({ cotN: n });
+  }
+  toggleFaq(id) { this.setState(s => ({ faqOpen: s.faqOpen === id ? null : id })); }
+  togglePrivacy() { this.setState(s => ({ privacyOpen: !s.privacyOpen })); }
+
+  estimar(n) {
+    var ESCALONES = [
+      { nMin: 10, nMax: 40, s: 399, c: 699, plan: 'Esencial', nota: 'Incluye todos los módulos.' },
+      { nMin: 41, nMax: 100, s: 664, c: 1299, plan: 'Crecimiento', nota: 'Incluye todos los módulos.' },
+    ];
+    if (n <= 5) return { total: 0, plan: 'Gratuito', nota: 'Todos los módulos incluidos, sin costo.' };
+    if (n <= 9) return { total: 299, plan: 'Arranque', nota: 'Cuota fija, no cambia con el número de unidades.' };
+    var t = ESCALONES.find(function (e) { return n >= e.nMin && n <= e.nMax; });
+    if (!t) return { total: null, plan: 'Empresarial', nota: 'Cotización a la medida.' };
+    var avgInicio = t.s / t.nMin;
+    var avgTope = t.c / t.nMax;
+    var avgUnidades = avgInicio + (avgTope - avgInicio) * (n - t.nMin) / (t.nMax - t.nMin);
+    return { total: Math.round(avgUnidades * n), plan: t.plan, nota: t.nota };
+  }
+
+  renderVals() {
+    var st = this.state;
+    var self = this;
+
+    var featureData = [
+      { id: 'cob', num: '01', title: 'Cobranza', desc: 'Ve quién está al corriente y quién no, con el monto exacto.', detailLines: ['Controlas cuándo se marca vencido y cómo se recuerda a cada residente.', 'Conciliación automática — nada de cruzar recibos a mano.'] },
+      { id: 'avi', num: '02', title: 'Avisos', desc: 'Publica una vez y sabe exactamente quién lo leyó y quién falta.', detailLines: ['Confirmación de lectura automática, por aviso y por persona.', 'Se acaba el "yo no vi el mensaje" como excusa.'] },
+      { id: 'inc', num: '03', title: 'Incidencias', desc: 'Reporte con foto, prioridad y seguimiento hasta que se resuelve.', detailLines: ['Asignación directa a proveedores, con estado en tiempo real.', 'Nada se pierde entre reportes de boca en boca.'] },
+      { id: 'asa', num: '04', title: 'Asambleas', desc: 'Asistencia por QR, quórum en vivo y votaciones exportables.', detailLines: ['Acta lista para exportar, sin listas de papel.', 'Se acaban las discusiones de "¿sí hubo quórum?".'] },
+      { id: 'res', num: '05', title: 'Reservas', desc: 'Salón, alberca, roof garden — calendario y reglas claras.', detailLines: ['Horarios y aforo configurables para cada espacio.', 'Se acaba el "yo lo aparté primero" sin comprobante.'] },
+      { id: 'man', num: '06', title: 'Mantenimiento', desc: 'Programa lo que necesita atención periódica.', detailLines: ['Recordatorios automáticos, sin depender de la memoria de nadie.', 'Nada se pasa de fecha por olvido.'] },
+      { id: 'pro', num: '07', title: 'Proveedores', desc: 'Directorio de a quién llamar, con historial de trabajos.', detailLines: ['Control de acceso por proveedor y evaluación de desempeño.', 'Decides con quién seguir trabajando, con datos reales.'] },
+      { id: 'ron', num: '08', title: 'Rondas de seguridad', desc: 'Tú decides qué revisa el guardia y cuándo.', detailLines: ['Puntos de control, horarios y frecuencia configurables.', 'Sabes exactamente qué se revisó, sin preguntarle al guardia.'] },
+      { id: 'doc', num: '09', title: 'Documentos', desc: 'Reglamento, actas y contratos siempre a la mano.', detailLines: ['Permisos de acceso por documento, sin carpetas físicas.', 'Nunca más "no encuentro esa acta de hace dos años".'] },
+    ];
+    var features = featureData.map(function (f) {
+      var open = !!st.openFeat[f.id];
+      return Object.assign({}, f, { open: open, toggleLabel: open ? 'Ocultar' : 'Más detalle', toggle: function () { self.toggleFeat(f.id); } });
+    });
+
+    var rolesMini = [
+      { label: 'Guardia', desc: 'Completa su ronda y confirma — si algo salió mal, se vuelve incidencia con un toque.' },
+      { label: 'Consejo', desc: 'Revisa y vota decisiones importantes, con acceso a reportes reales.' },
+      { label: 'Proveedor', desc: 'Recibe la solicitud, la resuelve y reporta — sin llamadas de seguimiento.' },
+    ];
+
+    var plans = [
+      { name: 'Gratuito', range: '1 a 5 unidades', items: ['Módulos básicos incluidos', 'Cuotas de mantenimiento', 'Accesos con QR y NIP'] },
+      { name: 'Arranque', range: '6 a 9 unidades', items: ['Cuota fija por administración', 'Módulos completos incluidos', 'Incidencias por tickets'] },
+      { name: 'Esencial', range: '10 a 40 unidades', items: ['Todos los módulos incluidos', 'Cobranza conciliada sola', 'Soporte prioritario'] },
+      { name: 'Crecimiento', range: '41 a 100 unidades', items: ['Pago con tarjeta de crédito', 'Recibos automáticos por correo', 'Todo lo anterior incluido'] },
+      { name: 'Empresarial', range: '+100 unidades', items: ['Precios preferenciales', 'Cotización a la medida', 'Todo lo anterior incluido'] },
+    ].map(function (p) {
+      return Object.assign({}, p, { selected: st.activePlan === p.name, select: function () { self.selectPlan(p.name); } });
+    });
+    var activePlanName = st.activePlan;
+    var planCtaHref = activePlanName
+      ? 'https://wa.me/5219991781098?text=' + encodeURIComponent('Hola, quiero información de VARELZA. Me interesa el plan ' + activePlanName + '.')
+      : '#';
+
+    var migMap = {
+      excel: 'Tu Excel se queda donde está — no tienes que reconstruirlo. Cargamos la información base una sola vez, y desde ahí la cobranza se concilia sola.',
+      whatsapp: 'Los avisos que hoy mandas por WhatsApp llegan igual de rápido, pero con confirmación de lectura.',
+      otro: 'No tienes que esperar a que termine tu contrato actual — migramos tu información base desde el primer día, en paralelo.',
+      papel: 'Es el cambio que más se va a sentir: pasar de una libreta a verlo resuelto en la pantalla, al instante.',
+    };
+    var migLabels = { excel: 'Excel', whatsapp: 'WhatsApp', otro: 'Otro software', papel: 'Libreta o papel' };
+    var migOptions = Object.keys(migLabels).map(function (key) {
+      return { key: key, labelStyled: migLabels[key], select: function () { self.setMig(key); } };
+    });
+    var migAnswer = migMap[st.migKey];
+    var migSteps = [
+      { n: '1', title: 'Nos cuentas qué usas hoy', desc: 'Sin compromiso, por WhatsApp o el formulario.', bg: 'transparent' },
+      { n: '2', title: 'Un agente configura tu condominio contigo', desc: 'Unidades, cuotas y residentes — no lo haces solo.', bg: '#F6F3EE' },
+      { n: '3', title: 'Empiezas a operar', desc: 'Sin reconstruir años de historial, solo el punto de partida.', bg: 'transparent' },
+    ];
+
+    var est = this.estimar(st.cotN);
+    var cotAmount = est.total === null ? 'A cotizar' : '$' + est.total.toLocaleString('es-MX') + ' MXN';
+    var cotNote = est.nota;
+    var cotPlan = est.plan;
+
+    var faqData = [
+      { id: 'q1', q: '¿Qué tan seguros están los datos de mi condominio?', a: 'Cada condominio está aislado del resto. El acceso es solo por invitación de tu administrador, nunca por registro abierto, y VARELZA nunca guarda el número de tu tarjeta.' },
+      { id: 'q2', q: '¿Qué pasa si decido cancelar?', a: 'Cancelas cuando quieras, sin contrato forzoso ni penalización. Se cobra proporcional a los días exactos que estuvo activa cada unidad.' },
+      { id: 'q3', q: '¿Cómo migro desde Excel o WhatsApp sin perder mi historial?', a: 'Solo se carga la información base de tu condominio una sola vez; no necesitas reconstruir años de historial, solo el punto de partida.' },
+      { id: 'q4', q: '¿Hay costos ocultos además de la cuota mensual?', a: 'No. El precio de tu plan es fijo según tus unidades activas. Lo único adicional es la comisión de tarjeta, que la cubre quien paga, no el condominio.' },
+      { id: 'q5', q: '¿Cómo paga un residente sin tarjeta?', a: 'Con efectivo en cualquier OXXO del país, o por transferencia SPEI. Nadie se queda sin forma de pagar.' },
+      { id: 'q6', q: '¿Cuánto tarda en estar funcionando mi condominio?', a: 'No es una implementación larga: se trata de invitar a las personas clave y cargar la información base. Un agente te acompaña todo el proceso.' },
+    ];
+    var faqs = faqData.map(function (f) {
+      var open = st.faqOpen === f.id;
+      return Object.assign({}, f, { open: open, chev: open ? '−' : '+', toggle: function () { self.toggleFaq(f.id); } });
+    });
+
+    var testimonialSlots = [
+      { placeholder: 'Pendiente: testimonio real de un administrador que ya usa Varelza.', label: 'Administrador verificado' },
+      { placeholder: 'Pendiente: testimonio real de un residente sobre su experiencia con la app.', label: 'Residente verificado' },
+      { placeholder: 'Pendiente: testimonio real sobre cobranza, migración o soporte.', label: 'Cliente verificado' },
+    ];
+
+    var G = '#C99A5B', W = '#F5F1EA';
+
+    var win2AllCards = [
+      { word: 'ORDEN', icon: 'M5 4 H19 V20 H5 Z M8 8 H16 M8 12 H16 M8 16 H12', desc: 'Estar al corriente abre la puerta — al salón, la alberca y cada amenidad.',
+        points: ['Contabilidad diaria de tu condominio', 'Balances y estados de resultados directo en el portal', 'Facturación conectada de punta a punta'] },
+      { word: 'AHORRO', icon: 'M3 17 L9 11 L13 15 L21 7 M15 7 H21 V13', desc: 'Mientras más crece tu condominio, menos pagas por unidad — sin mínimos.',
+        points: ['La factura se calcula por el número de unidades activas cada día', 'Sin rangos fijos ni compromisos mínimos', 'Cruzar a un plan más grande nunca cuesta más que quedarte en el anterior'] },
+      { word: 'PAGOS', icon: 'M3 6 H21 V18 H3 Z M3 10 H21 M6 14 H10', desc: 'Tarjeta, SPEI u OXXO — los recordatorios cobran por ti.',
+        points: ['El comprobante se genera solo', 'Recordatorios automáticos avisan a quien no ha pagado', 'VARELZA factura el servicio de administración'] },
+      { word: 'BLINDADO', icon: 'M12 2 L20 6 V12 C20 18 16 21 12 22 C8 21 4 18 4 12 V6 Z M9 12 L11.5 14.5 L16 10', desc: 'PCI-DSS Nivel 1 y SOC 2 Tipo II — seguridad real, no solo la palabra.',
+        points: ['Acceso solo por invitación', 'Información aislada entre condominios', 'Tu dominio forzando conexión cifrada siempre'] },
+      { word: 'CONTROL', icon: 'M4 6 H14 M4 12 H20 M4 18 H10', desc: 'QR o PIN en cada acceso, todo con fecha y hora — sin que tú estés encima.',
+        points: ['Tú programas las rondas del guardia', 'Cada asamblea confirma asistencia por QR', 'Todo queda registrado en una bitácora con fecha y hora'] },
+      { word: 'VOZ', icon: 'M9 3 H15 V12 A3 3 0 0 1 9 12 Z M5 11 C5 15 8 18 12 18 C16 18 19 15 19 11 M12 18 V22 M9 22 H15', desc: 'El consejo vota y queda registrado — cualquier unidad puede votar también.',
+        points: ['El consejo vota y queda registrado en las decisiones que le tocan', 'Protegiendo tu gestión, no dejándote solo con la decisión', 'Cualquier unidad del condominio puede votar también'] },
+    ];
+
+    var MANROPE = "'Manrope',sans-serif";
+    var win2Style = [
+      { dia:'clamp(70px,7.4vw,104px)', numSize:'clamp(24px,2.6vw,36px)', wordSize:'clamp(14px,1.4vw,18px)', color:G, wordFont:MANROPE, wordFontStyle:'normal', wordWeight:800, numFont:MANROPE, numStyle:'normal', ls:'1.5px', rot:'0deg', offsetY:0 },
+      { dia:'clamp(70px,7.4vw,104px)', numSize:'clamp(24px,2.6vw,36px)', wordSize:'clamp(14px,1.4vw,18px)', color:W, wordFont:MANROPE, wordFontStyle:'normal', wordWeight:800, numFont:MANROPE, numStyle:'normal', ls:'1.5px', rot:'0deg', offsetY:0 },
+      { dia:'clamp(70px,7.4vw,104px)', numSize:'clamp(24px,2.6vw,36px)', wordSize:'clamp(14px,1.4vw,18px)', color:'#8A5A1E', wordFont:MANROPE, wordFontStyle:'normal', wordWeight:800, numFont:MANROPE, numStyle:'normal', ls:'1.5px', rot:'0deg', offsetY:0 },
+      { dia:'clamp(70px,7.4vw,104px)', numSize:'clamp(24px,2.6vw,36px)', wordSize:'clamp(14px,1.4vw,18px)', color:G, wordFont:MANROPE, wordFontStyle:'normal', wordWeight:800, numFont:MANROPE, numStyle:'normal', ls:'1.5px', rot:'0deg', offsetY:0 },
+      { dia:'clamp(70px,7.4vw,104px)', numSize:'clamp(24px,2.6vw,36px)', wordSize:'clamp(14px,1.4vw,18px)', color:W, wordFont:MANROPE, wordFontStyle:'normal', wordWeight:800, numFont:MANROPE, numStyle:'normal', ls:'1.5px', rot:'0deg', offsetY:0 },
+      { dia:'clamp(70px,7.4vw,104px)', numSize:'clamp(24px,2.6vw,36px)', wordSize:'clamp(14px,1.4vw,18px)', color:'#8A5A1E', wordFont:MANROPE, wordFontStyle:'normal', wordWeight:800, numFont:MANROPE, numStyle:'normal', ls:'1.5px', rot:'0deg', offsetY:0 },
+    ];
+    var win2Cards = win2AllCards.map(function (c, i) {
+      var key = i;
+      var expanded = !!st.win2Expanded[key];
+      var dparts = c.desc.split(' — ');
+      return Object.assign({}, c, win2Style[i], {
+        expanded: expanded,
+        toggleDetail: self.toggleWin2Detail.bind(self, key),
+        onHoverIn: self.setWin2Detail.bind(self, key, true),
+        onHoverOut: self.setWin2Detail.bind(self, key, false),
+        detailLabel: expanded ? 'Ocultar detalles' : 'Ver detalles',
+        z: expanded ? 5 : 1,
+        descHead: dparts[0],
+        descBody: dparts[1] || '',
+        showDivider: i < 5,
+        num: String(i + 1).padStart(2, '0'),
+        wordCap: c.word.charAt(0) + c.word.slice(1).toLowerCase(),
+        wordFirst: c.word.slice(0, 2),
+        wordRest: c.word.slice(2),
+      });
+    });
+
+    var refs = { btnShine: this.makeRef('btnShine'), wordmarkShine: this.makeRef('wordmarkShine'), win2Shine: this.makeRef('win2Shine'), chips: this.makeRef('chips'), miniapp: this.makeRef('miniapp'), diamonds: this.makeRef('diamonds'), roles: this.makeRef('roles'), phoneSection: this.makeRef('phoneSection'), win2: this.makeRef('win2'), win3: this.makeRef('win3') };
+    var onLightHeader = this.jackDerived(st.jackStep).win3Opened;
+
+    var moduleData = [
+      { num: '01', title: 'Cobranza al instante', desc: 'Ve quién está al corriente y quién no, con el monto exacto — sin cruzar recibos a mano.', rows: ['Depto 101 · al día', 'Depto 204 · vencido $850', 'Depto 305 · al día'] },
+      { num: '02', title: 'Avisos con confirmación', desc: 'Publica un aviso y sabe exactamente quién lo leyó y quién falta.', rows: ['Asamblea extraordinaria · 18/20 leído', 'Corte de agua · 20/20 leído'] },
+      { num: '03', title: 'Incidencias con seguimiento', desc: 'Reporte con foto, prioridad y estado, hasta que queda resuelta.', rows: ['Fuga en azotea · en proceso', 'Luminaria pasillo B · resuelta'] },
+      { num: '04', title: 'Rondas de seguridad', desc: 'Tú decides qué revisa el guardia y cuándo — con historial completo.', rows: ['Ronda perimetral · hace 18h', 'Acceso vehicular · hace 3h'] },
+      { num: '05', title: 'Asambleas y votación', desc: 'Asistencia por QR, quórum en vivo y resultados exportables.', rows: ['Quórum alcanzado · 78%', 'Votación abierta · 2 temas'] },
+    ];
+    var totalModules = moduleData.length;
+    var jd = this.jackDerived(st.jackStep);
+    var moduleIndex = Math.min(totalModules - 1, jd.moduleIndex);
+    var currentModule = moduleData[moduleIndex];
+    var moduleDots = moduleData.map(function (m, i) {
+      return { w: i === moduleIndex ? '26px' : '6px', bg: i === moduleIndex ? '#8A5A1E' : '#E7E2DC' };
+    });
+
+
+    var reveal = {
+      chips: st.reveal.chips ? 1 : 0,
+      miniapp: st.reveal.miniapp ? 1 : 0,
+      diamonds: st.reveal.diamonds ? 1 : 0,
+      roles: st.reveal.roles ? 1 : 0,
+    };
+
+    return {
+
+      features: features, rolesMini: rolesMini, testimonialSlots: testimonialSlots,
+      win2Cards: win2Cards,
+      win2PopupPos: st.win2PopupPos,
+      win2HasExpanded: win2Cards.some(function (c) { return c.expanded; }),
+      win2ExpandedCard: win2Cards.filter(function (c) { return c.expanded; })[0] || {},
+      closeWin2Detail: this.closeWin2Detail.bind(this),
+      stopProp: this.stopProp.bind(this),
+      win2Card0: win2Cards[0], win2Card1: win2Cards[1], win2Card2: win2Cards[2],
+      plans: plans, activePlanName: activePlanName, planCtaHref: planCtaHref,
+      migOptions: migOptions, migAnswer: migAnswer, migSteps: migSteps, migKey: st.migKey,
+      cotN: st.cotN, cotAmount: cotAmount, cotNote: cotNote, cotPlan: cotPlan, onCotInput: this.onCotInput.bind(this),
+      faqs: faqs, privacyOpen: st.privacyOpen, togglePrivacy: this.togglePrivacy.bind(this),
+      refs: refs, reveal: reveal,
+      moduleIndex: moduleIndex,
+      currentModule: currentModule, moduleDots: moduleDots,
+      pinPosition: st.jackStep >= 9 && st.jackStep < this.MAX_STEP ? 'fixed' : 'absolute',
+      pinTop: st.jackStep >= this.MAX_STEP ? 'auto' : '0px',
+      pinBottom: st.jackStep >= this.MAX_STEP ? '0px' : 'auto',
+      win2Y: jd.win2Opened ? 0 : 100, win3Y: jd.win3Opened ? 0 : 100,
+      win2Transition: jd.win2Opened ? '0.6s' : '0.3s',
+      win3Transition: jd.win3Opened ? '0.6s' : '0.3s',
+      phoneTransition: jd.phoneOpened ? '0.6s' : '0.3s',
+      win2Radius: jd.win2Opened ? '32px 32px 0 0' : '0',
+      phoneSlideX: jd.phoneOpened ? 0 : -100,
+      win2GroupOpacity: jd.win2Opened ? 1 : 0,
+      win2GroupY: jd.win2Opened ? 'translateY(0)' : 'translateY(20px)',
+      win3Radius: jd.win3Opened ? '32px 32px 0 0' : '0',
+      headerBg: onLightHeader ? 'transparent' : 'rgba(20,17,13,0.32)',
+      headerBlur: onLightHeader ? 'none' : 'blur(14px)',
+      headerBorder: onLightHeader ? 'rgba(30,27,24,0.06)' : 'rgba(255,255,255,0.08)',
+      headerText: onLightHeader ? '#1E1B18' : '#F5F1EA',
+      chipsTransform: st.reveal.chips ? 'none' : 'translateY(30px)',
+      miniappTransform: st.reveal.miniapp ? 'none' : 'translateX(30px)',
+      diamondScale: st.reveal.diamonds ? 1 : 0.85,
+      roleLeftTransform: st.reveal.roles ? 'none' : 'translateX(-40px)',
+      roleRightTransform: st.reveal.roles ? 'none' : 'translateX(40px)',
+    };
+  }
+}
+</script>
+
+<script>
+  // Eventos de conversion para Analytics, equivalentes a los del sitio anterior:
+  // contact_click en cualquier clic a WhatsApp o correo. Delegado en document
+  // porque el marcado lo vuelve a montar React en cada render.
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+    if (!a || typeof gtag !== 'function') return;
+    var href = a.getAttribute('href') || '';
+    var metodo = href.indexOf('wa.me') !== -1 ? 'whatsapp'
+               : href.indexOf('mailto:') === 0 ? 'email'
+               : null;
+    if (!metodo) return;
+    gtag('event', 'contact_click', {
+      cta_label: (a.textContent || '').trim().slice(0, 60),
+      contact_method: metodo
+    });
+  });
+</script>
+</body>
+</html>
