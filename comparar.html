@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>VARELZA — comparar tipografía</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Manrope',system-ui,sans-serif;background:#14110D;color:#F5F1EA;height:100vh;display:flex;flex-direction:column;}
+  header{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.14);display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+  h1{font-size:15px;font-weight:800;letter-spacing:2px;color:#C99A5B;}
+  .modos{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap;}
+  button{font-family:inherit;font-size:12.5px;font-weight:700;padding:8px 16px;border-radius:999px;
+    border:1.5px solid rgba(255,255,255,.25);background:transparent;color:#F5F1EA;cursor:pointer;transition:.2s;}
+  button:hover{border-color:#C99A5B;}
+  button[aria-pressed="true"]{background:#C99A5B;border-color:#C99A5B;color:#14110D;}
+  .nota{font-size:12px;color:#B7AFA2;width:100%;}
+  .nota b{color:#E0B876;}
+  main{flex:1;display:flex;min-height:0;}
+  .panel{flex:1;display:flex;flex-direction:column;min-width:0;border-right:1px solid rgba(255,255,255,.14);}
+  .panel:last-child{border-right:0;}
+  .etiqueta{padding:7px 14px;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+    background:rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;gap:10px;}
+  .etiqueta span:last-child{color:#B7AFA2;font-weight:600;letter-spacing:0;text-transform:none;}
+  iframe{flex:1;width:100%;border:0;background:#fff;}
+  body[data-modo="original"] .panel[data-v="ajustada"]{display:none;}
+  body[data-modo="ajustada"] .panel[data-v="original"]{display:none;}
+</style>
+</head>
+<body data-modo="ambas">
+<header>
+  <h1>VARELZA · comparar tipografía</h1>
+  <div class="modos">
+    <button data-modo="ambas" aria-pressed="true">Lado a lado</button>
+    <button data-modo="original" aria-pressed="false">Solo original</button>
+    <button data-modo="ajustada" aria-pressed="false">Solo ajustada</button>
+  </div>
+  <p class="nota">
+    Ambas versiones son idénticas salvo el tamaño de letra. La ajustada baja el titular del hero
+    <b>62&nbsp;→&nbsp;52px</b>, el del panel oscuro <b>64&nbsp;→&nbsp;48px</b>, los de sección
+    <b>38&nbsp;→&nbsp;34px</b>, y sube el párrafo del hero <b>16.5&nbsp;→&nbsp;18px</b>.
+    Los paneles van estrechos: para juzgar de verdad, usa «Solo original» y «Solo ajustada» a pantalla completa.
+  </p>
+</header>
+
+<main>
+  <div class="panel" data-v="original">
+    <div class="etiqueta"><span>Original</span><span>como lo diseñó Claude Design</span></div>
+    <iframe src="./" title="Versión original" loading="eager"></iframe>
+  </div>
+  <div class="panel" data-v="ajustada">
+    <div class="etiqueta"><span>Ajustada</span><span>escala cercana a varelza.app</span></div>
+    <iframe src="./ajustada/" title="Versión ajustada" loading="eager"></iframe>
+  </div>
+</main>
+
+<script>
+  var botones = document.querySelectorAll('button[data-modo]');
+  botones.forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.body.dataset.modo = b.dataset.modo;
+      botones.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+    });
+  });
+</script>
+</body>
+</html>
