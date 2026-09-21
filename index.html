@@ -995,8 +995,8 @@
 
     <div class="tiers-grid">
       <div class="tier-card reveal" style="transition-delay:0.06s">
-        <h4>🎉 Gratuito</h4>
-        <div class="tc-range">1 a 5 unidades</div>
+        <h4>🎉 <!--gen:nombre:Gratuito-->Gratuito<!--/gen:nombre:Gratuito--></h4>
+        <div class="tc-range"><!--gen:rango:Gratuito-->1 a 5 unidades<!--/gen:rango:Gratuito--></div>
         <ul>
           <li>Módulos de residente, administración y guardia incluidos</li>
           <li>Gestión completa de cuotas de mantenimiento</li>
@@ -1005,18 +1005,18 @@
         <div class="tc-cta-wrap"><button class="btn btn-primary tc-agent-btn" type="button">💬 Solicitar más información a un agente</button></div>
       </div>
       <div class="tier-card reveal" style="transition-delay:0.1s">
-        <h4>Arranque</h4>
-        <div class="tc-range">6 a 9 unidades</div>
+        <h4><!--gen:nombre:Arranque-->Arranque<!--/gen:nombre:Arranque--></h4>
+        <div class="tc-range"><!--gen:rango:Arranque-->6 a 9 unidades<!--/gen:rango:Arranque--></div>
         <ul>
-          <li>Cuota fija por administración de 6 a 9 unidades</li>
+          <li>Cuota fija por administración de <!--gen:rango:Arranque-->6 a 9 unidades<!--/gen:rango:Arranque--></li>
           <li>Módulos de residente, administración y guardia incluidos</li>
           <li>Gestión de incidencias a través de tickets</li>
         </ul>
         <div class="tc-cta-wrap"><button class="btn btn-primary tc-agent-btn" type="button">💬 Solicitar más información a un agente</button></div>
       </div>
       <div class="tier-card reveal" style="transition-delay:0.14s">
-        <h4>Esencial</h4>
-        <div class="tc-range">10 a 40 unidades</div>
+        <h4><!--gen:nombre:Esencial-->Esencial<!--/gen:nombre:Esencial--></h4>
+        <div class="tc-range"><!--gen:rango:Esencial-->10 a 40 unidades<!--/gen:rango:Esencial--></div>
         <ul>
           <li>Todos los módulos incluidos (comité + proveedores)</li>
           <li>Cobranza conciliada automáticamente</li>
@@ -1028,8 +1028,8 @@
       </div>
       <div class="tier-card destacado reveal" style="transition-delay:0.18s">
         <span class="tc-badge">Pagos con tarjeta</span>
-        <h4>Crecimiento en adelante</h4>
-        <div class="tc-range">41 a 100 unidades</div>
+        <h4><!--gen:nombre:Crecimiento-->Crecimiento<!--/gen:nombre:Crecimiento--> en adelante</h4>
+        <div class="tc-range"><!--gen:rango:Crecimiento-->41 a 100 unidades<!--/gen:rango:Crecimiento--></div>
         <ul>
           <li>Incluye todo lo de los paquetes anteriores</li>
           <li><b>Pago de mensualidades con tarjeta de crédito</b></li>
@@ -1075,9 +1075,9 @@
           <input type="range" id="cot-slider" min="1" max="100" value="20">
         </div>
         <div class="cot-result">
-          <div class="cr-label">Estimado mensual <span class="cr-plan-badge" id="cot-plan-badge">Esencial</span></div>
-          <div class="cr-amount" id="cot-amount">$649 <span>MXN + IVA</span></div>
-          <div class="cr-amount-iva" id="cot-amount-iva">$753 MXN ya con IVA (16%)</div>
+          <div class="cr-label">Estimado mensual <span class="cr-plan-badge" id="cot-plan-badge"><!--gen:inicial:plan-->Esencial<!--/gen:inicial:plan--></span></div>
+          <div class="cr-amount" id="cot-amount"><!--gen:inicial:monto-->$649 <span>MXN + IVA</span><!--/gen:inicial:monto--></div>
+          <div class="cr-amount-iva" id="cot-amount-iva"><!--gen:inicial:iva-->$753 MXN ya con IVA (16%)<!--/gen:inicial:iva--></div>
           <div class="cr-note" id="cot-note">Incluye todos los módulos.</div>
           <a class="btn btn-primary" href="mailto:hola@varelza.app" data-cta="cotizador-formal" data-method="email">Pide tu cotización formal →</a>
         </div>
@@ -1295,22 +1295,42 @@
   // las unidades). Cruzar de escalón siempre cuesta menos que seguir en el
   // anterior en su punto más caro — el precio de entrada de cada escalón es
   // menor al tope del anterior a propósito.
+  /*gen:simulador*/
+  // ⚠️ REGIÓN GENERADA desde varelza-platform (datos/tabulador.json, datos/iva.json,
+  // datos/nombres-de-plan.json) por scripts/generar-sitio.mjs. No la edites
+  // aquí: el candado del sitio la rechaza. Es la misma fórmula que cobra la app.
   var ESCALONES = [
-    { nMin: 10, nMax: 40, s: 399, c: 699, plan: 'Esencial', nota: 'Incluye todos los módulos.' },
-    { nMin: 41, nMax: 100, s: 664, c: 1299, plan: 'Crecimiento', nota: 'Incluye todos los módulos.' },
-    { nMin: 101, nMax: 200, s: 1234, c: 2199, plan: 'Profesional', nota: 'Incluye todos los módulos.' },
-    { nMin: 201, nMax: 400, s: 2089, c: 3599, plan: 'Corporativo', nota: 'Incluye todos los módulos.' },
+    { clave: 'Gratuito', plan: 'Gratuito', nMin: 1, nMax: 5, s: 0, c: 0, esFijo: true, cotizacionManual: false },
+    { clave: 'Arranque', plan: 'Arranque', nMin: 6, nMax: 9, s: 299, c: 299, esFijo: true, cotizacionManual: false },
+    { clave: 'Esencial', plan: 'Esencial', nMin: 10, nMax: 40, s: 399, c: 699, esFijo: false, cotizacionManual: false },
+    { clave: 'Crecimiento', plan: 'Crecimiento', nMin: 41, nMax: 100, s: 711, c: 1346, esFijo: false, cotizacionManual: false },
+    { clave: 'Profesional', plan: 'Profesional', nMin: 101, nMax: 200, s: 1281, c: 2246, esFijo: false, cotizacionManual: false },
+    { clave: 'Corporativo', plan: 'Corporativo', nMin: 201, nMax: 400, s: 2136, c: 3646, esFijo: false, cotizacionManual: false },
+    { clave: 'Enterprise', plan: 'Empresarial', nMin: 401, nMax: null, s: 0, c: 0, esFijo: false, cotizacionManual: true },
   ];
+  var TASA_IVA = 0.16;
   function estimar(n) {
-    if (n <= 5) return { total: 0, plan: 'Gratuito', nota: 'Todos los módulos incluidos, sin costo.' };
-    if (n <= 9) return { total: 299, plan: 'Arranque', nota: 'Cuota fija, no cambia con el número de unidades.' };
-    if (n > 400) return { total: null, plan: 'Empresarial', nota: 'Cotización a la medida.' };
-    var t = ESCALONES.find(function (e) { return n >= e.nMin && n <= e.nMax; });
+    var m = Math.max(1, n);
+    var t = ESCALONES.filter(function (e) { return m >= e.nMin && (e.nMax === null || m <= e.nMax); })[0] || ESCALONES[ESCALONES.length - 1];
+    if (t.cotizacionManual) return { total: null, plan: t.plan, clave: t.clave };
+    if (t.esFijo) return { total: t.s, plan: t.plan, clave: t.clave };
     var avgInicio = t.s / t.nMin;
     var avgTope = t.c / t.nMax;
-    var avgUnidades = avgInicio + (avgTope - avgInicio) * (n - t.nMin) / (t.nMax - t.nMin);
-    return { total: Math.round(avgUnidades * n), plan: t.plan, nota: t.nota };
+    var avgUnidades = avgInicio + ((avgTope - avgInicio) * (n - t.nMin)) / (t.nMax - t.nMin);
+    return { total: Math.round(avgUnidades * n), plan: t.plan, clave: t.clave };
   }
+  /*/gen:simulador*/
+  // Las notas de cada plan son copy del sitio (no números): viven aquí, por
+  // clave interna del plan. Lo que dice cada una lo revisa marketing (nº 16).
+  var NOTAS = {
+    Gratuito: 'Todos los módulos incluidos, sin costo.',
+    Arranque: 'Cuota fija, no cambia con el número de unidades.',
+    Esencial: 'Incluye todos los módulos.',
+    Crecimiento: 'Incluye todos los módulos.',
+    Profesional: 'Incluye todos los módulos.',
+    Corporativo: 'Incluye todos los módulos.',
+    Enterprise: 'Cotización a la medida.'
+  };
   var slider = document.getElementById('cot-slider');
   var nInput = document.getElementById('cot-n');
   var amount = document.getElementById('cot-amount');
@@ -1328,7 +1348,7 @@
     if (cotRaf) cancelAnimationFrame(cotRaf);
     function paint(val) {
       amount.innerHTML = '$' + val.toLocaleString('es-MX') + ' <span>MXN + IVA</span>';
-      amountIva.textContent = '$' + Math.round(val * 1.16).toLocaleString('es-MX') + ' MXN ya con IVA (16%)';
+      amountIva.textContent = '$' + Math.round(val * (1 + TASA_IVA)).toLocaleString('es-MX') + ' MXN ya con IVA (' + Math.round(TASA_IVA * 1000) / 10 + '%)';
     }
     function tick(now) {
       var t = Math.min(1, (now - startTime) / dur);
@@ -1352,7 +1372,7 @@
     // La "cuota de mantenimiento" es lo que paga el RESIDENTE, no la
     // licencia del administrador — hay que decirlo explícito para que no
     // se confunda con el precio del plan de arriba.
-    note.textContent = r.nota + (n < 41
+    note.textContent = (NOTAS[r.clave] || '') + (n < 41
       ? ' Pago de cuota de mantenimiento (residente) por transferencia o en efectivo en OXXO; con tarjeta de crédito a partir de 41 unidades.'
       : ' Pago de cuota de mantenimiento (residente) con tarjeta de crédito, transferencia, o en efectivo en OXXO.');
   }

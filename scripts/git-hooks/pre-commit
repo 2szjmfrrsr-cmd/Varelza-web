@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# Candados del sitio público (Varelza-web), antes de cada commit.
+#
+# Se activa UNA vez por clon:   git config core.hooksPath scripts/git-hooks
+#
+#   1. check-sitio.mjs — los números del sitio (simulador, rangos de las
+#      tarjetas, IVA) salen de varelza-platform/datos/, los mismos que cobra
+#      la app, y fuera de sus regiones no hay precios escritos a mano.
+#      Lee platform de su origin/main: sin varelza-platform al lado, FALLA.
+#
+# Para saltártelo a propósito:  git commit --no-verify
+set -e
+cd "$(git rev-parse --show-toplevel)"
+if ! node scripts/check-sitio.mjs; then
+  echo ""
+  echo "  Commit detenido: los números del sitio no salen de varelza-platform."
+  echo ""
+  exit 1
+fi
