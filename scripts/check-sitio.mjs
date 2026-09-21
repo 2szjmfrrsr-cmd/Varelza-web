@@ -15,7 +15,9 @@
 //      lo que sale de la fuente de hoy (ni editada a mano, ni desfasada);
 //   2. que están todas las regiones obligatorias;
 //   3. que fuera de las regiones no hay montos, tasa de IVA ni escalones
-//      escritos a mano.
+//      escritos a mano;
+//   4. que cada correo @varelza.app y cada número de wa.me de las páginas
+//      con contacto es el oficial (datos/contacto.json).
 // La lógica que calcula las regiones NO está copiada aquí: se lee de
 // platform (scripts/sitio/regiones.mjs) y se ejecuta.
 // ============================================================
@@ -54,11 +56,12 @@ if (mio !== null && mio !== dePlatform('scripts/plantillas/check-sitio.plantilla
 // ── la lógica de platform, ejecutada tal cual ──
 const d = mkdtempSync(join(tmpdir(), 'varelza-check-sitio-'));
 writeFileSync(join(d, 'regiones.mjs'), dePlatform('scripts/sitio/regiones.mjs'));
-const { regiones, leerRegiones, REQUERIDAS, PROHIBIDO_FUERA } = await import(pathToFileURL(join(d, 'regiones.mjs')).href);
+const { regiones, leerRegiones, REQUERIDAS, PROHIBIDO_FUERA, PAGINAS_CONTACTO, revisarContacto } = await import(pathToFileURL(join(d, 'regiones.mjs')).href);
 const fuentes = {
   tabulador: JSON.parse(dePlatform('datos/tabulador.json')),
   iva: JSON.parse(dePlatform('datos/iva.json')),
   nombresDePlan: JSON.parse(dePlatform('datos/nombres-de-plan.json')),
+  contacto: JSON.parse(dePlatform('datos/contacto.json')),
 };
 
 const html = delIndice('index.html');
@@ -85,9 +88,16 @@ fuera.split('\n').forEach((linea, i) => {
   for (const p of PROHIBIDO_FUERA) if (p.patron.test(linea)) mal.push(`fuera de las regiones hay ${p.que}: «${linea.trim().slice(0, 90)}»`);
 });
 
+// ── 4. el contacto oficial ──
+for (const pagina of PAGINAS_CONTACTO) {
+  const texto = delIndice(pagina);
+  if (texto === null) continue;
+  for (const p of revisarContacto(texto, fuentes)) mal.push(`${pagina}: ${p}`);
+}
+
 if (mal.length) {
   morir('Los números del sitio no salen de varelza-platform:', ...mal.map((m) => `· ${m}`),
         'Se regeneran con: VARELZA_WEB_DIR=<este repo> node ../varelza-platform/scripts/generar-sitio.mjs',
-        'Para cambiar un precio o el IVA se edita la fuente en platform, nunca este archivo.');
+        'Para cambiar un precio, el IVA o el contacto se edita la fuente en platform, nunca este archivo.');
 }
 console.log(`✅ Los números del sitio salen de varelza-platform (${presentes.length} regiones, ${REF}).`);
