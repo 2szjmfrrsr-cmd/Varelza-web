@@ -562,30 +562,6 @@
   .faq-a{ padding:0 20px 18px; font-size:14px; color:var(--gray); line-height:1.6; }
   @media (prefers-reduced-motion: reduce){ .faq-a-wrap, .faq-chev{ transition:none; } }
 
-  /* CHAT / WHATSAPP */
-  .chat-fab{
-    position:fixed; bottom:24px; right:24px; z-index:40; width:58px; height:58px; border-radius:50%;
-    background:#25D366; color:white; display:flex; align-items:center; justify-content:center; font-size:26px;
-    box-shadow:0 12px 26px rgba(37,211,102,0.4); cursor:pointer; border:none; transition:transform 0.2s ease;
-  }
-  .chat-fab:hover{ transform:scale(1.07); }
-  .chat-panel{
-    position:fixed; bottom:94px; right:24px; z-index:41; width:300px; background:var(--white);
-    border-radius:20px; box-shadow:0 24px 48px rgba(0,0,0,0.2); overflow:hidden; display:none;
-  }
-  .chat-panel.open{ display:block; }
-  .chat-panel-head{ background:var(--green); color:white; padding:16px 18px; }
-  .chat-panel-head b{ display:block; font-size:14.5px; }
-  .chat-panel-head span{ font-size:11.5px; opacity:0.9; }
-  .chat-panel-body{ padding:16px 18px; }
-  .chat-panel-body p{ font-size:13px; color:var(--gray); margin-bottom:14px; line-height:1.5; }
-  .chat-option{
-    display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:12px; border:1.5px solid var(--border);
-    text-decoration:none; color:var(--ink); font-size:13px; font-weight:700; margin-bottom:8px;
-  }
-  .chat-option:hover{ border-color:var(--green); }
-  .chat-option .co-ic{ font-size:17px; }
-
   /* CTA FINAL */
   .cta-final{ background:linear-gradient(120deg, var(--green-soft), var(--orange-soft)); border-radius:32px; margin:0 24px; padding:64px 40px; text-align:center; overflow:hidden; }
   .cta-final h2{ font-family:'Fraunces',serif; font-style:italic; font-weight:500; font-size:clamp(24px,3.2vw,32px); color:var(--green-dark); margin-bottom:14px; }
@@ -971,7 +947,7 @@
       <p id="mig-answer-text">Tu Excel se queda donde está — no tienes que reconstruirlo. Cargamos la información base (unidades, cuotas, residentes) una sola vez, y desde ahí la cobranza se concilia sola.</p>
     </div>
     <div class="mig-steps">
-      <div class="mig-step reveal" style="transition-delay:0.06s"><span class="mig-num">1</span><div><b>Nos cuentas qué usas hoy</b><span>Sin compromiso, por WhatsApp o el formulario de abajo.</span></div></div>
+      <div class="mig-step reveal" style="transition-delay:0.06s"><span class="mig-num">1</span><div><b>Nos cuentas qué usas hoy</b><span>Sin compromiso, por el chat, por WhatsApp o el formulario de abajo.</span></div></div>
       <div class="mig-step reveal" style="transition-delay:0.1s"><span class="mig-num">2</span><div><b>Un agente configura tu condominio contigo</b><span>Unidades, cuotas y residentes — no lo haces solo.</span></div></div>
       <div class="mig-step reveal" style="transition-delay:0.14s"><span class="mig-num">3</span><div><b>Empiezas a operar</b><span>Sin reconstruir años de historial, solo el punto de partida.</span></div></div>
     </div>
@@ -1179,19 +1155,6 @@
   <span class="nav-mark"><span class="var">VAR</span><span class="elza">ELZA</span></span>
   <p>¿Preguntas? <a class="mail" href="mailto:hola@varelza.app">hola@varelza.app</a> · © 2026 VARELZA · <a class="mail" href="#" id="open-privacy-modal">Aviso de privacidad</a></p>
 </footer>
-
-<button class="chat-fab" id="chat-fab" aria-label="Abrir chat de contacto">💬</button>
-<div class="chat-panel" id="chat-panel">
-  <div class="chat-panel-head">
-    <b>¿Tienes dudas?</b>
-    <span>Normalmente respondemos en minutos</span>
-  </div>
-  <div class="chat-panel-body">
-    <p>Escríbenos directo — no es un bot, es un humano real del otro lado.</p>
-    <a class="chat-option" href="https://wa.me/50254805226?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20de%20VARELZA" target="_blank" rel="noopener" data-cta="chat-panel-whatsapp" data-method="whatsapp"><span class="co-ic">💬</span> WhatsApp</a>
-    <a class="chat-option" href="mailto:hola@varelza.app" data-cta="chat-panel-email" data-method="email"><span class="co-ic">✉️</span> hola@varelza.app</a>
-  </div>
-</div>
 
 <div class="modal-overlay" id="agent-overlay">
   <div class="agent-modal" role="dialog" aria-modal="true" aria-labelledby="agent-modal-title">
@@ -1410,13 +1373,6 @@
       nInput.addEventListener('blur', alSalirDelCampo);
     }
     alMoverSlider();
-  }
-
-  // Chat widget
-  var fab = document.getElementById('chat-fab');
-  var panel = document.getElementById('chat-panel');
-  if (fab && panel) {
-    fab.addEventListener('click', function () { panel.classList.toggle('open'); });
   }
 
   // Eventos de conversión para Analytics — clic directo a WhatsApp/correo
@@ -1667,5 +1623,14 @@
   }
 </script>
 
+<!-- Chat web para prospectos (K6). chat-web.js es copia de
+     varelza-platform/web/chat-web/chat-web.js: se copia de allá hacia acá,
+     nunca al revés. Colores: los valores por defecto del script (17 sept 2026). -->
+<script src="chat-web.js" defer
+        data-supabase-url="https://dkadhgdbfdflrhnzfayc.supabase.co"
+        data-anon-key="__ANON_PRODUCCION__"
+        data-privacidad="https://varelza.app/privacidad/"
+        data-whatsapp="50254805226"
+        data-whatsapp-activo="true"></script>
 </body>
 </html>
