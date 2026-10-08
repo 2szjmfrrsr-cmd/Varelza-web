@@ -1202,11 +1202,11 @@
       <p class="agent-modal-sub">Este aviso aplica solo a este sitio (varelza.app). La app de VARELZA para administrador, residentes, guardia, consejo y proveedores tiene su propio aviso de privacidad dentro de la app.</p>
     </div>
     <div class="agent-modal-body" style="padding-top:0;">
-      <p style="font-size:13.5px; color:var(--gray); line-height:1.6; margin-bottom:14px;"><b style="color:var(--ink);">Qué datos recopilamos.</b> Al navegar este sitio usamos Google Analytics para entender cómo se usa la página — qué secciones se visitan, desde qué dispositivo, cuánto tiempo se permanece. Es información agregada, no te identifica personalmente. Si nos escribes por el formulario, WhatsApp o correo, recibimos los datos que tú decidas compartir: nombre, teléfono, correo, y tu condominio o empresa.</p>
+      <p style="font-size:13.5px; color:var(--gray); line-height:1.6; margin-bottom:14px;"><b style="color:var(--ink);">Qué datos recopilamos.</b> Al navegar este sitio usamos Google Analytics para entender cómo se usa la página — qué secciones se visitan, desde qué dispositivo, cuánto tiempo se permanece. Es información agregada, no te identifica personalmente. Si nos escribes por el chat, el formulario, WhatsApp o correo, recibimos los datos que tú decidas compartir: nombre, teléfono, correo, tu condominio o empresa y lo que nos escribas. El chat guarda además la página desde la que escribiste y una huella cifrada de tu IP para frenar abusos. Los detalles están en el <a href="/privacidad/" style="color:var(--green-dark); font-weight:700;">Aviso de Privacidad completo</a>.</p>
       <p style="font-size:13.5px; color:var(--gray); line-height:1.6; margin-bottom:14px;"><b style="color:var(--ink);">Para qué los usamos.</b> Para responder tu solicitud de información, y para entender qué partes del sitio funcionan mejor y así mejorarlo.</p>
-      <p style="font-size:13.5px; color:var(--gray); line-height:1.6; margin-bottom:14px;"><b style="color:var(--ink);">Con quién se comparten.</b> Con Google, a través de Google Analytics, bajo sus propios términos de privacidad — y, si nos contactas, con el equipo de VARELZA que te atiende. Nunca se venden ni se comparten con terceros para fines de publicidad.</p>
+      <p style="font-size:13.5px; color:var(--gray); line-height:1.6; margin-bottom:14px;"><b style="color:var(--ink);">Con quién se comparten.</b> Con Google, a través de Google Analytics, bajo sus propios términos de privacidad — y, si nos contactas, con el equipo de VARELZA que te atiende. Lo que escribas por el chat lo ve el equipo de VARELZA en su bandeja de mensajes. Nunca se venden ni se comparten con terceros para fines de publicidad.</p>
       <p style="font-size:13.5px; color:var(--gray); line-height:1.6; margin-bottom:0;"><b style="color:var(--ink);">Tus derechos.</b> Puedes solicitar acceso, corrección o eliminación de tus datos escribiendo a <a href="mailto:hola@varelza.app" style="color:var(--green-dark); font-weight:700;">hola@varelza.app</a>.</p>
-      <p class="agent-modal-foot" style="margin-top:16px;">Última actualización: agosto 2026.</p>
+      <p class="agent-modal-foot" style="margin-top:16px;">Última actualización: octubre 2026.</p>
     </div>
   </div>
 </div>
@@ -1625,12 +1625,15 @@
 
 <!-- Chat web para prospectos (K6). chat-web.js es copia de
      varelza-platform/web/chat-web/chat-web.js: se copia de allá hacia acá,
-     nunca al revés. Colores: los valores por defecto del script (17 sept 2026). -->
+     nunca al revés. Colores: los valores por defecto del script (17 sept 2026).
+     Posición: derecha, para no tapar las insignias de las tiendas en celular
+     (renglón 154, 7 oct 2026). -->
 <script src="chat-web.js" defer
         data-supabase-url="https://dkadhgdbfdflrhnzfayc.supabase.co"
         data-anon-key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRrYWRoZ2RiZmRmbHJobnpmYXljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxOTE4NjYsImV4cCI6MjEwMjc2Nzg2Nn0.maKACujwWbDnNWxZX17y83y_O3AEIu6zPxheIzdHGXo"
         data-privacidad="https://varelza.app/privacidad/"
         data-whatsapp="50254805226"
-        data-whatsapp-activo="true"></script>
+        data-whatsapp-activo="true"
+        data-posicion="derecha"></script>
 </body>
 </html>
