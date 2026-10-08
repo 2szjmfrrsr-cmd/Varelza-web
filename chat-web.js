@@ -10,6 +10,7 @@
  *           data-anon-key="<llave pública anon>"
  *           data-privacidad="https://varelza.app/<aviso-de-privacidad>"
  *           data-whatsapp="50254805226"
+ *           data-whatsapp-visible="+502 5480 5226"
  *           data-whatsapp-activo="false"></script>
  *
  * Todo vive dentro de un shadow DOM: ni el CSS del sitio (ni su capa
@@ -67,6 +68,10 @@
     privacidad: attr('privacidad', 'https://varelza.app/privacidad/'),
     whatsapp: attr('whatsapp', '').replace(/\D/g, ''),
     whatsappActivo: attr('whatsapp-activo', 'false') === 'true',
+    // Cómo se le enseña el número a una persona (datos/contacto.json →
+    // whatsappVisible; lo escribe y lo revisa el generador del sitio). Si
+    // falta, la tarjeta dice «Abrir WhatsApp» en vez del número.
+    whatsappVisible: attr('whatsapp-visible', ''),
     // Degradado opcional: dos colores separados por coma («#FF7A45,#FFB347»).
     // Si está, sustituye al acento plano en el botón, los botones de enviar
     // y las burbujas del visitante; con degradado-cabecera también pinta
@@ -172,7 +177,7 @@
     '.lanzador:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid ' + CFG.acento + ';outline-offset:2px}' +
     '.punto{position:absolute;top:4px;right:4px;width:14px;height:14px;border-radius:50%;background:#F04438;border:2px solid #fff;display:none}' +
     '.punto.si{display:block}' +
-    '.panel{position:fixed;bottom:calc(92px + env(safe-area-inset-bottom));' + lado + ':20px;z-index:2147483001;width:370px;max-width:calc(100vw - 32px);height:min(600px, calc(100vh - 120px));background:' + CFG.fondo + ';color:' + CFG.texto + ';border:1px solid ' + CFG.borde + ';border-radius:' + (R + 4) + 'px;box-shadow:0 18px 50px rgba(15,17,21,.24);display:none;flex-direction:column;overflow:hidden;font-size:14.5px;line-height:1.45}' +
+    '.panel{position:fixed;bottom:calc(92px + env(safe-area-inset-bottom));' + lado + ':20px;z-index:2147483001;width:370px;max-width:calc(100vw - 32px);height:min(690px, calc(100vh - 110px));background:' + CFG.fondo + ';color:' + CFG.texto + ';border:1px solid ' + CFG.borde + ';border-radius:' + (R + 4) + 'px;box-shadow:0 18px 50px rgba(15,17,21,.24);display:none;flex-direction:column;overflow:hidden;font-size:14.5px;line-height:1.45}' +
     '.panel.abierto{display:flex}' +
     '@media (max-width:480px){.panel{left:8px;right:8px;width:auto;max-width:none;bottom:calc(84px + env(safe-area-inset-bottom));height:calc(100vh - 100px)}}' +
     '.cab{padding:16px 18px;border-bottom:1px solid ' + CFG.borde + ';display:flex;gap:12px;align-items:flex-start}' +
@@ -184,7 +189,7 @@
     '.campo span{display:block;font-size:12.5px;font-weight:700;margin-bottom:5px}' +
     '.campo small{font-weight:600;color:' + CFG.apoyo + '}' +
     'input,select,textarea{width:100%;font-size:15px;color:' + CFG.texto + ';background:' + CFG.fondo + ';border:1px solid ' + CFG.borde + ';border-radius:' + Math.max(10, R - 6) + 'px;padding:10px 12px;appearance:none;-webkit-appearance:none}' +
-    'textarea{resize:none;min-height:84px}' +
+    'textarea{resize:none;min-height:72px}' +
     '.fila{display:flex;gap:10px}.fila .campo{flex:1;min-width:0}' +
     '.ayuda{font-size:12px;color:' + CFG.apoyo + ';margin:-4px 0 12px}' +
     '.trampa{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}' +
@@ -206,6 +211,11 @@
     '.envio textarea{min-height:44px;max-height:120px}' +
     '.enviar{flex:none;width:44px;height:44px;border-radius:50%;border:0;background:' + RELLENO_BOTON + ';color:' + CFG.acentoTexto + ';cursor:pointer;display:flex;align-items:center;justify-content:center}' +
     '.enviar[disabled]{opacity:.5;cursor:default}' +
+    '.wa-tarjeta{display:flex;align-items:center;gap:12px;margin-top:14px;padding:11px 14px;border-radius:' + Math.max(14, R - 2) + 'px;background:#EAF8EF;border:1px solid #BFE8CD;color:#1F2430;text-decoration:none}' +
+    '.wa-tarjeta:hover{background:#DDF3E5}' +
+    '.wa-ic{flex:none;width:36px;height:36px;border-radius:50%;background:#168A44;color:#fff;display:flex;align-items:center;justify-content:center}' +
+    '.wa-tx{display:flex;flex-direction:column;flex:1;min-width:0}.wa-tx b{font-size:14px;font-weight:800}.wa-tx small{font-size:12.5px;color:#3D4654}' +
+    '.wa-fl{font-size:18px;font-weight:800;color:#157A3B}' +
     '.wa{font-size:12px;color:' + CFG.apoyo + ';text-align:center;margin-top:8px}' +
     '@media (prefers-reduced-motion:reduce){.lanzador{transition:none}}' +
     (CFG.degradadoCabecera && colores.length >= 2
@@ -251,17 +261,31 @@
     return abierto && document.visibilityState === 'visible';
   }
 
-  function whatsappLink() {
+  // Tarjeta verde (formulario y aviso) o, con `compacto`, una línea (pie de
+  // la conversación, para no quitarle espacio a los mensajes). Decisión de
+  // Iván, 7 oct 2026: la opción de WhatsApp tiene que verse.
+  // Verde #168A44: 4.42 de contraste con el blanco (el de la marca de
+  // WhatsApp, #25D366/#1DA851, se queda en 1.98/3.1).
+  var ICONO_WA = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>';
+  function whatsappLink(compacto) {
     if (!CFG.whatsappActivo || !CFG.whatsapp) return null;
-    var p = el('p', { class: 'wa' });
-    p.appendChild(document.createTextNode('¿Prefieres WhatsApp? '));
-    p.appendChild(el('a', {
-      href: 'https://wa.me/' + CFG.whatsapp + '?text=' + encodeURIComponent('Hola, me interesa VARELZA para mi condominio.'),
-      target: '_blank',
-      rel: 'noopener',
-      text: 'Escríbenos ahí',
-    }));
-    return p;
+    var href = 'https://wa.me/' + CFG.whatsapp + '?text=' + encodeURIComponent('Hola, me interesa VARELZA para mi condominio.');
+    if (compacto) {
+      var p = el('p', { class: 'wa' });
+      p.appendChild(document.createTextNode('¿Prefieres WhatsApp? '));
+      p.appendChild(el('a', { href: href, target: '_blank', rel: 'noopener', text: 'Escríbenos ahí' }));
+      return p;
+    }
+    var icono = el('span', { class: 'wa-ic' });
+    icono.innerHTML = ICONO_WA;
+    return el('a', { class: 'wa-tarjeta', href: href, target: '_blank', rel: 'noopener' }, [
+      icono,
+      el('span', { class: 'wa-tx' }, [
+        el('b', { text: '¿Prefieres WhatsApp?' }),
+        el('small', { text: CFG.whatsappVisible ? 'Escríbenos al ' + CFG.whatsappVisible : 'Abrir WhatsApp' }),
+      ]),
+      el('span', { class: 'wa-fl', 'aria-hidden': 'true', text: '→' }),
+    ]);
   }
 
   // ── Vistas ───────────────────────────────────────────────────
@@ -379,7 +403,7 @@
         cajaTexto.style.height = Math.min(120, cajaTexto.scrollHeight + 2) + 'px';
       });
       btnEnviar.addEventListener('click', enviar);
-      reemplazar(pie, [errorPie, el('div', { class: 'envio' }, [cajaTexto, btnEnviar]), whatsappLink()]);
+      reemplazar(pie, [errorPie, el('div', { class: 'envio' }, [cajaTexto, btnEnviar]), whatsappLink(true)]);
     }
     pintarMensajes();
   }
