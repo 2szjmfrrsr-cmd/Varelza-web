@@ -966,7 +966,7 @@
       <svg class="diff-watermark" viewBox="0 0 400 300" aria-hidden="true">
         <path d="M 200 30 L 20 280" /><path d="M 200 30 L 380 280" />
       </svg>
-      <div class="diff-text"><b>Ten el control completo de lo que pagas.</b> <span>Da de alta y baja unidades cuando quieras — se cobra lo proporcional a los días exactos que estuvo activa cada una. Nunca pagas de más.</span></div>
+      <div class="diff-text"><b>Ten el control completo de lo que pagas.</b> <span>Da de alta y baja unidades cuando quieras — se cobra lo proporcional a los días exactos que estuvo activa cada una, con un mínimo de 7 días por cada alta. Nunca pagas un mes completo que no usaste.</span></div>
     </div>
 
     <div class="tiers-grid">
@@ -994,9 +994,8 @@
         <h4><!--gen:nombre:Esencial-->Esencial<!--/gen:nombre:Esencial--></h4>
         <div class="tc-range"><!--gen:rango:Esencial-->10 a 40 unidades<!--/gen:rango:Esencial--></div>
         <ul>
-          <li>Todos los módulos incluidos (comité + proveedores)</li>
-          <li>Cobranza conciliada automáticamente</li>
-          <li>Soporte prioritario — respuesta garantizada, no autoservicio</li>
+          <li>Recordatorios automáticos de cobranza por correo</li>
+          <li>Conciliación de pagos SPEI y efectivo desde el portal</li>
           <li>Reportes de cobranza e incidencias listos para tu asamblea</li>
           <li>Un agente de VARELZA configura tu condominio contigo la primera vez</li>
         </ul>
@@ -1009,6 +1008,8 @@
         <ul>
           <li>Incluye todo lo de los paquetes anteriores</li>
           <li><b>Pago de mensualidades con tarjeta de crédito</b></li>
+          <li>Soporte prioritario — respuesta garantizada, no autoservicio</li>
+          <li>Contabilidad del condominio, rondas de guardia y portal de proveedores</li>
           <li>Envío automático de recibos de pago por correo</li>
         </ul>
         <div class="tc-cta-wrap"><button class="btn btn-primary tc-agent-btn" type="button">💬 Solicitar más información a un agente</button></div>
@@ -1040,7 +1041,7 @@
           <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
           <path d="M8 16H3v5"/>
         </svg>
-        Da de alta y baja unidades cuando quieras — pagas <b>solo los días exactos</b> que estuvo activa cada una.
+        <span>Da de alta y baja unidades cuando quieras — pagas <b>solo los días exactos</b> que estuvo activa cada una (mínimo 7 días por cada alta).</span>
       </p>
       <div class="cot-body">
         <div class="cot-input-wrap">
@@ -1054,7 +1055,7 @@
           <div class="cr-label">Estimado mensual <span class="cr-plan-badge" id="cot-plan-badge"><!--gen:inicial:plan-->Esencial<!--/gen:inicial:plan--></span></div>
           <div class="cr-amount" id="cot-amount"><!--gen:inicial:monto-->$566 <span>MXN + IVA</span><!--/gen:inicial:monto--></div>
           <div class="cr-amount-iva" id="cot-amount-iva"><!--gen:inicial:iva-->$657 MXN ya con IVA (16%)<!--/gen:inicial:iva--></div>
-          <div class="cr-note" id="cot-note">Incluye todos los módulos.</div>
+          <div class="cr-note" id="cot-note">Incluye recordatorios automáticos de cobranza.</div>
           <a class="btn btn-primary" href="mailto:hola@varelza.app" data-cta="cotizador-formal" data-method="email">Pide tu cotización formal →</a>
         </div>
       </div>
@@ -1082,7 +1083,7 @@
           <span>¿Qué pasa si decido cancelar?</span>
           <span class="faq-chev">⌄</span>
         </button>
-        <div class="faq-a-wrap"><div class="faq-a-inner"><p class="faq-a">Cancelas cuando quieras, sin contrato forzoso ni penalización. Se cobra proporcional a los días exactos que estuvo activa cada unidad — si cancelas a la mitad del mes, no pagas el mes completo.</p></div></div>
+        <div class="faq-a-wrap"><div class="faq-a-inner"><p class="faq-a">Cancelas cuando quieras, sin contrato forzoso ni penalización. Se cobra proporcional a los días exactos que estuvo activa cada unidad (con un mínimo de 7 días por cada alta) — si cancelas a la mitad del mes, no pagas el mes completo.</p></div></div>
       </div>
       <div class="faq-item reveal" style="transition-delay:0.14s">
         <button class="faq-q" type="button" aria-expanded="false">
@@ -1096,7 +1097,7 @@
           <span>¿Hay costos ocultos además de la cuota mensual?</span>
           <span class="faq-chev">⌄</span>
         </button>
-        <div class="faq-a-wrap"><div class="faq-a-inner"><p class="faq-a">No. El precio de tu plan es fijo según tus unidades activas, sin letras chiquitas. Lo único adicional es la comisión de procesamiento cuando un residente paga con tarjeta — se muestra desglosada antes de confirmar el pago, y la cubre quien usa la tarjeta, no el condominio.</p></div></div>
+        <div class="faq-a-wrap"><div class="faq-a-inner"><p class="faq-a">No, sin letras chiquitas. Tu plan depende de tus unidades activas y se cobra por los días exactos que estuvo activa cada una (con un mínimo de 7 días por cada alta). Todos los precios son más IVA. Aparte solo pagas lo que tú decidas sumar: los complementos que actives desde la app (por ejemplo, el pago con tarjeta si tu condominio tiene menos de 41 unidades), siempre con su precio mensual a la vista antes de aceptarlo. Y cuando un residente paga con tarjeta, la comisión de procesamiento se muestra desglosada antes de confirmar el pago, y la cubre quien usa la tarjeta, no el condominio.</p></div></div>
       </div>
       <div class="faq-item reveal" style="transition-delay:0.2s">
         <button class="faq-q" type="button" aria-expanded="false">
@@ -1249,15 +1250,16 @@
   // src/lib/tabulador.ts y CLAUDE.md). Confirmado por Iván agosto 2026,
   // fundamentado con benchmarking real (AdminCondo, Vivook).
   //
-  // Dentro de cada escalón con curva, el PROMEDIO por unidad baja en línea
-  // recta entre el precio de entrada y el de tope — nunca sube, por
-  // construcción matemática (una versión anterior, donde el precio TOTAL se
-  // frenaba cerca del tope, hacía que el promedio subiera un tramo antes de
-  // volver a bajar; se corrigió invirtiendo la construcción: el promedio es
-  // el que se traza en línea recta, el total se deriva de multiplicarlo por
-  // las unidades). Cruzar de escalón siempre cuesta menos que seguir en el
-  // anterior en su punto más caro — el precio de entrada de cada escalón es
-  // menor al tope del anterior a propósito.
+  // Dentro de cada escalón con curva, el precio por unidad nunca sube y el
+  // total nunca baja (lo vigila revisarCurvas() de generar-tabulador.mjs en
+  // platform). En casi todos el PROMEDIO por unidad baja en línea recta
+  // entre la entrada y el tope; Esencial usa la forma «suave», donde el
+  // TOTAL crece con incrementos que se achican (7 oct 2026). Cruzar de
+  // escalón cuesta menos que seguir en el anterior en su punto más caro,
+  // salvo tres excepciones que Iván aceptó a propósito (CLAUDE.md de
+  // platform): 9 → 10 (el total y el precio por unidad suben), 40 → 41
+  // (el total sube por el costo fijo de Stripe) y el «relleno» (101 u pagan
+  // menos que 100, y 201 menos que 200).
   /*gen:simulador*/
   // ⚠️ REGIÓN GENERADA desde varelza-platform (datos/tabulador.json, datos/iva.json,
   // datos/nombres-de-plan.json) por scripts/generar-sitio.mjs. No la edites
@@ -1290,10 +1292,10 @@
   // Las notas de cada plan son copy del sitio (no números): viven aquí, por
   // clave interna del plan. Lo que dice cada una lo revisa marketing (nº 16).
   var NOTAS = {
-    Gratuito: 'Todos los módulos incluidos, sin costo.',
+    Gratuito: 'Módulos de residente, administración y guardia, sin costo.',
     Arranque: 'Cuota fija, no cambia con el número de unidades.',
-    Esencial: 'Incluye todos los módulos.',
-    Crecimiento: 'Incluye todos los módulos.',
+    Esencial: 'Incluye recordatorios automáticos de cobranza.',
+    Crecimiento: 'Incluye pago con tarjeta, soporte prioritario y contabilidad.',
     Profesional: 'Incluye todos los módulos.',
     Corporativo: 'Incluye todos los módulos.',
     Enterprise: 'Cotización a la medida.'
@@ -1340,7 +1342,7 @@
     // licencia del administrador — hay que decirlo explícito para que no
     // se confunda con el precio del plan de arriba.
     note.textContent = (NOTAS[r.clave] || '') + (n < 41
-      ? ' Pago de cuota de mantenimiento (residente) por transferencia o en efectivo en OXXO; con tarjeta de crédito a partir de 41 unidades.'
+      ? ' Pago de cuota de mantenimiento (residente) por transferencia o en efectivo en OXXO; con tarjeta de crédito a partir de 41 unidades, o antes con el complemento de pago con tarjeta.'
       : ' Pago de cuota de mantenimiento (residente) con tarjeta de crédito, transferencia, o en efectivo en OXXO.');
   }
   // El slider siempre trae un valor válido — sincroniza el campo numérico y pinta.
