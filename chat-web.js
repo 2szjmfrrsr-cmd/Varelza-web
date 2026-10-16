@@ -1,6 +1,6 @@
 /*!
  * VARELZA — chat web para prospectos (K6)
- * Ficha: diseño/varelza-ux-chat-web-prospectos.md (repo Varelza-app)
+ * Ficha: diseño/varelza-ux-chat-web-prospectos.md (repo varelza-platform)
  *
  * UN solo archivo, sin dependencias y sin React. Se inserta en cualquier
  * HTML estático con una línea:
@@ -27,9 +27,15 @@
  * firma la función por 10 minutos: por eso se vuelven a pintar con cada
  * lectura, sin recargar lo que ya se ve ni cortar lo que se reproduce.
  *
- * La copia canónica de este archivo vive en Varelza-app/web/chat-web/.
- * Si se copia al repo del sitio, se copia de aquí hacia allá, nunca al
- * revés.
+ * Permiso de WhatsApp (Mensajes F3, MS24): si el visitante deja su
+ * WhatsApp, aparece una casilla desmarcada y opcional con el texto que
+ * eligió Iván el 14 oct 2026 (TEXTO_PERMISO_WHATSAPP, igual a
+ * datos/mensajes.json: lo revisa scripts/generar-mensajes.mjs).
+ *
+ * La copia canónica de este archivo vive en varelza-platform
+ * (web/chat-web/chat-web.js). El sitio (Varelza-web) lleva una copia
+ * idéntica que genera scripts/generar-sitio.mjs: se copia de aquí hacia
+ * allá, nunca al revés.
  */
 (function () {
   'use strict';
@@ -159,6 +165,9 @@
   var ADJUNTO_MAX_BYTES = 10 * 1024 * 1024;
   var TIPOS_VISITANTE = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
   var ACEPTA = TIPOS_VISITANTE.join(',');
+  // MS24 (14 oct 2026): el texto de la casilla del permiso de WhatsApp. Es
+  // el de datos/mensajes.json (permisoWhatsapp.textoChatWeb), igualito.
+  var TEXTO_PERMISO_WHATSAPP = 'Acepto que VARELZA me escriba por WhatsApp a este número para dar seguimiento a mi consulta y enviarme información de VARELZA. Puedo pedir que dejen de escribirme cuando quiera.';
   function tipoPermitido(f) {
     if (f.type) return TIPOS_VISITANTE.indexOf(f.type.toLowerCase()) >= 0;
     return /\.(jpe?g|png|webp|pdf)$/i.test(f.name || '');
@@ -226,6 +235,8 @@
     'textarea{resize:none;min-height:72px}' +
     '.fila{display:flex;gap:10px}.fila .campo{flex:1;min-width:0}' +
     '.ayuda{font-size:12px;color:' + CFG.apoyo + ';margin:-4px 0 12px}' +
+    '.permiso{display:flex;gap:8px;align-items:flex-start;font-size:12px;line-height:1.4;color:' + CFG.apoyo + ';margin:-4px 0 12px;cursor:pointer}' +
+    '.permiso input{width:16px;height:16px;flex:0 0 16px;margin:1px 0 0;padding:0;appearance:auto;-webkit-appearance:checkbox;accent-color:' + CFG.acento + '}' +
     '.trampa{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}' +
     '.btn{width:100%;border:0;border-radius:' + Math.max(14, R - 2) + 'px;padding:12px 16px;font-size:15px;font-weight:800;cursor:pointer;background:' + RELLENO_BOTON + ';color:' + CFG.acentoTexto + '}' +
     '.btn[disabled]{opacity:.55;cursor:default}' +
@@ -363,6 +374,16 @@
     var texto = el('textarea', { name: 'texto', maxlength: '1000', required: '', rows: '3' });
     // Campo trampa: invisible para personas y lectores de pantalla.
     var trampa = el('input', { type: 'text', name: 'sitio_web', tabindex: '-1', autocomplete: 'off' });
+    // MS24: desmarcada y opcional; solo se ve si dejó un WhatsApp.
+    var aceptaWhatsapp = el('input', { type: 'checkbox', name: 'acepta_whatsapp' });
+    var casillaPermiso = el('label', { class: 'permiso' }, [aceptaWhatsapp, el('span', { text: TEXTO_PERMISO_WHATSAPP })]);
+    function mostrarCasilla() {
+      var hay = telefono.value.replace(/\D/g, '').length > 0;
+      casillaPermiso.style.display = hay ? 'flex' : 'none';
+      if (!hay) aceptaWhatsapp.checked = false;
+    }
+    telefono.addEventListener('input', mostrarCasilla);
+    mostrarCasilla();
     var boton = el('button', { class: 'btn', type: 'submit', text: 'Enviar mensaje' });
 
     var legal = el('p', { class: 'legal' });
@@ -381,6 +402,7 @@
       campo('Tu nombre', nombre),
       el('div', { class: 'fila' }, [campo('Correo', correo), campo('WhatsApp', telefono)]),
       el('p', { class: 'ayuda', text: 'Déjanos al menos uno de los dos para poder responderte.' }),
+      casillaPermiso,
       campo('Unidades del condominio', unidades, '(opcional)'),
       campo('¿En qué te ayudamos?', texto),
       el('div', { class: 'trampa', 'aria-hidden': 'true' }, [trampa]),
@@ -409,6 +431,8 @@
         nombre: nombre.value,
         correo: correo.value,
         telefono: telefono.value,
+        acepta_whatsapp: aceptaWhatsapp.checked && telefono.value.replace(/\D/g, '').length > 0,
+        texto_permiso: aceptaWhatsapp.checked ? TEXTO_PERMISO_WHATSAPP : '',
         unidades: unidades.value,
         texto: texto.value,
         pagina: location.pathname,
@@ -486,8 +510,11 @@
   var cacheAdjuntos = {};
   var RENOVAR_MEDIA_MS = 8 * 60000;
 
+  // Solo enlaces firmados del Storage de ESTE proyecto (los que firma la
+  // función): nunca cualquier https que viniera en un mensaje.
+  var PREFIJO_STORAGE = SUPABASE_URL + '/storage/v1/object/sign/';
   function urlSegura(u) {
-    return typeof u === 'string' && /^https:\/\//i.test(u) ? u : null;
+    return typeof u === 'string' && /^https:\/\//i.test(u) && u.indexOf(PREFIJO_STORAGE) === 0 ? u : null;
   }
 
   function tamanoLegible(b) {
