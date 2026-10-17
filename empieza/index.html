@@ -388,6 +388,9 @@
       correo: $('f-correo').value.trim(),
       telefono: $('f-telefono').value.trim(),
       acepta_whatsapp: !$('caja-whatsapp').hidden && $('f-whatsapp').checked,
+      // El texto que vio en la casilla: la base lo compara con el suyo
+      // (permiso_texto_solicitud_alta) y queda en la evidencia del permiso.
+      texto_permiso: $('texto-whatsapp').textContent.trim(),
       condominio: $('f-condominio').value.trim(),
       estado: $('f-estado').value,
       municipio: $('f-municipio').value.trim(),
