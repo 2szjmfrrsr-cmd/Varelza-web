@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Empieza con VARELZA</title>
+<meta name="description" content="Déjanos tus datos y un asesor de VARELZA te ayuda a arrancar con tu condominio.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://varelza.app/empieza/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,500&family=Inter:wght@400;500;600&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<!--
+  «Empieza con VARELZA» (opción B de «Contratar desde la web», renglón 184 de
+  varelza-platform; diseño/varelza-investigacion-contratar-desde-web.md §4).
+  El interesado deja sus datos, confirma su correo con el enlace que le llega
+  y un asesor lo atiende desde ops. Aquí NO nace ninguna cuenta: el
+  Administrador sigue naciendo de la invitación que manda el staff.
+
+  Habla con la Edge Function `solicitar-alta` (sin sesión, como el chat):
+    · en localhost / 127.0.0.1, con la base de PRUEBAS y la llave de sitio de
+      PRUEBA de Turnstile (siempre pasa);
+    · en varelza.app, con producción y la llave de sitio real.
+  Sin llave de sitio real (TURNSTILE_SITEKEY vacía), la página dice que por
+  ahora no recibimos solicitudes: nunca enseña un formulario que va a fallar.
+
+  El código del enlace llega después de «#» (#confirmar=…): el navegador no
+  lo manda a ningún servidor ni queda en los registros de GitHub Pages. Se
+  confirma con un botón, no al abrir la página, para que el programa de
+  seguridad de un correo que abre enlaces solo no lo confirme por la persona.
+-->
+<style>
+  :root{
+    --terracota:#E8825C; --terracota-osc:#C86640; --terracota-suave:#FBE4D9;
+    --salvia:#8FA888; --salvia-osc:#6B8865; --salvia-suave:#EAF0E7;
+    --tinta:#2E3130; --gris:#84867F; --fondo:#FBFAF7; --borde:#ECEAE2;
+    --amarillo-suave:#FFF3DC; --amarillo:#FFC24B; --rojo:#C0392B; --rojo-suave:#FBEAE7;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--fondo);color:var(--tinta);
+       font-family:Nunito,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+       font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--terracota-osc)}
+  header{background:linear-gradient(100deg,var(--terracota-suave),var(--salvia-suave));border-bottom:1px solid var(--borde)}
+  .caja{max-width:680px;margin:0 auto;padding:0 16px}
+  header .caja{padding-top:36px;padding-bottom:36px}
+  .marca{font-family:Fraunces,Georgia,serif;font-size:28px;letter-spacing:.5px;text-decoration:none;display:inline-block;margin-bottom:18px}
+  .marca .var{font-weight:600;color:var(--tinta)}
+  .marca .elza{font-weight:500;font-style:italic;color:var(--terracota)}
+  h1{font-size:32px;font-weight:800;line-height:1.2;margin:0 0 8px}
+  .bajada{color:var(--gris);font-size:15.5px;margin:0}
+  main .caja{padding-top:28px;padding-bottom:56px}
+  .tarjeta{background:#fff;border:1px solid var(--borde);border-radius:24px;padding:26px 24px;box-shadow:0 10px 30px rgba(46,49,48,.06)}
+  .tarjeta h2{font-size:22px;font-weight:800;margin:0 0 8px;line-height:1.3}
+  .tarjeta p{margin:0 0 12px;font-size:15.5px}
+  .rejilla{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px}
+  .ancho{grid-column:1 / -1}
+  .campo label,.campo .etiqueta{display:block;font-family:Inter,sans-serif;font-weight:600;font-size:13px;margin-bottom:6px;color:var(--tinta)}
+  .campo .opcional{font-weight:400;color:var(--gris)}
+  .campo input:not([type=checkbox]):not([type=radio]),.campo select{width:100%;font-family:Inter,sans-serif;font-size:15px;color:var(--tinta);background:var(--fondo);
+       border:1.5px solid var(--borde);border-radius:14px;padding:12px 14px;outline:none;min-height:48px}
+  .campo input:not([type=checkbox]):not([type=radio]):focus,.campo select:focus{border-color:var(--terracota);background:#fff}
+  .campo.mal input,.campo.mal select{border-color:var(--rojo)}
+  .ayuda{font-family:Inter,sans-serif;font-size:12.5px;color:var(--gris);margin-top:5px}
+  .error-campo{font-family:Inter,sans-serif;font-size:12.5px;color:var(--rojo);margin-top:5px;font-weight:500}
+  .pastillas{display:flex;flex-wrap:wrap;gap:8px}
+  .pastillas label{position:relative;font-family:Inter,sans-serif;font-weight:500;font-size:14px;margin:0;cursor:pointer;
+       border:1.5px solid var(--borde);border-radius:999px;padding:9px 16px;background:var(--fondo)}
+  .pastillas input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;pointer-events:none}
+  .pastillas input:checked + span{color:var(--terracota-osc)}
+  .pastillas label:has(input:checked){border-color:var(--terracota);background:var(--terracota-suave)}
+  .pastillas label:has(input:focus-visible){outline:2px solid var(--terracota);outline-offset:2px}
+  .campo label.casilla,.casilla{display:flex;margin:0;font-weight:400;gap:10px;align-items:flex-start;font-family:Inter,sans-serif;font-size:14px;line-height:1.5;cursor:pointer}
+  .casilla input{width:20px;height:20px;margin:1px 0 0;accent-color:var(--terracota);flex:none}
+  .trampa{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .boton{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;
+       font-family:Nunito,sans-serif;font-weight:800;font-size:16px;border-radius:18px;padding:15px 26px;min-height:52px;
+       background:var(--terracota);color:#fff;text-decoration:none}
+  .boton:hover{background:var(--terracota-osc)}
+  .boton[disabled]{opacity:.55;cursor:wait}
+  .boton.secundario{background:#fff;color:var(--tinta);border:1.5px solid var(--borde)}
+  .acciones{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:20px}
+  .aviso{border-radius:18px;padding:14px 18px;margin:0 0 16px;font-size:14.5px}
+  .aviso.error{background:var(--rojo-suave);border:1px solid #F1C3BB;color:#7A2418}
+  .aviso.info{background:var(--amarillo-suave);border:1px solid var(--amarillo)}
+  .emoji{font-size:40px;line-height:1;margin-bottom:10px}
+  .pasos{margin:14px 0 0;padding-left:20px;color:var(--gris);font-size:14.5px}
+  .pasos li{margin-bottom:6px}
+  #turnstile{min-height:65px;margin-top:4px}
+  [hidden]{display:none !important}
+  footer{border-top:1px solid var(--borde);background:#fff}
+  footer .caja{padding-top:22px;padding-bottom:30px;color:var(--gris);font-size:13.5px}
+  @media (max-width:560px){
+    h1{font-size:27px}
+    .rejilla{grid-template-columns:1fr}
+    .tarjeta{padding:22px 18px;border-radius:20px}
+    .boton{width:100%}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="caja">
+    <a class="marca" href="/"><span class="var">VAR</span><span class="elza">ELZA</span></a>
+    <h1>Empieza con VARELZA</h1>
+    <p class="bajada">Cuéntanos de tu condominio y un asesor te ayuda a arrancar. Sin costo y sin compromiso.</p>
+  </div>
+</header>
+
+<main>
+<div class="caja">
+
+  <!-- Cargando: hasta saber si el formulario está abierto -->
+  <section class="tarjeta" id="vista-cargando" aria-live="polite">
+    <p>Un momento…</p>
+  </section>
+
+  <!-- El formulario -->
+  <section class="tarjeta" id="vista-formulario" hidden>
+    <form id="formulario" novalidate>
+      <div class="aviso error" id="error-general" role="alert" hidden></div>
+      <div class="rejilla">
+        <div class="campo ancho" data-campo="nombre">
+          <label for="f-nombre">Tu nombre</label>
+          <input id="f-nombre" name="nombre" autocomplete="name" maxlength="80" required>
+        </div>
+        <div class="campo" data-campo="correo">
+          <label for="f-correo">Tu correo</label>
+          <input id="f-correo" name="correo" type="email" autocomplete="email" maxlength="120" inputmode="email" required>
+          <p class="ayuda">Ahí te llega un enlace para confirmarlo.</p>
+        </div>
+        <div class="campo" data-campo="telefono">
+          <label for="f-telefono">WhatsApp <span class="opcional">(opcional)</span></label>
+          <input id="f-telefono" name="telefono" type="tel" autocomplete="tel" maxlength="20" inputmode="tel" placeholder="+52 33 1234 5678">
+        </div>
+        <div class="campo ancho" data-campo="condominio">
+          <label for="f-condominio">Nombre de tu condominio</label>
+          <input id="f-condominio" name="condominio" maxlength="120" placeholder="Ej. Residencial Las Palmas" required>
+        </div>
+        <div class="campo" data-campo="estado">
+          <label for="f-estado">Estado</label>
+          <select id="f-estado" name="estado" required>
+            <option value="">Elige tu estado</option>
+          </select>
+        </div>
+        <div class="campo" data-campo="municipio">
+          <label for="f-municipio">Municipio o alcaldía</label>
+          <input id="f-municipio" name="municipio" maxlength="80" autocomplete="address-level2" required>
+        </div>
+        <div class="campo" data-campo="unidades">
+          <label for="f-unidades">¿Cuántas unidades tiene?</label>
+          <input id="f-unidades" name="unidades" type="number" min="1" max="100000" step="1" inputmode="numeric" required>
+          <p class="ayuda">Casas, departamentos o locales.</p>
+        </div>
+        <div class="campo ancho" data-campo="quien_es">
+          <span class="etiqueta" id="et-quien">¿Quién eres?</span>
+          <div class="pastillas" role="radiogroup" aria-labelledby="et-quien">
+            <label><input type="radio" name="quien_es" value="administracion_profesional"><span>Administración profesional</span></label>
+            <label><input type="radio" name="quien_es" value="mesa_directiva"><span>Mesa directiva o comité</span></label>
+            <label><input type="radio" name="quien_es" value="residente"><span>Residente interesado</span></label>
+          </div>
+        </div>
+        <div class="campo ancho" id="caja-whatsapp" hidden>
+          <label class="casilla"><input type="checkbox" id="f-whatsapp"> <span id="texto-whatsapp">Acepto que VARELZA me escriba por WhatsApp sobre mi solicitud.</span></label>
+        </div>
+        <div class="campo ancho" data-campo="privacidad">
+          <label class="casilla"><input type="checkbox" id="f-privacidad" required> <span>He leído el <a href="/privacidad/" target="_blank" rel="noopener">Aviso de Privacidad</a> y acepto que VARELZA use mis datos para atender esta solicitud.</span></label>
+        </div>
+        <div class="trampa" aria-hidden="true">
+          <label for="f-sitio">No llenes este campo</label>
+          <input id="f-sitio" name="sitio_web" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="campo ancho" data-campo="turnstile">
+          <div id="turnstile"></div>
+        </div>
+      </div>
+      <div class="acciones">
+        <button class="boton" type="submit" id="enviar">Enviar solicitud</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Revisa tu correo -->
+  <section class="tarjeta" id="vista-correo" hidden aria-live="polite">
+    <div class="emoji" aria-hidden="true">📬</div>
+    <h2>Revisa tu correo</h2>
+    <p>Te mandamos un enlace a <strong id="correo-enviado"></strong>. Ábrelo para confirmar que es tuyo y tu solicitud le llega a un asesor.</p>
+    <ul class="pasos">
+      <li>Si no lo ves en unos minutos, busca en spam o promociones.</li>
+      <li>El enlace sirve una sola vez y vence en 24 horas.</li>
+      <li>¿Te equivocaste de correo? <a href="/empieza/">Vuelve a llenar el formulario</a>.</li>
+    </ul>
+  </section>
+
+  <!-- Confirmar el correo (desde el enlace) -->
+  <section class="tarjeta" id="vista-confirmar" hidden aria-live="polite">
+    <div class="emoji" aria-hidden="true">✉️</div>
+    <h2>Confirma tu correo</h2>
+    <p>Un clic más y tu solicitud le llega a un asesor de VARELZA.</p>
+    <div class="aviso error" id="error-confirmar" role="alert" hidden></div>
+    <div class="acciones">
+      <button class="boton" type="button" id="confirmar">Sí, confirmar mi correo</button>
+    </div>
+  </section>
+
+  <!-- Listo -->
+  <section class="tarjeta" id="vista-listo" hidden aria-live="polite">
+    <div class="emoji" aria-hidden="true">🎉</div>
+    <h2>¡Listo! Recibimos tu solicitud</h2>
+    <p id="texto-listo">Tu correo quedó confirmado. Te responderemos en cuanto un asesor esté disponible.</p>
+    <p>Mientras tanto, si tienes una duda, escríbenos a <a href="mailto:hola@varelza.app">hola@varelza.app</a>.</p>
+    <div class="acciones">
+      <a class="boton secundario" href="/">Volver a varelza.app</a>
+    </div>
+  </section>
+
+  <!-- Avisos: formulario apagado, enlace vencido o desconocido -->
+  <section class="tarjeta" id="vista-aviso" hidden aria-live="polite">
+    <div class="emoji" aria-hidden="true" id="aviso-emoji">💬</div>
+    <h2 id="aviso-titulo"></h2>
+    <p id="aviso-texto"></p>
+    <div class="acciones" id="aviso-acciones"></div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div class="caja">
+    VARELZA · Todo bajo un mismo techo · <a href="/privacidad/">Aviso de Privacidad</a> · <a href="mailto:hola@varelza.app">hola@varelza.app</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // ── Configuración por lugar ──────────────────────────────────
+  var LOCAL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+  var FUNCION = LOCAL
+    ? 'https://xujrjqxswctwpkkazeae.supabase.co/functions/v1/solicitar-alta'   // PRUEBAS
+    : 'https://dkadhgdbfdflrhnzfayc.supabase.co/functions/v1/solicitar-alta';  // producción
+  // Llave de SITIO de Turnstile (pública). En local, la de prueba de
+  // Cloudflare que siempre pasa. La de varelza.app la crea Iván en
+  // Cloudflare → Turnstile; mientras esté vacía, el formulario no se enseña.
+  var TURNSTILE_SITEKEY = LOCAL ? '1x00000000000000000000AA' : '';
+  var ESTADOS = ['Aguascalientes', 'Baja California', 'Baja California Sur', 'Campeche', 'Chiapas', 'Chihuahua',
+    'Ciudad de México', 'Coahuila', 'Colima', 'Durango', 'Estado de México', 'Guanajuato', 'Guerrero',
+    'Hidalgo', 'Jalisco', 'Michoacán', 'Morelos', 'Nayarit', 'Nuevo León', 'Oaxaca', 'Puebla', 'Querétaro',
+    'Quintana Roo', 'San Luis Potosí', 'Sinaloa', 'Sonora', 'Tabasco', 'Tamaulipas', 'Tlaxcala', 'Veracruz',
+    'Yucatán', 'Zacatecas'];
+  var CORREO = 'hola@varelza.app';
+
+  var abiertoEn = Date.now();
+  var tokenTurnstile = '';
+  var widget = null;
+
+  function $(id) { return document.getElementById(id); }
+  function mostrar(id) {
+    ['vista-cargando', 'vista-formulario', 'vista-correo', 'vista-confirmar', 'vista-listo', 'vista-aviso'].forEach(function (v) {
+      $(v).hidden = v !== id;
+    });
+    window.scrollTo(0, 0);
+  }
+  function aviso(emoji, titulo, texto, conFormulario) {
+    $('aviso-emoji').textContent = emoji;
+    $('aviso-titulo').textContent = titulo;
+    $('aviso-texto').textContent = texto;
+    var acc = $('aviso-acciones');
+    acc.innerHTML = '';
+    var a = document.createElement('a');
+    a.className = 'boton' + (conFormulario ? '' : ' secundario');
+    a.href = conFormulario ? '/empieza/' : 'mailto:' + CORREO;
+    a.textContent = conFormulario ? 'Llenar el formulario otra vez' : 'Escribir a ' + CORREO;
+    acc.appendChild(a);
+    mostrar('vista-aviso');
+  }
+  function llamar(cuerpo) {
+    return fetch(FUNCION, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(cuerpo) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { status: r.status, datos: d }; }); });
+  }
+  function apagado(texto) {
+    aviso('💬', 'Por ahora no estamos recibiendo solicitudes aquí', texto || ('Escríbenos a ' + CORREO + ' y te respondemos.'), false);
+  }
+
+  // ── Confirmar el correo (#confirmar=…) ───────────────────────
+  // Si pegan el enlace en esta misma pestaña solo cambia el «#»: se recarga
+  // para leerlo.
+  window.addEventListener('hashchange', function () { if (/^#confirmar=/.test(location.hash)) location.reload(); });
+  var m = location.hash.match(/^#confirmar=([A-Za-z0-9_-]{40,50})$/);
+  if (m) {
+    var codigo = m[1];
+    mostrar('vista-confirmar');
+    $('confirmar').addEventListener('click', function () {
+      var boton = this;
+      boton.disabled = true;
+      boton.textContent = 'Confirmando…';
+      $('error-confirmar').hidden = true;
+      llamar({ accion: 'confirmar', codigo: codigo }).then(function (r) {
+        var res = r.datos && r.datos.resultado;
+        if (res === 'confirmada' || res === 'ya_confirmada') {
+          // Sin el código en la barra: recargar no vuelve a pedir el clic.
+          history.replaceState(null, '', location.pathname);
+          if (res === 'ya_confirmada') $('texto-listo').textContent = 'Este correo ya estaba confirmado. Te responderemos en cuanto un asesor esté disponible.';
+          mostrar('vista-listo');
+        } else if (res === 'vencido') {
+          history.replaceState(null, '', location.pathname);
+          aviso('⌛', 'Este enlace ya venció', 'Los enlaces sirven 24 horas. Vuelve a llenar el formulario y te mandamos uno nuevo.', true);
+        } else if (res === 'no_existe') {
+          history.replaceState(null, '', location.pathname);
+          aviso('🤔', 'No reconocemos este enlace', 'Puede que esté incompleto. Copia el enlace completo del correo, o vuelve a llenar el formulario.', true);
+        } else {
+          $('error-confirmar').textContent = (r.datos && r.datos.error) || 'No pudimos confirmar tu correo. Intenta de nuevo en un momento.';
+          $('error-confirmar').hidden = false;
+          boton.disabled = false;
+          boton.textContent = 'Sí, confirmar mi correo';
+        }
+      }).catch(function () {
+        $('error-confirmar').textContent = 'Parece que no hay conexión. Revisa tu internet e intenta de nuevo.';
+        $('error-confirmar').hidden = false;
+        boton.disabled = false;
+        boton.textContent = 'Sí, confirmar mi correo';
+      });
+    });
+    return;
+  }
+
+  // ── El formulario ────────────────────────────────────────────
+  var sel = $('f-estado');
+  ESTADOS.forEach(function (e) { var o = document.createElement('option'); o.value = e; o.textContent = e; sel.appendChild(o); });
+  $('f-telefono').addEventListener('input', function () { $('caja-whatsapp').hidden = !this.value.trim(); });
+
+  if (!TURNSTILE_SITEKEY) { apagado(); return; }
+
+  llamar({ accion: 'estado' }).then(function (r) {
+    if (!r.datos || r.datos.activo !== true) return apagado(r.datos && r.datos.mensaje_apagado);
+    mostrar('vista-formulario');
+    cargarTurnstile();
+  }).catch(function () { apagado(); });
+
+  function cargarTurnstile() {
+    window.alCargarTurnstile = function () {
+      widget = window.turnstile.render('#turnstile', {
+        sitekey: TURNSTILE_SITEKEY,
+        language: 'es',
+        theme: 'light',
+        callback: function (t) { tokenTurnstile = t; limpiarError('turnstile'); },
+        'expired-callback': function () { tokenTurnstile = ''; },
+        'error-callback': function () { tokenTurnstile = ''; },
+      });
+    };
+    var s = document.createElement('script');
+    s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=alCargarTurnstile';
+    s.async = true;
+    s.defer = true;
+    document.head.appendChild(s);
+  }
+
+  function marcarError(campo, texto) {
+    var c = document.querySelector('[data-campo="' + campo + '"]');
+    if (!c) return false;
+    c.classList.add('mal');
+    var p = c.querySelector('.error-campo');
+    if (!p) { p = document.createElement('p'); p.className = 'error-campo'; c.appendChild(p); }
+    p.textContent = texto;
+    return true;
+  }
+  function limpiarError(campo) {
+    var c = document.querySelector('[data-campo="' + campo + '"]');
+    if (!c) return;
+    c.classList.remove('mal');
+    var p = c.querySelector('.error-campo');
+    if (p) p.remove();
+  }
+  document.querySelectorAll('[data-campo] input, [data-campo] select').forEach(function (el) {
+    el.addEventListener('input', function () { limpiarError(el.closest('[data-campo]').getAttribute('data-campo')); });
+    el.addEventListener('change', function () { limpiarError(el.closest('[data-campo]').getAttribute('data-campo')); });
+  });
+
+  $('formulario').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    $('error-general').hidden = true;
+    var quien = document.querySelector('input[name="quien_es"]:checked');
+    var datos = {
+      accion: 'solicitar',
+      nombre: $('f-nombre').value.trim(),
+      correo: $('f-correo').value.trim(),
+      telefono: $('f-telefono').value.trim(),
+      acepta_whatsapp: !$('caja-whatsapp').hidden && $('f-whatsapp').checked,
+      condominio: $('f-condominio').value.trim(),
+      estado: $('f-estado').value,
+      municipio: $('f-municipio').value.trim(),
+      unidades: $('f-unidades').value.trim(),
+      quien_es: quien ? quien.value : '',
+      acepta_privacidad: $('f-privacidad').checked,
+      aviso_privacidad_url: '/privacidad/',
+      turnstile: tokenTurnstile,
+      pagina: location.pathname,
+      sitio_web: $('f-sitio').value,
+      abierto_ms: Date.now() - abiertoEn,
+    };
+
+    // Lo mismo que revisa el servidor, para avisar antes de enviar.
+    var errores = 0;
+    function exigir(cond, campo, texto) { if (!cond) { errores++; marcarError(campo, texto); } }
+    exigir(datos.nombre.length >= 2, 'nombre', 'Escribe tu nombre.');
+    exigir(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(datos.correo), 'correo', 'Escribe un correo válido.');
+    var dig = datos.telefono.replace(/\D/g, '');
+    exigir(!datos.telefono || (dig.length >= 8 && dig.length <= 15), 'telefono', 'Ese WhatsApp no parece válido (de 8 a 15 dígitos).');
+    exigir(datos.condominio.length >= 2, 'condominio', 'Escribe el nombre de tu condominio.');
+    exigir(!!datos.estado, 'estado', 'Elige tu estado.');
+    exigir(datos.municipio.length >= 2, 'municipio', 'Escribe tu municipio o alcaldía.');
+    exigir(/^\d{1,6}$/.test(datos.unidades) && Number(datos.unidades) >= 1, 'unidades', 'Escribe cuántas unidades tiene.');
+    exigir(!!datos.quien_es, 'quien_es', 'Elige una opción.');
+    exigir(datos.acepta_privacidad, 'privacidad', 'Para seguir, acepta el aviso de privacidad.');
+    exigir(!!datos.turnstile, 'turnstile', 'Espera a que se complete la verificación de arriba.');
+    if (errores) {
+      var primero = document.querySelector('.campo.mal input, .campo.mal select');
+      if (primero) primero.focus();
+      return;
+    }
+
+    var boton = $('enviar');
+    boton.disabled = true;
+    boton.textContent = 'Enviando…';
+    llamar(datos).then(function (r) {
+      boton.disabled = false;
+      boton.textContent = 'Enviar solicitud';
+      if (r.status === 200 && r.datos && r.datos.ok) {
+        $('correo-enviado').textContent = datos.correo;
+        mostrar('vista-correo');
+        return;
+      }
+      if (r.datos && r.datos.codigo === 'apagado') return apagado(r.datos.error);
+      // Un token de Turnstile sirve una vez: se pide otro para reintentar.
+      tokenTurnstile = '';
+      if (widget !== null && window.turnstile) window.turnstile.reset(widget);
+      var texto = (r.datos && r.datos.error) || 'No pudimos enviar tu solicitud. Intenta de nuevo en un momento.';
+      if (!(r.datos && r.datos.campo && marcarError(r.datos.campo, texto))) {
+        $('error-general').textContent = texto;
+        $('error-general').hidden = false;
+        window.scrollTo(0, 0);
+      }
+    }).catch(function () {
+      boton.disabled = false;
+      boton.textContent = 'Enviar solicitud';
+      $('error-general').textContent = 'Parece que no hay conexión. Revisa tu internet e intenta de nuevo.';
+      $('error-general').hidden = false;
+    });
+  });
+})();
+</script>
+</body>
+</html>
