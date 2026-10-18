@@ -21,8 +21,9 @@
 //      (datos/contacto.json);
 //   5. que chat-web.js es EXACTAMENTE el de web/chat-web/ de platform, y que
 //      está si alguna página lo carga;
-//   6. que terminos/index.html trae EXACTAMENTE los Términos que aceptan los
-//      Administradores (datos/terminos-servicio.{md,json}), en sus regiones.
+//   6. que terminos/index.html, si existe, trae EXACTAMENTE los Términos que
+//      aceptan los Administradores (datos/terminos-servicio.{md,json}), y que
+//      ese texto ya es el final (sin marcas de borrador: regla de Iván).
 // La lógica que calcula las regiones NO está copiada aquí: se lee de
 // platform (scripts/sitio/regiones.mjs) y se ejecuta.
 // ============================================================
@@ -61,7 +62,7 @@ if (mio !== null && mio !== dePlatform('scripts/plantillas/check-sitio.plantilla
 // ── la lógica de platform, ejecutada tal cual ──
 const d = mkdtempSync(join(tmpdir(), 'varelza-check-sitio-'));
 writeFileSync(join(d, 'regiones.mjs'), dePlatform('scripts/sitio/regiones.mjs'));
-const { regiones, leerRegiones, REQUERIDAS, PROHIBIDO_FUERA, PAGINAS_CONTACTO, revisarContacto, CHAT_WEB, usaChatWeb, PAGINA_TERMINOS, regionesTerminos } = await import(pathToFileURL(join(d, 'regiones.mjs')).href);
+const { regiones, leerRegiones, REQUERIDAS, PROHIBIDO_FUERA, PAGINAS_CONTACTO, revisarContacto, CHAT_WEB, usaChatWeb, PAGINA_TERMINOS, regionesTerminos, problemasParaPublicar } = await import(pathToFileURL(join(d, 'regiones.mjs')).href);
 const fuentes = {
   tabulador: JSON.parse(dePlatform('datos/tabulador.json')),
   iva: JSON.parse(dePlatform('datos/iva.json')),
@@ -110,7 +111,10 @@ if (chatWeb !== null && chatWeb !== dePlatform(CHAT_WEB.fuente)) mal.push(`${CHA
 if (PAGINA_TERMINOS) {
   const terminos = delIndice(PAGINA_TERMINOS);
   if (terminos !== null) {
-    const esperadasT = regionesTerminos(dePlatform('datos/terminos-servicio.md'), JSON.parse(dePlatform('datos/terminos-servicio.json')));
+    const textoT = dePlatform('datos/terminos-servicio.md');
+    const metaT = JSON.parse(dePlatform('datos/terminos-servicio.json'));
+    for (const x of problemasParaPublicar ? problemasParaPublicar(textoT, metaT) : []) mal.push(`${PAGINA_TERMINOS}: los Términos aún no se pueden publicar: ${x}`);
+    const esperadasT = regionesTerminos(textoT, metaT);
     const presentesT = leerRegiones(terminos);
     for (const id of Object.keys(esperadasT)) {
       const g = presentesT.find((x) => x.id === id);
