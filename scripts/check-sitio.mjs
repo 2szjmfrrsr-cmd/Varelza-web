@@ -130,7 +130,8 @@ if (PAGINA_TERMINOS) {
 // ── 7. /privacidad/ es el aviso que acepta cada usuario de la app ──
 if (PAGINA_PRIVACIDAD) {
   const privacidad = delIndice(PAGINA_PRIVACIDAD);
-  if (privacidad !== null) {
+  if (privacidad === null) mal.push(`${PAGINA_PRIVACIDAD}: falta (el sitio tiene que publicar el Aviso de Privacidad)`);
+  else {
     const esperadasP = regionesPrivacidad(dePlatform('datos/aviso-privacidad.md'));
     const presentesP = leerRegiones(privacidad);
     for (const id of Object.keys(esperadasP)) {
