@@ -41,251 +41,89 @@
   .nota{background:var(--amarillo-suave);border:1px solid var(--amarillo);
         border-radius:18px;padding:18px 22px;margin:26px 0}
   .nota strong{display:block;margin-bottom:5px}
-  .dato{background:#fff;border:1px solid var(--borde);border-radius:18px;
-        padding:20px 24px;margin:20px 0}
-  .dato p{margin:5px 0}
-  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px}
-  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--borde);vertical-align:top}
-  th{font-weight:800;font-size:12.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--gris)}
-  .envoltorio{overflow-x:auto}
   footer{border-top:1px solid var(--borde);background:#fff}
   footer .caja{padding-top:26px;padding-bottom:34px;color:var(--gris);font-size:13.5px}
   @media (max-width:520px){h1{font-size:27px}h2{font-size:19px}}
 </style>
+<!--
+  Aviso de Privacidad (renglón 198, 18 oct 2026). Página hermana de
+  /terminos/. El texto NO se edita aquí: lo escribe
+  varelza-platform/scripts/generar-sitio.mjs desde datos/aviso-privacidad.md
+  (el mismo aviso que acepta cada usuario en la app) y el candado
+  scripts/check-sitio.mjs da rojo si las regiones gen:privacidad:* no son
+  exactamente esa fuente.
+-->
 </head>
 <body>
 
 <header>
   <div class="caja">
     <a class="marca" href="/"><span class="var">VAR</span><span class="elza">ELZA</span></a>
-    <h1>Aviso de Privacidad</h1>
-    <p class="bajada">Última actualización: 17 de octubre de 2026</p>
+    <h1><!--gen:privacidad:titulo-->Aviso de Privacidad de VARELZA<!--/gen:privacidad:titulo--></h1>
+    <p class="bajada"><!--gen:privacidad:fecha-->Última actualización: 18 de octubre de 2026<!--/gen:privacidad:fecha--></p>
   </div>
 </header>
 
 <main>
 <div class="caja">
-
-
-<h2>1. Quién es responsable de tus datos</h2>
-<div class="dato">
-  <p><strong>Responsable:</strong> Natalia del Carmen Kuk Cortés</p>
-  <p><strong>Nombre comercial:</strong> VARELZA</p>
-  <p><strong>Domicilio:</strong> Calle 29 núm. 131C x 27 y 29, C.P. 97450, Baca, Yucatán, México</p>
-  <p><strong>Correo para asuntos de privacidad:</strong> hola@varelza.app</p>
+<div class="nota">
+  <strong>Es el mismo aviso que aceptas en la app de VARELZA.</strong>
+  Antes de usar la app, cada persona lo lee y lo acepta; aquí se publica para que cualquiera pueda leerlo. Lo que
+  contrata un condominio está en los <a href="/terminos/">Términos de Servicio</a>.
 </div>
-<p>
-  VARELZA es un servicio de software para la administración de condominios. Este aviso explica qué datos personales
-  tratamos, para qué, con quién los compartimos y cómo puedes ejercer tus derechos. Está redactado conforme a la Ley
-  Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP) y su reglamento.
-</p>
-
-<h2>2. Qué datos tratamos</h2>
-<p>
-  Solo tratamos los datos que hacen falta para que el servicio funcione. No pedimos datos "por si acaso".
-</p>
-
-<div class="envoltorio">
-<table>
-  <tr><th>Categoría</th><th>Qué incluye</th><th>De dónde viene</th></tr>
-  <tr>
-    <td>Identificación y contacto</td>
-    <td>Nombre, correo electrónico y, cuando nos escribes por WhatsApp, tu número de teléfono y el nombre que tienes puesto en tu perfil de WhatsApp.</td>
-    <td>Lo proporcionas tú, o lo registra la administración de tu condominio al darte de alta.</td>
-  </tr>
-  <tr>
-    <td>Datos de tu vivienda</td>
-    <td>Torre y número de unidad, indiviso, fecha de alta y tu relación con esa unidad.</td>
-    <td>La administración de tu condominio.</td>
-  </tr>
-  <tr>
-    <td>Datos de cobranza</td>
-    <td>Cuotas que te corresponden, su estado (al corriente, pendiente, vencido), pagos reportados y los comprobantes que subas.</td>
-    <td>Se generan al usar el servicio.</td>
-  </tr>
-  <tr>
-    <td>Comunicaciones</td>
-    <td>Mensajes que intercambias con la administración o con VARELZA por la app, por correo interno, por WhatsApp o por el chat del sitio.</td>
-    <td>Los escribes tú.</td>
-  </tr>
-  <tr>
-    <td>Datos técnicos</td>
-    <td>Registros de acceso, dirección IP, tipo de dispositivo e identificadores para enviarte notificaciones al teléfono.</td>
-    <td>Se generan solos al usar la app.</td>
-  </tr>
-</table>
-</div>
-
-<h3>Datos de tarjeta: no los tenemos</h3>
-<p>
-  Cuando pagas con tarjeta, los datos van directo a <strong>Stripe</strong>, nuestro procesador de pagos.
-  <strong>VARELZA nunca recibe, ve ni almacena el número de tu tarjeta</strong>, su fecha de vencimiento ni su código de
-  seguridad. Solo guardamos el resultado del cobro (si se aprobó, el monto y la fecha) y los últimos cuatro dígitos que
-  Stripe nos devuelve para que puedas identificar cuál tarjeta usaste.
-</p>
-
+<!--gen:privacidad:texto-->
+<h2>1. Quién trata tus datos</h2>
+<p>VARELZA es el nombre comercial con el que presta su servicio <strong>Natalia del Carmen Kuk Cortés</strong>, con domicilio en Calle 29 núm. 131C x 27 y 29, C.P. 97450, Baca, Yucatán, México, y correo hola@varelza.app. En este aviso, «VARELZA» se refiere a ella.</p>
+<p>VARELZA es la plataforma que usa la administración de tu condominio. Por eso, según de qué datos se trate, el responsable es uno u otro:</p>
+<ul><li><strong>Los datos de tu cuenta</strong> (los que nos das para entrar y usar la app) y los que nos dejas en el sitio varelza.app: <strong>VARELZA es la responsable.</strong></li><li><strong>Los datos de la administración de tu condominio</strong> (tu unidad, tus cuotas y pagos, los accesos y visitas, las incidencias y demás registros del condominio): <strong>tu condominio es el responsable y VARELZA es su encargada.</strong> Los tratamos solo por cuenta de tu condominio y para prestarle el servicio: no los usamos para fines propios ni los vendemos.</li></ul>
+<p>Este aviso cumple la Ley Federal de Protección de Datos Personales en Posesión de los Particulares. Para los datos de la administración rige también el aviso de privacidad de tu condominio, que le corresponde darte a tu administración.</p>
+<h2>2. Datos de tu cuenta (VARELZA es responsable)</h2>
+<ul><li>Tu nombre, tu correo, tu teléfono y, si la pones, tu foto de perfil.</li><li>Tu contraseña, que se guarda cifrada: nadie en VARELZA puede leerla.</li><li>La versión de este aviso que aceptaste y cuándo, y tu permiso para recibir mensajes por WhatsApp. Es opcional, salvo para el Administrador: a él le escribimos por ahí sobre su licencia, sus cobros y Soporte, así que al aceptar su invitación lo da como parte del servicio.</li><li>Los identificadores de tu teléfono para enviarte notificaciones, el tipo de dispositivo y los registros de acceso a tu cuenta.</li><li>Lo que nos escribas a Soporte de VARELZA, con las fotos o archivos que adjuntes. Si nos escribes por WhatsApp, también tu número y el nombre de tu perfil de WhatsApp.</li><li>Si eres Administrador: tus datos fiscales y de pago de la licencia, y la constancia de que aceptaste los Términos de Servicio (con fecha, dirección IP y dispositivo).</li></ul>
+<h2>3. Datos de la administración (tu condominio es responsable)</h2>
+<ul><li>Tu unidad, tu relación con ella (propietario, inquilino o familiar), el indiviso y las fechas de alta y baja.</li><li>Tus cuotas, su estado, los pagos que reportas y los comprobantes que subes. Son datos patrimoniales.</li><li>Las visitas que registras: nombre del visitante, placas, acompañantes y el código o PIN de entrada, y los registros del guardia.</li><li>Las incidencias que reportas, con sus fotos, y su seguimiento.</li><li>Los paquetes que llegan a tu nombre, las reservas de áreas comunes, las lecturas de avisos y los objetos perdidos.</li><li>En las asambleas: tu asistencia, tus votos y, si das un poder, la carta poder que subes.</li><li>Los mensajes que intercambias con la administración.</li></ul>
+<h2>4. Si visitas el sitio o nos escribes desde él</h2>
+<h3>Las visitas a la página principal</h3>
+<p>La página principal de varelza.app usa Google Analytics para saber cómo se usa: qué secciones se visitan, desde qué tipo de dispositivo y por cuánto tiempo, y cuántas personas tocan un botón de contacto o envían el formulario de la página (sin tu nombre ni tus datos de contacto). Para eso Google guarda cookies en tu navegador y recibe tu dirección IP y datos técnicos de tu navegador. Usamos esa información solo en conjunto, para mejorar el sitio: no para identificarte ni para publicidad. Puedes bloquear o borrar las cookies desde tu navegador y el sitio sigue funcionando igual. Las demás páginas del sitio y la app no usan Google Analytics ni otras herramientas de medición.</p>
 <h3>El chat del sitio</h3>
-<p>
-  Si nos escribes por el chat de varelza.app, te pedimos tu nombre, un correo o un WhatsApp para contestarte, y, si
-  quieres decírnoslo, cuántas unidades tiene tu condominio. Guardamos también lo que escribas y la página del sitio
-  desde la que escribiste. Para frenar abusos registramos una huella cifrada de tu dirección IP, de la que no se puede
-  recuperar la dirección; el registro que usamos para contar intentos se borra a los dos días. Tu navegador guarda una
-  clave de la conversación durante 30 días para que puedas volver a ella; puedes borrarla limpiando los datos de este
-  sitio en tu navegador.
-</p>
-<p>
-  Usamos estos datos <strong>solo para contestarte</strong>: por el mismo chat o, si ya cerraste la página, al correo o
-  WhatsApp que nos dejaste. Los ve <strong>el equipo de VARELZA</strong>, en su bandeja de mensajes. Conservamos la
-  conversación <strong>para darte seguimiento si vuelves a escribirnos</strong>. Si quieres que la borremos, escríbenos
-  a <a href="mailto:hola@varelza.app"><strong>hola@varelza.app</strong></a> y lo haremos.
-</p>
-
+<p>Si nos escribes por el chat de varelza.app, te pedimos tu nombre, un correo o un WhatsApp para contestarte y, si quieres decírnoslo, cuántas unidades tiene tu condominio. Guardamos también lo que escribas y la página del sitio desde la que escribiste. Para frenar abusos registramos una huella cifrada de tu dirección IP, de la que no se puede recuperar la dirección; el registro que usamos para contar intentos se borra a los dos días. Tu navegador guarda una clave de la conversación durante 30 días para que puedas volver a ella; puedes borrarla limpiando los datos de este sitio en tu navegador.</p>
+<p>Usamos estos datos <strong>solo para contestarte</strong>: por el mismo chat o, si ya cerraste la página, al correo o WhatsApp que nos dejaste. Los ve el equipo de VARELZA, en su bandeja de mensajes.</p>
 <h3>«Empieza con VARELZA»</h3>
-<p>
-  Si pides empezar con VARELZA desde el formulario del sitio, te pedimos tu nombre, tu correo, tu WhatsApp (si quieres
-  dejarlo), el nombre de tu condominio, su estado y municipio, cuántas unidades tiene y si eres administración
-  profesional, mesa directiva o residente. Guardamos también la fecha, la página desde la que enviaste el formulario
-  y una huella cifrada de tu dirección IP, igual que en el chat, para frenar abusos.
-</p>
-<p>
-  Para comprobar que quien llena el formulario es una persona y no un programa automático usamos
-  <strong>Cloudflare Turnstile</strong>, que revisa tu navegador mientras llenas el formulario. Después te mandamos un
-  correo con un enlace para confirmar que esa dirección es tuya; hasta que lo abras, tu solicitud no le llega a nadie.
-  Si marcas la casilla de WhatsApp, guardamos tu permiso para escribirte por ahí sobre tu solicitud.
-</p>
-<p>
-  Usamos estos datos <strong>solo para atender tu solicitud</strong>: un asesor de VARELZA la revisa, te busca y, si
-  decides contratar, da de alta tu condominio. Los ve <strong>el equipo de VARELZA</strong>. Si no confirmas tu correo,
-  la solicitud se borra sola en pocos días. Si confirmas y no seguimos adelante, la conservamos para darte seguimiento
-  <strong>hasta que nos pidas borrarla</strong> en <a href="mailto:hola@varelza.app"><strong>hola@varelza.app</strong></a>.
-</p>
-
-<h3>Datos sensibles</h3>
-<p>
-  No tratamos datos personales sensibles: ni de salud, ni de origen étnico, ni de creencias religiosas, ni de
-  preferencias sexuales, ni de opiniones políticas. Si llegaras a incluir alguno en el texto libre de un mensaje, será
-  tratado con la misma confidencialidad que el resto, pero no lo pedimos ni lo necesitamos.
-</p>
-
-<h2>3. Para qué usamos tus datos</h2>
-<h3>Finalidades necesarias</h3>
-<p>Sin estas, el servicio no puede funcionar:</p>
-<ul>
-  <li>Darte acceso a tu cuenta y verificar que eres quien dices ser.</li>
-  <li>Mostrarte tus cuotas, registrar tus pagos y emitir tus comprobantes.</li>
-  <li>Entregarte avisos, notificaciones y documentos de tu condominio.</li>
-  <li>Permitir que te comuniques con la administración y con nuestro equipo de soporte.</li>
-  <li>Registrar asistencia y votos en asambleas, cuando tu condominio use esa función.</li>
-  <li>Contestarte cuando nos escribes por el chat del sitio y evitar que se use de forma abusiva.</li>
-  <li>Atender tu solicitud de «Empieza con VARELZA», confirmar tu correo y evitar que el formulario se use de forma abusiva.</li>
-  <li>Mantener la seguridad del servicio, prevenir fraudes y cumplir obligaciones legales, contables y fiscales.</li>
-</ul>
-
-<h3>Finalidades adicionales</h3>
-<p>
-  Podemos usar tu correo para informarte sobre mejoras del servicio. <strong>Puedes oponerte a esto en cualquier
-  momento</strong> escribiéndonos al correo del apartado 1, sin que afecte tu acceso al servicio ni la administración de
-  tu condominio.
-</p>
-<p>
-  <strong>No vendemos tus datos personales.</strong> No los usamos para publicidad de terceros ni los compartimos con
-  anunciantes.
-</p>
-
-<h2>4. Con quién compartimos tus datos</h2>
-<p>
-  Compartimos datos únicamente con quienes hacen falta para prestar el servicio, y solo lo necesario. Todos están
-  obligados por contrato a protegerlos y a usarlos solo para lo que les pedimos.
-</p>
-<div class="envoltorio">
-<table>
-  <tr><th>Con quién</th><th>Para qué</th><th>Qué recibe</th></tr>
-  <tr><td>La administración de tu condominio</td><td>Administrar la propiedad donde vives</td><td>Tus datos de contacto, tu unidad y tu estado de cuenta</td></tr>
-  <tr><td>Supabase</td><td>Alojar la base de datos y los archivos</td><td>Todos los datos del servicio, cifrados</td></tr>
-  <tr><td>Stripe</td><td>Procesar pagos con tarjeta</td><td>Los datos de tu tarjeta (directo, sin pasar por nosotros) y el monto</td></tr>
-  <tr><td>Meta (WhatsApp)</td><td>Entregar y recibir mensajes de WhatsApp</td><td>Tu número y el contenido de esos mensajes</td></tr>
-  <tr><td>Resend</td><td>Enviar correos del servicio</td><td>Tu correo y el contenido del mensaje</td></tr>
-  <tr><td>Cloudflare (Turnstile)</td><td>Comprobar que el formulario «Empieza con VARELZA» lo llena una persona</td><td>Datos técnicos de tu navegador y tu dirección IP en el momento de enviarlo</td></tr>
-  <tr><td>Autoridades</td><td>Cuando la ley lo exija</td><td>Únicamente lo que la autoridad requiera por escrito y con fundamento</td></tr>
-</table>
-</div>
-<p>
-  Algunos de estos proveedores están fuera de México. Al usar el servicio, aceptas esa transferencia internacional, que
-  se hace bajo los contratos de tratamiento de datos de cada proveedor.
-</p>
-
-<h2>5. Tus derechos ARCO</h2>
-<p>Tienes derecho a:</p>
-<ul>
-  <li><strong>Acceder</strong> — saber qué datos tuyos tenemos y para qué los usamos.</li>
-  <li><strong>Rectificar</strong> — corregirlos si están mal o incompletos.</li>
-  <li><strong>Cancelar</strong> — pedir que los eliminemos, con los límites del apartado 6.</li>
-  <li><strong>Oponerte</strong> — pedir que dejemos de usarlos para una finalidad concreta.</li>
-</ul>
-<p>
-  También puedes <strong>revocar tu consentimiento</strong> en cualquier momento. Ten en cuenta que revocarlo para las
-  finalidades necesarias puede impedir que sigas usando el servicio.
-</p>
-<h3>Cómo ejercerlos</h3>
-<p>
-  Escribe a <a href="mailto:hola@varelza.app"><strong>hola@varelza.app</strong></a> con: tu nombre, un medio para contestarte, una copia de una
-  identificación oficial, y una descripción clara de lo que pides. <strong>Te responderemos en un plazo máximo de 20
-  días hábiles</strong> y, si procede, lo haremos efectivo dentro de los 15 días hábiles siguientes.
-</p>
-<p>
-  Si no estás conforme con nuestra respuesta, puedes acudir al Instituto Nacional de Transparencia, Acceso a la
-  Información y Protección de Datos Personales (INAI).
-</p>
-
-<h2>6. Cuánto tiempo conservamos tus datos</h2>
-<p>
-  Conservamos tus datos mientras tengas una cuenta activa y tu condominio sea cliente de VARELZA. Después:
-</p>
-<ul>
-  <li>Los datos de <strong>facturación y pagos</strong> se conservan el tiempo que exige la legislación fiscal mexicana (actualmente cinco años).</li>
-  <li>El resto de los datos se elimina o se anonimiza dentro de los <strong>doce meses</strong> siguientes al cierre de la cuenta.</li>
-  <li>Las conversaciones del <strong>chat del sitio</strong> se conservan para darte seguimiento <strong>hasta que nos pidas borrarlas</strong>.</li>
-  <li>Las solicitudes de <strong>«Empieza con VARELZA»</strong> sin correo confirmado se borran solas en pocos días; las demás se conservan para darte seguimiento <strong>hasta que nos pidas borrarlas</strong>. Si tu condominio se vuelve cliente, tus datos pasan a ser los de tu cuenta.</li>
-</ul>
-<p>
-  Esto significa que hay datos que no podemos borrar aunque nos lo pidas, porque la ley nos obliga a conservarlos.
-  Cuando ocurra, te diremos exactamente cuáles y por qué.
-</p>
-
-<h2>7. Cómo protegemos tus datos</h2>
-<p>
-  La información viaja cifrada y se almacena cifrada. Cada condominio está aislado de los demás mediante controles a
-  nivel de la base de datos: la información de un condominio no es accesible desde otro. El acceso del personal de
-  VARELZA está limitado a lo necesario para dar soporte y queda registrado.
-</p>
-<p>
-  Ningún sistema es infalible. Si ocurriera una vulneración que afecte de forma significativa tus datos, te lo
-  notificaremos sin demora y te diremos qué pasó y qué puedes hacer.
-</p>
-
-<h2>8. Menores de edad</h2>
-<p>
-  El servicio está dirigido a personas mayores de edad. No recabamos datos de menores a sabiendas. Si detectamos que
-  una cuenta pertenece a un menor sin autorización de quien ejerce la patria potestad, la eliminaremos.
-</p>
-
-<h2>9. Cambios a este aviso</h2>
-<p>
-  Si cambiamos este aviso, publicaremos la versión nueva en esta misma dirección y actualizaremos la fecha del
-  encabezado. Si el cambio es importante, te lo avisaremos por correo o dentro de la app antes de que entre en vigor.
-</p>
-
-<h2>10. Contacto</h2>
-<p>
-  Para cualquier duda sobre este aviso o sobre el tratamiento de tus datos, escríbenos a
-  <a href="mailto:hola@varelza.app"><strong>hola@varelza.app</strong></a>.
-</p>
-
+<p>Si pides empezar con VARELZA desde el formulario del sitio, te pedimos tu nombre, tu correo, tu WhatsApp (si quieres dejarlo), el nombre de tu condominio, su estado y municipio, cuántas unidades tiene y si eres administración profesional, mesa directiva o residente. Guardamos también la fecha, la página desde la que enviaste el formulario y una huella cifrada de tu dirección IP, igual que en el chat, para frenar abusos.</p>
+<p>Para comprobar que quien llena el formulario es una persona y no un programa automático usamos Cloudflare Turnstile, que revisa tu navegador mientras lo llenas. Después te mandamos un correo con un enlace para confirmar que esa dirección es tuya; hasta que lo abras, tu solicitud no le llega a nadie. Si marcas la casilla de WhatsApp, guardamos tu permiso para escribirte por ahí sobre tu solicitud.</p>
+<p>Usamos estos datos <strong>solo para atender tu solicitud</strong>: un asesor de VARELZA la revisa, te busca y, si decides contratar, da de alta tu condominio.</p>
+<h2>5. Datos que no tenemos</h2>
+<ul><li><strong>Tu tarjeta.</strong> Cuando pagas con tarjeta, los datos van directo a Stripe, nuestro procesador de pagos. VARELZA nunca recibe ni guarda el número, la fecha de vencimiento ni el código de seguridad: solo el resultado del cobro (si se aprobó, el monto y la fecha) y los últimos cuatro dígitos que Stripe nos devuelve para que identifiques cuál tarjeta usaste.</li><li><strong>Tus datos biométricos.</strong> Si activas Face ID o tu huella en la app, la verificación la hace tu teléfono: VARELZA no los recibe.</li><li><strong>Tu ubicación y tus contactos.</strong> La app no los pide.</li></ul>
+<p>No pedimos datos personales sensibles (salud, origen, creencias, preferencias sexuales u opiniones políticas). Si llegas a escribir alguno en un mensaje o a mostrarlo en una foto, se trata con la misma confidencialidad, pero no lo necesitamos.</p>
+<h2>6. Para qué usamos tus datos</h2>
+<p>Para prestar el servicio, sin lo cual no puede funcionar:</p>
+<ul><li>Crear tu cuenta, verificar que eres tú y mantenerla segura.</li><li>Mostrarte tus cuotas, registrar tus pagos y darte tus comprobantes.</li><li>Autorizar la entrada de tus visitas y avisarte de lo que pasa en tu condominio: accesos, paquetes, avisos e incidencias.</li><li>Que te comuniques con tu administración y con Soporte de VARELZA.</li><li>Registrar tu asistencia y tus votos cuando tu condominio use asambleas.</li><li>Contestarte cuando nos escribes por el chat del sitio y atender tu solicitud de «Empieza con VARELZA».</li><li>Prevenir fraudes y abusos, y cumplir obligaciones legales, contables y fiscales.</li></ul>
+<p>De forma adicional, podemos usar tu correo para contarte de mejoras del servicio, y medimos cómo se usa la página principal del sitio para mejorarla. Puedes negarte a lo primero en cualquier momento escribiendo a hola@varelza.app, y evitar lo segundo bloqueando las cookies en tu navegador, sin que afecte tu cuenta ni la administración de tu condominio.</p>
+<p><strong>No vendemos tus datos</strong>, no los usamos para publicidad y no los compartimos con anunciantes.</p>
+<h2>7. Con quién los compartimos</h2>
+<ul><li><strong>La administración de tu condominio</strong>, que es quien te dio de alta: ve los datos de tu cuenta, tu unidad y tu estado de cuenta.</li><li><strong>Supabase</strong>, para alojar la base de datos y los archivos.</li><li><strong>Stripe</strong>, para los pagos con tarjeta.</li><li><strong>Expo, Apple y Google</strong>, para entregar las notificaciones de la app a tu teléfono.</li><li><strong>Resend</strong>, para enviar los correos del servicio.</li><li><strong>Meta</strong>, para los mensajes de WhatsApp.</li><li><strong>Cloudflare</strong>, para comprobar que el formulario «Empieza con VARELZA» lo llena una persona.</li><li><strong>Google</strong>, para medir las visitas a la página principal del sitio (Google Analytics).</li><li><strong>Las autoridades</strong>, solo cuando la ley lo exija y por escrito.</li></ul>
+<p>Los proveedores reciben solo lo necesario, únicamente para prestarnos su servicio, y están obligados por contrato a protegerlo y a no usarlo para nada más. Algunos están fuera de México.</p>
+<h2>8. Tus derechos</h2>
+<p>Puedes acceder a tus datos, corregirlos, pedir que los eliminemos u oponerte a que los usemos para una finalidad concreta (derechos ARCO), y también revocar tu consentimiento. Si lo revocas para las finalidades necesarias, ya no podrás usar el servicio.</p>
+<p>Para los datos de tu cuenta y los que nos dejas en el sitio, escríbenos a hola@varelza.app con tu nombre, un medio para contestarte, una copia de tu identificación oficial y lo que pides. <strong>Te respondemos en un máximo de 20 días hábiles</strong> y, si procede, lo hacemos efectivo dentro de los 15 días hábiles siguientes.</p>
+<p>Para los datos de la administración, dirígete a tu administración, que es la responsable. Si nos escribes a nosotros, se lo hacemos llegar y la ayudamos a responderte.</p>
+<p>Si no estás conforme con la respuesta, puedes acudir a la autoridad de protección de datos personales, hoy la Secretaría Anticorrupción y Buen Gobierno.</p>
+<h2>9. Cuánto tiempo los guardamos</h2>
+<ul><li>Mientras tengas tu cuenta y tu condominio use VARELZA.</li><li>Cuando tu condominio termina el servicio, guardamos su información 12 meses para que pueda recuperarla o volver, y después se elimina.</li><li>Lo que la ley nos obliga a guardar se conserva el tiempo que ella marca: los datos fiscales y de pagos, cinco años, y la constancia de aceptación de los Términos de Servicio, diez años.</li><li>Las conversaciones del chat del sitio, para darte seguimiento si vuelves a escribirnos, hasta que nos pidas borrarlas.</li><li>Las solicitudes de «Empieza con VARELZA» sin correo confirmado se borran solas en pocos días; las demás se guardan para darte seguimiento hasta que nos pidas borrarlas. Si tu condominio se vuelve cliente, tus datos pasan a ser los de tu cuenta.</li></ul>
+<p>Por eso hay datos que no podemos borrar aunque nos lo pidas: cuando pase, te decimos cuáles y por qué.</p>
+<h2>10. Cómo los protegemos</h2>
+<p>La información viaja y se guarda cifrada. Cada condominio está aislado de los demás desde la base de datos: nadie de otro condominio puede ver la información del tuyo. El personal de VARELZA solo entra a lo necesario para dar soporte, y queda registrado. Si ocurriera una vulneración que afecte tus datos de forma importante, te avisamos sin demora y te decimos qué pasó y qué puedes hacer.</p>
+<h2>11. Menores de edad</h2>
+<p>El servicio es para personas mayores de edad. Si la administración registra a un menor como ocupante de una unidad, lo hace como responsable de esos datos y con la autorización de quien ejerce la patria potestad.</p>
+<h2>12. Cambios a este aviso</h2>
+<p>Si cambiamos este aviso, publicamos la versión nueva en varelza.app/privacidad/ y en la app, con su fecha. Si el cambio es importante, te lo enseñamos en la app con un resumen de lo que cambió y te pedimos aceptarlo de nuevo antes de seguir.</p>
+<h2>13. Contacto</h2>
+<p>Para cualquier duda sobre este aviso o sobre tus datos, escríbenos a hola@varelza.app.</p>
+<!--/gen:privacidad:texto-->
 </div>
 </main>
 
 <footer>
-  <div class="caja">© 2026 VARELZA · <a href="/">Volver al inicio</a></div>
+  <div class="caja">© 2026 VARELZA · <a href="/terminos/">Términos de Servicio</a> · <a href="/">Volver al inicio</a></div>
 </footer>
 
 </body>

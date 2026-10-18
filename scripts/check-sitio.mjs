@@ -23,7 +23,9 @@
 //      está si alguna página lo carga;
 //   6. que terminos/index.html, si existe, trae EXACTAMENTE los Términos que
 //      aceptan los Administradores (datos/terminos-servicio.{md,json}), y que
-//      ese texto ya es el final (sin marcas de borrador: regla de Iván).
+//      ese texto ya es el final (sin marcas de borrador: regla de Iván);
+//   7. que privacidad/index.html trae EXACTAMENTE el Aviso de Privacidad que
+//      acepta cada usuario de la app (datos/aviso-privacidad.md).
 // La lógica que calcula las regiones NO está copiada aquí: se lee de
 // platform (scripts/sitio/regiones.mjs) y se ejecuta.
 // ============================================================
@@ -62,7 +64,7 @@ if (mio !== null && mio !== dePlatform('scripts/plantillas/check-sitio.plantilla
 // ── la lógica de platform, ejecutada tal cual ──
 const d = mkdtempSync(join(tmpdir(), 'varelza-check-sitio-'));
 writeFileSync(join(d, 'regiones.mjs'), dePlatform('scripts/sitio/regiones.mjs'));
-const { regiones, leerRegiones, REQUERIDAS, PROHIBIDO_FUERA, PAGINAS_CONTACTO, revisarContacto, CHAT_WEB, usaChatWeb, PAGINA_TERMINOS, regionesTerminos, problemasParaPublicar } = await import(pathToFileURL(join(d, 'regiones.mjs')).href);
+const { regiones, leerRegiones, REQUERIDAS, PROHIBIDO_FUERA, PAGINAS_CONTACTO, revisarContacto, CHAT_WEB, usaChatWeb, PAGINA_TERMINOS, regionesTerminos, problemasParaPublicar, PAGINA_PRIVACIDAD, regionesPrivacidad } = await import(pathToFileURL(join(d, 'regiones.mjs')).href);
 const fuentes = {
   tabulador: JSON.parse(dePlatform('datos/tabulador.json')),
   iva: JSON.parse(dePlatform('datos/iva.json')),
@@ -125,9 +127,25 @@ if (PAGINA_TERMINOS) {
   }
 }
 
+// ── 7. /privacidad/ es el aviso que acepta cada usuario de la app ──
+if (PAGINA_PRIVACIDAD) {
+  const privacidad = delIndice(PAGINA_PRIVACIDAD);
+  if (privacidad === null) mal.push(`${PAGINA_PRIVACIDAD}: falta (el sitio tiene que publicar el Aviso de Privacidad)`);
+  else {
+    const esperadasP = regionesPrivacidad(dePlatform('datos/aviso-privacidad.md'));
+    const presentesP = leerRegiones(privacidad);
+    for (const id of Object.keys(esperadasP)) {
+      const g = presentesP.find((x) => x.id === id);
+      if (!g) mal.push(`${PAGINA_PRIVACIDAD}: falta la región «${id}»`);
+      else if (g.contenido !== esperadasP[id]) mal.push(`${PAGINA_PRIVACIDAD}: la región «${id}» no es el texto de datos/aviso-privacidad.md de ${REF} (editada a mano o desfasada)`);
+    }
+    for (const g of presentesP) if (!(g.id in esperadasP)) mal.push(`${PAGINA_PRIVACIDAD}: región «${g.id}» que la fuente no conoce`);
+  }
+}
+
 if (mal.length) {
   morir('Los números del sitio no salen de varelza-platform:', ...mal.map((m) => `· ${m}`),
         'Se regeneran con: VARELZA_WEB_DIR=<este repo> node ../varelza-platform/scripts/generar-sitio.mjs',
-        'Para cambiar un precio, el IVA, el contacto o el chat web se edita la fuente en platform, nunca este archivo.');
+        'Para cambiar un precio, el IVA, el contacto, el chat web, los Términos o el Aviso de Privacidad se edita la fuente en platform, nunca este archivo.');
 }
 console.log(`✅ Los números del sitio salen de varelza-platform (${presentes.length} regiones, ${REF}).`);
