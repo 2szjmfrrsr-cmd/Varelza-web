@@ -20,7 +20,9 @@
 //      data-whatsapp de las páginas con contacto es el oficial
 //      (datos/contacto.json);
 //   5. que chat-web.js es EXACTAMENTE el de web/chat-web/ de platform, y que
-//      está si alguna página lo carga.
+//      está si alguna página lo carga;
+//   6. que terminos/index.html trae EXACTAMENTE los Términos que aceptan los
+//      Administradores (datos/terminos-servicio.{md,json}), en sus regiones.
 // La lógica que calcula las regiones NO está copiada aquí: se lee de
 // platform (scripts/sitio/regiones.mjs) y se ejecuta.
 // ============================================================
@@ -59,7 +61,7 @@ if (mio !== null && mio !== dePlatform('scripts/plantillas/check-sitio.plantilla
 // ── la lógica de platform, ejecutada tal cual ──
 const d = mkdtempSync(join(tmpdir(), 'varelza-check-sitio-'));
 writeFileSync(join(d, 'regiones.mjs'), dePlatform('scripts/sitio/regiones.mjs'));
-const { regiones, leerRegiones, REQUERIDAS, PROHIBIDO_FUERA, PAGINAS_CONTACTO, revisarContacto, CHAT_WEB, usaChatWeb } = await import(pathToFileURL(join(d, 'regiones.mjs')).href);
+const { regiones, leerRegiones, REQUERIDAS, PROHIBIDO_FUERA, PAGINAS_CONTACTO, revisarContacto, CHAT_WEB, usaChatWeb, PAGINA_TERMINOS, regionesTerminos } = await import(pathToFileURL(join(d, 'regiones.mjs')).href);
 const fuentes = {
   tabulador: JSON.parse(dePlatform('datos/tabulador.json')),
   iva: JSON.parse(dePlatform('datos/iva.json')),
@@ -103,6 +105,21 @@ const chatWeb = delIndice(CHAT_WEB.destino);
 const loCargan = PAGINAS_CONTACTO.filter((p) => usaChatWeb(delIndice(p) ?? ''));
 if (loCargan.length && chatWeb === null) mal.push(`${loCargan.join(' y ')} carga${loCargan.length > 1 ? 'n' : ''} ${CHAT_WEB.destino}, pero no está en git`);
 if (chatWeb !== null && chatWeb !== dePlatform(CHAT_WEB.fuente)) mal.push(`${CHAT_WEB.destino} no es el ${CHAT_WEB.fuente} de ${REF} de platform (editado aquí o desfasado)`);
+
+// ── 6. /terminos/ es el texto que aceptan los Administradores ──
+if (PAGINA_TERMINOS) {
+  const terminos = delIndice(PAGINA_TERMINOS);
+  if (terminos !== null) {
+    const esperadasT = regionesTerminos(dePlatform('datos/terminos-servicio.md'), JSON.parse(dePlatform('datos/terminos-servicio.json')));
+    const presentesT = leerRegiones(terminos);
+    for (const id of Object.keys(esperadasT)) {
+      const g = presentesT.find((x) => x.id === id);
+      if (!g) mal.push(`${PAGINA_TERMINOS}: falta la región «${id}»`);
+      else if (g.contenido !== esperadasT[id]) mal.push(`${PAGINA_TERMINOS}: la región «${id}» no es el texto de datos/terminos-servicio de ${REF} (editada a mano o desfasada)`);
+    }
+    for (const g of presentesT) if (!(g.id in esperadasT)) mal.push(`${PAGINA_TERMINOS}: región «${g.id}» que la fuente no conoce`);
+  }
+}
 
 if (mal.length) {
   morir('Los números del sitio no salen de varelza-platform:', ...mal.map((m) => `· ${m}`),

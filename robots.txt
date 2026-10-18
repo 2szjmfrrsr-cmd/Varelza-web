@@ -1,0 +1,8 @@
+# varelza.app — barrido 110, bloque 3 (V124, 18 oct 2026). Todo el sitio se
+# puede rastrear; lo que no debe aparecer en buscadores lo dice cada página
+# con <meta name="robots" content="noindex"> (hoy /empieza/ y, mientras sean
+# borrador, /terminos/).
+User-agent: *
+Allow: /
+
+Sitemap: https://varelza.app/sitemap.xml

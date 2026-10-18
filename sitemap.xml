@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- varelza.app — barrido 110, bloque 3 (V124, 18 oct 2026). Solo las páginas
+     que se pueden indexar: /empieza/ y /terminos/ (mientras sea borrador)
+     llevan noindex y no van aquí. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://varelza.app/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://varelza.app/privacidad/</loc><lastmod>2026-10-17</lastmod></url>
+</urlset>
