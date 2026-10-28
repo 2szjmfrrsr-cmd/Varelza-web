@@ -1,0 +1,17 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="VARELZA">
+  <!-- Favicon cuadrado de VARELZA — opción B (Iván, 17 sept 2026): el símbolo de
+       varelza-favicon-2026.svg, sin cambios, dentro de un cuadro #15171B con esquinas
+       redondeadas. Mismo degradado (un solo barrido, userSpaceOnUse). -->
+  <defs>
+    <linearGradient id="marca" gradientUnits="userSpaceOnUse" x1="20" y1="99" x2="180" y2="71">
+      <stop offset="0" stop-color="#FF7A45"/>
+      <stop offset="1" stop-color="#12B76A"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112.6" fill="#15171B"/>
+  <g transform="translate(24.59,132.77) scale(2.3141)">
+    <path d="M100 12 L20 95" stroke="url(#marca)" stroke-width="17" stroke-linecap="round" fill="none"/>
+    <path d="M100 12 L180 95" stroke="url(#marca)" stroke-width="17" stroke-linecap="round" fill="none"/>
+    <circle cx="100" cy="12" r="9" fill="#FF7A45"/>
+  </g>
+</svg>
